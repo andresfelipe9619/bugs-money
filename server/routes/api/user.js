@@ -3,11 +3,11 @@ let router = express.Router();
 const bcrypt = require('bcryptjs');
 const _ = require('underscore');
 
-const Usuario = require('../models/usuario');
+const Usuario = require('../../models/user');
 const {
   verificaToken,
-  verificaAdminRole,
-} = require('../middlewares/autenticacion');
+  verificaAdminRole, 
+} = require('../../middlewares/authentication');
 
 router.get('/', verificaToken, (req, res) => {
   let desde = req.query.desde || 0;

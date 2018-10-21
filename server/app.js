@@ -8,6 +8,8 @@ const cors = require('cors');
 
 const app = express();
 
+require('./config/config');
+
 const isProduction = process.env.NODE_ENV === 'production';
 
 app.use(cors());
