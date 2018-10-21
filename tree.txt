@@ -1,0 +1,192 @@
+|   .eslintignore
+|   .eslintrc
+|   .gitignore
+|   LICENSE
+|   package-lock.json
+|   package.json
+|   tree.txt
+|   
++---client
+|   |   package-lock.json
+|   |   package.json
+|   |   README.md
+|   |   semantic.json
+|   |   
+|   +---build
+|   |   |   asset-manifest.json
+|   |   |   favicon.ico
+|   |   |   index.html
+|   |   |   manifest.json
+|   |   |   service-worker.js
+|   |   |   
+|   |   \---static
+|   |       +---css
+|   |       |       main.904b8664.css
+|   |       |       main.904b8664.css.map
+|   |       |       
+|   |       +---js
+|   |       |       main.00943b21.js
+|   |       |       main.00943b21.js.map
+|   |       |       
+|   |       \---media
+|   |               brand-icons.13db00b7.eot
+|   |               brand-icons.a046592b.woff
+|   |               brand-icons.a1a749e8.svg
+|   |               brand-icons.c5ebe0b3.ttf
+|   |               brand-icons.e8c322de.woff2
+|   |               flags.9c74e172.png
+|   |               icons.0ab54153.woff2
+|   |               icons.8e3c7f55.eot
+|   |               icons.962a1bf3.svg
+|   |               icons.b87b9ba5.ttf
+|   |               icons.faff9214.woff
+|   |               outline-icons.701ae6ab.eot
+|   |               outline-icons.82f60bd0.svg
+|   |               outline-icons.ad97afd3.ttf
+|   |               outline-icons.cd6c777f.woff2
+|   |               outline-icons.ef60a4f6.woff
+|   +---src
+|   |   |   App.js
+|   |   |   index.js
+|   |   |   registerServiceWorker.js
+|   |   |   
+|   |   +---assets
+|   |   |   +---audios
+|   |   |   +---icons
+|   |   |   +---images
+|   |   |   |       logo.jpg
+|   |   |   |       
+|   |   |   \---videos
+|   |   +---features
+|   |   |   +---about
+|   |   |   |   |   About.js
+|   |   |   |   |   
+|   |   |   |   \---redux
+|   |   |   |           actions.js
+|   |   |   |           constants.js
+|   |   |   |           reducer.js
+|   |   |   |           
+|   |   |   +---accounts
+|   |   |   |   |   CounterPage.js
+|   |   |   |   |   index.js
+|   |   |   |   |   
+|   |   |   |   \---redux
+|   |   |   |           actions.js
+|   |   |   |           constants.js
+|   |   |   |           counterMinusOne.js
+|   |   |   |           counterPlusOne.js
+|   |   |   |           counterReset.js
+|   |   |   |           fetchRedditList.js
+|   |   |   |           initialState.js
+|   |   |   |           reducer.js
+|   |   |   |           
+|   |   |   +---auth
+|   |   |   |   |   Login.js
+|   |   |   |   |   Register.js
+|   |   |   |   |   
+|   |   |   |   \---redux
+|   |   |   |           actions.js
+|   |   |   |           constants.js
+|   |   |   |           reducer.js
+|   |   |   |           
+|   |   |   +---budgets
+|   |   |   |   |   CounterPage.js
+|   |   |   |   |   index.js
+|   |   |   |   |   
+|   |   |   |   \---redux
+|   |   |   |           actions.js
+|   |   |   |           constants.js
+|   |   |   |           counterMinusOne.js
+|   |   |   |           counterPlusOne.js
+|   |   |   |           counterReset.js
+|   |   |   |           fetchRedditList.js
+|   |   |   |           initialState.js
+|   |   |   |           reducer.js
+|   |   |   |           
+|   |   |   +---common
+|   |   |   |   |   LoadingComponent.js
+|   |   |   |   |   PageNotFound.js
+|   |   |   |   |   PrivateRoute.js
+|   |   |   |   |   
+|   |   |   |   \---redux
+|   |   |   |           actions.js
+|   |   |   |           constants.js
+|   |   |   |           reducer.js
+|   |   |   |           
+|   |   |   +---dashboard
+|   |   |   |   |   Dashboard.js
+|   |   |   |   |   Menu.js
+|   |   |   |   |   
+|   |   |   |   \---redux
+|   |   |   |           actions.js
+|   |   |   |           constants.js
+|   |   |   |           reducer.js
+|   |   |   |           
+|   |   |   +---home
+|   |   |   |   |   Home.js
+|   |   |   |   |   Navbar.js
+|   |   |   |   |   
+|   |   |   |   \---redux
+|   |   |   |           actions.js
+|   |   |   |           constants.js
+|   |   |   |           reducer.js
+|   |   |   |           saga.js
+|   |   |   |           
+|   |   |   \---transactions
+|   |   |       |   CounterPage.js
+|   |   |       |   index.js
+|   |   |       |   
+|   |   |       \---redux
+|   |   |               actions.js
+|   |   |               constants.js
+|   |   |               counterMinusOne.js
+|   |   |               counterPlusOne.js
+|   |   |               counterReset.js
+|   |   |               fetchRedditList.js
+|   |   |               initialState.js
+|   |   |               reducer.js
+|   |   |               
+|   |   +---services
+|   |   |   |   alert.js
+|   |   |   |   api.js
+|   |   |   |   auth.js
+|   |   |   |   notification.js
+|   |   |   |   
+|   |   |   \---redux
+|   |   |           actions.js
+|   |   |           alertReducer.js
+|   |   |           authReducer.js
+|   |   |           constants.js
+|   |   |           notificationReducer.js
+|   |   |           reduer.js
+|   |   |           
+|   |   +---store
+|   |   |       configStore.js
+|   |   |       history.js
+|   |   |       rootReducer.js
+|   |   |       
+|   |   \---styles
+|   +---tests
+|   \---tools
+|                   
+\---server
+    |   server.js
+    |   
+    +---config
+    +---models
+    |       Account.js
+    |       Budget.js
+    |       Transaction.js
+    |       User.js
+    |       
+    +---routes
+    |   |   index.js
+    |   |   
+    |   \---api
+    |           accounts.js
+    |           budgets.js
+    |           index.js
+    |           transactions.js
+    |           users.js
+    |           
+    \---tests
