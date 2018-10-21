@@ -1,7 +1,7 @@
-import superagentPromise from 'superagent-promise';
-import _superagent from 'superagent';
+// import superagentPromise from 'superagent-promise';
+// import _superagent from 'superagent';
 
-const superagent = superagentPromise(_superagent, global.Promise);
+// const superagent = superagentPromise(_superagent, global.Promise);
 
 // proxy localhost:5000
 const API_ROOT = '/api/';
