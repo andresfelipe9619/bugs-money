@@ -5,7 +5,7 @@ import {Route, Switch} from 'react-router-dom';
 import Transactions from '../transactions/Transactions';
 import {fetchUsers} from '../../services/api';
 import {success} from '../../services/redux/alertActions';
-import ReportsTab from './ReportsTab'
+import ReportsTab from './ReportsTab';
 class Reports extends Component {
   componentDidMount() {
     this.props.reportsPageLoaded(true);

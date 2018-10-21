@@ -1,5 +1,6 @@
 import React, {Component} from 'react';
 import GoogleLogin from 'react-google-login';
+import GoogleLoginButton from 'react-google-login/dist/google-login-render-props';
 export default class Google extends Component {
   state = {
     isSignedIn: false,
@@ -39,15 +40,14 @@ export default class Google extends Component {
     } else {
       glContent = (
         <GoogleLogin
-          clientId="641000933497-f8eprvm0qv
-            4ghnvrqfb2h4k7j66cvd8d.apps.googleusercontent.com"
+          clientId="654491791021-umv4luk94q6ptqmnj9vhrobearb3ti0l.apps.googleusercontent.com"
           autoLoad={false}
           buttonText="Google"
           fields="name,email,picture"
           callback={this.responseGoogle}
-          // render={(renderProps) => (
-          //   <GoogleLoginButton onClick={renderProps.onClick}/>
-          // )}
+          render={(renderProps) => (
+            <GoogleLoginButton onClick={renderProps.onClick} />
+          )}
         />
       );
     }

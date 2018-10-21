@@ -33,5 +33,5 @@ function callApi(endpoint) {
 }
 
 // api services
-export const fetchUsers = () => callApi(`users/`);
+export const fetchUsers = () => callApi(`user/`);
 export const fetchTransactions = () => callApi(`transactions/`);
