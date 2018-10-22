@@ -48,10 +48,10 @@ class App extends Component {
             <Switch>
               <Route exact path="/" component={LoadableHome} />
               {/* <Route exact path="/contacto" component={Contact} /> */}
-              <Route exact path="/dashboard" component={LoadableDashboard} />
+              <Route path="/dashboard" component={LoadableDashboard} />
               <Route exact path="/registro" component={LoadableRegister} />
               <Route exact path="/ingreso" component={LoadableLogin} />
-              <Route exact path="/dashboard/presupuesto" component={LoadableBudget} />
+              <Route exact path="/presupuesto" component={LoadableBudget} />
               <Route exact path="/perfil" component={LoadableProfile} />
               <Route component={PageNotFound} />
             </Switch>
