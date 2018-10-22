@@ -10,7 +10,7 @@ import {
 } from 'semantic-ui-react';
 import {Redirect} from 'react-router-dom';
 import Facebook from './social/Facebook';
-import {GoogleLoginButton} from 'react-social-login-buttons';
+import Google from './social/Google';
 class Login extends Component {
   constructor(props) {
     super(props);
@@ -176,7 +176,7 @@ class Login extends Component {
           </Grid.Row>
           <Facebook />
           <br />
-          <GoogleLoginButton />
+          <Google />
         </Grid>
       );
     }

@@ -6,6 +6,16 @@ export const LoadableHome = loadable({
   loading: Loading,
 });
 
+export const LoadableProfile = loadable({
+  loader: () => import('./profile/Profile'),
+  loading: Loading,
+});
+
+export const LoadableBudget = loadable({
+  loader: () => import('./budgets/Budget'),
+  loading: Loading,
+});
+
 export const LoadableDashboard = loadable({
   loader: () => import('./dashboard/Dashboard'),
   loading: Loading,
