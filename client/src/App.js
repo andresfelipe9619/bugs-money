@@ -16,8 +16,9 @@ import {
   LoadableHome,
   LoadableLogin,
   LoadableRegister,
+  LoadableBudget,
+  LoadableProfile,
 } from './features';
-
 class App extends Component {
   constructor(props) {
     super(props);
@@ -47,9 +48,11 @@ class App extends Component {
             <Switch>
               <Route exact path="/" component={LoadableHome} />
               {/* <Route exact path="/contacto" component={Contact} /> */}
-              <Route path="/dashboard" component={LoadableDashboard} />
+              <Route exact path="/dashboard" component={LoadableDashboard} />
               <Route exact path="/registro" component={LoadableRegister} />
               <Route exact path="/ingreso" component={LoadableLogin} />
+              <Route exact path="/dashboard/presupuesto" component={LoadableBudget} />
+              <Route exact path="/perfil" component={LoadableProfile} />
               <Route component={PageNotFound} />
             </Switch>
           </Container>
