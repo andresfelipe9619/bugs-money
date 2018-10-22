@@ -10,6 +10,7 @@ const NavBarChildren = ({children}) => (
 
 const leftItems = [
   {as: Link, to: '/', content: 'Inicio', key: 'inicio', name: 'home'},
+  {as: Link, to: '/perfil', content: 'Perfil', key: 'perfil', name: 'user'},
   {
     as: Link,
     to: '/dashboard/presupuesto',
