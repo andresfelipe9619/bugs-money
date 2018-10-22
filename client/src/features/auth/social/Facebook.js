@@ -16,7 +16,6 @@ export default class Facebook extends Component {
     console.log(response);
   };
 
-  componentClicked = () => console.log('clicked');
   render() {
     let fbContent;
 
