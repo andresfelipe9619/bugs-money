@@ -10,7 +10,3 @@
 4.Error command not found
 npm config get prefix
 SET PATH=%PATH%;npm get prefix;
-
-//////////////////////////HEROKU MONGO URI/////////////////////////
-node-js\07-restserver> heroku config:get MONGO_URI mongodb://cafe-user:azahella333@ds045507.mlab.com:45507/cafe-test
-
