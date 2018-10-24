@@ -5,7 +5,7 @@ import { SemanticToastContainer, toast } from "react-semantic-toasts";
 import Navbar from "./features/home/Navbar.js";
 import { connect } from "react-redux";
 import { history } from "./store/history";
-import { clear } from "./services/redux/alertActions";
+import { clear } from "./services/redux/actions/alertActions";
 import {
   PageNotFound,
   // PrivateRoute,
@@ -16,7 +16,6 @@ import {
   LoadableHome,
   LoadableLogin,
   LoadableRegister,
-  LoadableBudget,
   LoadableProfile
 } from "./features";
 class App extends Component {

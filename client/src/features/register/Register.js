@@ -1,12 +1,12 @@
-import React, {Component} from 'react';
-import {connect} from 'react-redux';
-import {Button, Checkbox, Form, Grid} from 'semantic-ui-react';
+import React, { Component } from "react";
+import { connect } from "react-redux";
+import { Button, Checkbox, Form, Grid } from "semantic-ui-react";
 // import {loadRegister, register} from '../../actions/registerActions';
 // import {alertError, alertSuccess} from '../../actions/alertActions';
-import {Redirect, Link} from 'react-router-dom';
+import { Redirect, Link } from "react-router-dom";
 // import AlertMsg from './AlertMsg';
 
-import {Header, Message, Segment} from 'semantic-ui-react';
+import { Header, Message, Segment } from "semantic-ui-react";
 class Register extends Component {
   constructor(props) {
     super(props);
@@ -14,37 +14,37 @@ class Register extends Component {
       errors: {
         valid: false,
         inputs: {
-          nombre: {valid: true, msg: 'El nombre de usuario es obligatorio'},
-          email: {valid: true, msg: 'El correo debe ser valido'},
+          nombre: { valid: true, msg: "El nombre de usuario es obligatorio" },
+          email: { valid: true, msg: "El correo debe ser valido" },
 
           pwd: {
             valid: true,
             msg:
-              'La Contrasena debe tener mas de 7 caracteres, ' +
-               'almenos una mayuscula y un minuscula',
+              "La Contrasena debe tener mas de 7 caracteres, " +
+              "almenos una mayuscula y un minuscula"
           },
-          pwdr: {valid: true, msg: 'Las Contrasenas deben coincidir'},
-        },
+          pwdr: { valid: true, msg: "Las Contrasenas deben coincidir" }
+        }
       },
-      nombre: '',
-      email: '',
-      pwd: '',
-      pwdr: '',
+      nombre: "",
+      email: "",
+      pwd: "",
+      pwdr: ""
     };
   }
 
-  handleChange = (e) => {
-    if ([e.target.name] === 'email') {
+  handleChange = e => {
+    if ([e.target.name] === "email") {
       let patron = /\w+/;
-      if ([e.target.value] === '' || patron.test([e.target.value])) {
+      if ([e.target.value] === "" || patron.test([e.target.value])) {
         this.setState({
           [e.target.name]: e.target.value,
           errors: {
             inputs: {
               ...this.state.errors.inputs,
-              email: {...this.state.errors.inputs.email, valid: true},
-            },
-          },
+              email: { ...this.state.errors.inputs.email, valid: true }
+            }
+          }
         });
       } else {
         this.setState({
@@ -52,23 +52,23 @@ class Register extends Component {
           errors: {
             inputs: {
               ...this.state.errors.inputs,
-              email: {...this.state.errors.inputs.email, valid: false},
-            },
-          },
+              email: { ...this.state.errors.inputs.email, valid: false }
+            }
+          }
         });
       }
-    } else if ([e.target.name] === 'pwd') {
+    } else if ([e.target.name] === "pwd") {
       let patron = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[a-zA-Z\d]{8,}$/;
 
-      if ([e.target.value] === '' || patron.test([e.target.value])) {
+      if ([e.target.value] === "" || patron.test([e.target.value])) {
         this.setState({
           [e.target.name]: e.target.value,
           errors: {
             inputs: {
               ...this.state.errors.inputs,
-              pwd: {...this.state.errors.inputs.pwd, valid: true},
-            },
-          },
+              pwd: { ...this.state.errors.inputs.pwd, valid: true }
+            }
+          }
         });
       } else {
         this.setState({
@@ -76,23 +76,23 @@ class Register extends Component {
           errors: {
             inputs: {
               ...this.state.errors.inputs,
-              pwd: {...this.state.errors.inputs.pwd, valid: false},
-            },
-          },
+              pwd: { ...this.state.errors.inputs.pwd, valid: false }
+            }
+          }
         });
       }
-    } else if ([e.target.name] === 'pwdr') {
+    } else if ([e.target.name] === "pwdr") {
       let patron = this.state.pwd[0];
 
-      if ([e.target.value] === '' || [e.target.value] === patron) {
+      if ([e.target.value] === "" || [e.target.value] === patron) {
         this.setState({
           [e.target.name]: e.target.value,
           errors: {
             inputs: {
               ...this.state.errors.inputs,
-              pwdr: {...this.state.errors.inputs.pwdr, valid: true},
-            },
-          },
+              pwdr: { ...this.state.errors.inputs.pwdr, valid: true }
+            }
+          }
         });
       } else {
         this.setState({
@@ -100,22 +100,22 @@ class Register extends Component {
           errors: {
             inputs: {
               ...this.state.errors.inputs,
-              pwdr: {...this.state.errors.inputs.pwdr, valid: false},
-            },
-          },
+              pwdr: { ...this.state.errors.inputs.pwdr, valid: false }
+            }
+          }
         });
       }
     } else {
       this.setState({
-        [e.target.name]: [e.target.value],
+        [e.target.name]: [e.target.value]
       });
     }
   };
 
-  handleSubmit = (e) => {
+  handleSubmit = e => {
     e.preventDefault();
-    const {nombre, email, pwd} = this.state;
-    const user = {nombre, email, pwd};
+    const { nombre, email, pwd } = this.state;
+    const user = { nombre, email, pwd };
     // this.props.requestRegister(user);
   };
 
@@ -124,7 +124,7 @@ class Register extends Component {
       <Grid
         // textAlign="center"
         style={{
-          height: '100%',
+          height: "100%"
         }}
         verticalAlign="middle"
       >
@@ -187,7 +187,6 @@ class Register extends Component {
               error={!this.state.errors.inputs.pwdr.valid}
             />
 
-
             <Form.Field>
               <Checkbox
                 label="Estoy de acuerdo con los terminos y
@@ -199,7 +198,7 @@ class Register extends Component {
               id="submitRegForm"
               type="submit"
               style={{
-                backgroundColor: '#2eb050',
+                backgroundColor: "#2eb050"
               }}
             >
               Submit

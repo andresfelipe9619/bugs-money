@@ -66,7 +66,7 @@ export default {
   Auth,
   User,
   Transaction,
-  Account,
+  Account
   // setToken: _token => {
   //   token = _token;
   // }

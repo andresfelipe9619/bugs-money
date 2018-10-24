@@ -1,18 +1,17 @@
-import React, {Component} from 'react';
-import {FacebookLoginButton} from 'react-social-login-buttons';
-import FacebookLogin
-  from 'react-facebook-login/dist/facebook-login-render-props';
+import React, { Component } from "react";
+import { FacebookLoginButton } from "react-social-login-buttons";
+import FacebookLogin from "react-facebook-login/dist/facebook-login-render-props";
 
 export default class Facebook extends Component {
   state = {
     isLoggedIn: false,
-    userID: '',
-    name: '',
-    email: '',
-    picture: '',
+    userID: "",
+    name: "",
+    email: "",
+    picture: ""
   };
 
-  responseFacebook = (response) => {
+  responseFacebook = response => {
     console.log(response);
   };
 
@@ -23,10 +22,10 @@ export default class Facebook extends Component {
       fbContent = (
         <div
           style={{
-            width: '400px',
-            margin: 'auto',
-            background: '#f4f4f4',
-            padding: '20px',
+            width: "400px",
+            margin: "auto",
+            background: "#f4f4f4",
+            padding: "20px"
           }}
         >
           <img src={this.state.picture} alt={this.state.name} />
@@ -41,7 +40,7 @@ export default class Facebook extends Component {
           autoLoad={false}
           fields="name,email,picture"
           callback={this.responseFacebook}
-          render={(renderProps) => (
+          render={renderProps => (
             <FacebookLoginButton onClick={renderProps.onClick} />
           )}
         />

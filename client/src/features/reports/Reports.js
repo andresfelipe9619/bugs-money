@@ -4,7 +4,7 @@ import { reportsPageLoaded } from "./redux/actions";
 import { Route, Switch } from "react-router-dom";
 import Transactions from "../transactions/Transactions";
 import Services from "../../services/api";
-import { success } from "../../services/redux/alertActions";
+import { success } from "../../services/redux/actions/alertActions";
 import ReportsTab from "./ReportsTab";
 import axios from "axios";
 class Reports extends Component {

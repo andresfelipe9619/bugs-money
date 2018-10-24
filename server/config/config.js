@@ -8,7 +8,7 @@ process.env.PORT = process.env.PORT || 5000;
 // Entorno
 // ===================
 
-process.env.NODE_ENV = process.env.NODE_ENV || 'dev';
+process.env.NODE_ENV = process.env.NODE_ENV || "dev";
 
 // ===================
 // Vencimiento del token
@@ -24,7 +24,7 @@ process.env.CADUCIDAD_TOKEN = 60 * 60 * 24 * 30;
 // SEED(Semilla) de autenticacion
 // ===================
 
-process.env.SEED = process.env.SEED || 'este-es-el-seed-desarrollo';
+process.env.SEED = process.env.SEED || "este-es-el-seed-desarrollo";
 
 // ===================
 // Base de Datos
@@ -32,8 +32,8 @@ process.env.SEED = process.env.SEED || 'este-es-el-seed-desarrollo';
 
 let urlDB;
 
-if (process.env.NODE_ENV === 'dev') {
-  urlDB = 'mongodb://localhost:27017/cafe';
+if (process.env.NODE_ENV === "dev") {
+  urlDB = "mongodb://Admin:jseb2520@ds237723.mlab.com:37723/test-bugs-money";
 } else {
   urlDB = process.env.MONGO_URI;
 }
@@ -46,4 +46,4 @@ process.env.URLDB = urlDB;
 
 process.env.CLIENT_ID =
   process.env.CLIENT_ID ||
-  '654491791021-umv4luk94q6ptqmnj9vhrobearb3ti0l.apps.googleusercontent.com';
+  "27487158293-89imhaa5mf45o0o0jvje4lut3rk0lq1u.apps.googleusercontent.com";

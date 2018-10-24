@@ -1,4 +1,4 @@
-import React, {Component} from 'react';
+import React, { Component } from "react";
 import {
   Segment,
   Loader,
@@ -6,11 +6,11 @@ import {
   Form,
   Grid,
   Button,
-  Header,
-} from 'semantic-ui-react';
-import {Redirect} from 'react-router-dom';
-import Facebook from './social/Facebook';
-import Google from './social/Google';
+  Header
+} from "semantic-ui-react";
+import { Redirect } from "react-router-dom";
+import Facebook from "../auth/social/Facebook";
+import Google from "../auth/social/Google";
 class Login extends Component {
   constructor(props) {
     super(props);
@@ -18,29 +18,29 @@ class Login extends Component {
       errors: {
         valid: false,
         inputs: {
-          email: {valid: true, msg: 'El correo debe ser valido'},
-        },
+          email: { valid: true, msg: "El correo debe ser valido" }
+        }
       },
-      email: '',
-      pwd: '',
+      email: "",
+      pwd: ""
     };
     this.handleChange = this.handleChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
   }
 
   handleChange(e) {
-    if ([e.target.name] === 'email') {
+    if ([e.target.name] === "email") {
       let patron = /\w+/;
 
-      if ([e.target.value] === '' || patron.test([e.target.value])) {
+      if ([e.target.value] === "" || patron.test([e.target.value])) {
         this.setState({
           [e.target.name]: e.target.value,
           errors: {
             inputs: {
               ...this.state.errors.inputs,
-              email: {...this.state.errors.inputs.email, valid: true},
-            },
-          },
+              email: { ...this.state.errors.inputs.email, valid: true }
+            }
+          }
         });
       } else {
         this.setState({
@@ -48,23 +48,23 @@ class Login extends Component {
           errors: {
             inputs: {
               ...this.state.errors.inputs,
-              email: {...this.state.errors.inputs.email, valid: false},
-            },
-          },
+              email: { ...this.state.errors.inputs.email, valid: false }
+            }
+          }
         });
       }
-    } else if ([e.target.name] === 'pwd') {
+    } else if ([e.target.name] === "pwd") {
       let patron = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[a-zA-Z\d]{8,}$/;
 
-      if ([e.target.value] === '' || patron.test([e.target.value])) {
+      if ([e.target.value] === "" || patron.test([e.target.value])) {
         this.setState({
           [e.target.name]: e.target.value,
           errors: {
             inputs: {
               ...this.state.errors.inputs,
-              pwd: {...this.state.errors.inputs.pwd, valid: true},
-            },
-          },
+              pwd: { ...this.state.errors.inputs.pwd, valid: true }
+            }
+          }
         });
       } else {
         this.setState({
@@ -72,23 +72,23 @@ class Login extends Component {
           errors: {
             inputs: {
               ...this.state.errors.inputs,
-              pwd: {...this.state.errors.inputs.pwd, valid: false},
-            },
-          },
+              pwd: { ...this.state.errors.inputs.pwd, valid: false }
+            }
+          }
         });
       }
-    } else if ([e.target.name] === 'pwd') {
+    } else if ([e.target.name] === "pwd") {
       let patron = this.state.pwd[0];
 
-      if ([e.target.value] === '' || [e.target.value] === patron) {
+      if ([e.target.value] === "" || [e.target.value] === patron) {
         this.setState({
           [e.target.name]: e.target.value,
           errors: {
             inputs: {
               ...this.state.errors.inputs,
-              pwdr: {...this.state.errors.inputs.pwdr, valid: true},
-            },
-          },
+              pwdr: { ...this.state.errors.inputs.pwdr, valid: true }
+            }
+          }
         });
       } else {
         this.setState({
@@ -96,14 +96,14 @@ class Login extends Component {
           errors: {
             inputs: {
               ...this.state.errors.inputs,
-              pwdr: {...this.state.errors.inputs.pwdr, valid: false},
-            },
-          },
+              pwdr: { ...this.state.errors.inputs.pwdr, valid: false }
+            }
+          }
         });
       }
     } else {
       this.setState({
-        [e.target.name]: [e.target.value],
+        [e.target.name]: [e.target.value]
       });
     }
   }
@@ -119,8 +119,8 @@ class Login extends Component {
       return (
         <Segment
           style={{
-            marginTop: '7em',
-            height: '20em',
+            marginTop: "7em",
+            height: "20em"
           }}
         >
           <Dimmer inverted active>
@@ -135,11 +135,11 @@ class Login extends Component {
         <Grid
           textAlign="center"
           style={{
-            height: '100%',
+            height: "100%"
           }}
           verticalAlign="middle"
         >
-          <Grid.Column width={6} style={{paddingTop: '2em'}}>
+          <Grid.Column width={6} style={{ paddingTop: "2em" }}>
             <Form onSubmit={this.handleSubmit}>
               <Form.Input
                 label="Correo Electrónico"

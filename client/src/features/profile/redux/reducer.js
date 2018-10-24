@@ -1,4 +1,4 @@
-import {PROFILE_PAGE_LOADED, } from './constants';
+import { PROFILE_PAGE_LOADED } from "./constants";
 
 function profileLoaded(state = true, action) {
   switch (action.type) {
@@ -9,9 +9,8 @@ function profileLoaded(state = true, action) {
   }
 }
 
-
 export default function profileReducer(state = {}, action) {
   return {
-    homeLoaded: profileLoaded(state.homeLoaded, action),
+    homeLoaded: profileLoaded(state.homeLoaded, action)
   };
 }
