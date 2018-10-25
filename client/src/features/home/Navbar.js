@@ -1,22 +1,22 @@
-import React, {Component} from 'react';
-import {connect} from 'react-redux';
-import {Link} from 'react-router-dom';
-import {Container, Responsive} from 'semantic-ui-react';
-import {default as Sidebar} from '../dashboard/Sidebar';
+import React, { Component } from "react";
+import { connect } from "react-redux";
+import { Link } from "react-router-dom";
+import { Container, Responsive } from "semantic-ui-react";
+import { default as Sidebar } from "../dashboard/Sidebar";
 
-const NavBarChildren = ({children}) => (
-  <Container style={{marginTop: '5em'}}>{children}</Container>
+const NavBarChildren = ({ children }) => (
+  <Container style={{ marginTop: "5em" }}>{children}</Container>
 );
 
 const leftItems = [
-  {as: Link, to: '/', content: 'Inicio', key: 'inicio', name: 'home'},
-  {as: Link, to: '/perfil', content: 'Perfil', key: 'perfil', name: 'user'},
+  { as: Link, to: "/", content: "Inicio", key: "inicio", name: "home" },
+  { as: Link, to: "/perfil", content: "Perfil", key: "perfil", name: "user" },
   {
     as: Link,
-    to: '/dashboard/presupuesto',
-    content: 'Presupuesto',
-    key: 'presupuesto',
-    name: 'money bill alternate outline',
+    to: "/dashboard/presupuesto",
+    content: "Presupuesto",
+    key: "presupuesto",
+    name: "money bill alternate outline"
   },
   // {
   //   as: Link,
@@ -26,41 +26,41 @@ const leftItems = [
   // },
   {
     as: Link,
-    to: '/dashboard/cuentas',
-    content: 'Cuentas',
-    key: 'cuentas',
-    name: 'credit card outline',
+    to: "/dashboard/cuentas",
+    content: "Cuentas",
+    key: "cuentas",
+    name: "credit card outline"
   },
   {
     as: Link,
-    to: '/dashboard/reportes',
-    content: 'Reportes',
-    key: 'reportes',
-    name: 'line graph',
-  },
+    to: "/dashboard/reportes",
+    content: "Reportes",
+    key: "reportes",
+    name: "line graph"
+  }
 ];
 
 const rightItems = [
-  {as: Link, to: '/ingreso', content: 'Ingreso', key: 'ingreso'},
-  {as: Link, to: '/registro', content: 'Registro', key: 'registro'},
+  { as: Link, to: "/ingreso", content: "Ingreso", key: "ingreso" },
+  { as: Link, to: "/registro", content: "Registro", key: "registro" }
 ];
 
 class NavBar extends Component {
   state = {
-    visible: false,
+    visible: false
   };
 
   handlePusher = () => {
-    const {visible} = this.state;
+    const { visible } = this.state;
 
-    if (visible) this.setState({visible: false});
+    if (visible) this.setState({ visible: false });
   };
 
-  handleToggle = () => this.setState({visible: !this.state.visible});
+  handleToggle = () => this.setState({ visible: !this.state.visible });
 
   render() {
-    const {children} = this.props;
-    const {visible} = this.state;
+    const { children } = this.props;
+    const { visible } = this.state;
 
     return (
       <div>
@@ -84,7 +84,7 @@ class NavBar extends Component {
   }
 }
 
-const mapStateToProps = (dispatch) => {
+const mapStateToProps = dispatch => {
   return {};
 };
 
