@@ -2,6 +2,7 @@ import _ from "lodash";
 import React from "react";
 import logo from "../../assets/images/king_icon.png";
 import { Icon, Menu, Sidebar } from "semantic-ui-react";
+import { Link } from "react-router-dom";
 
 const MobileSidebar = ({
   children,
@@ -39,7 +40,7 @@ const MobileSidebar = ({
         <Menu.Item onClick={onToggle}>
           <Icon name="sidebar" />
         </Menu.Item>
-        <Menu.Item header>
+        <Menu.Item as={Link} to="/" header>
           <img src={logo} alt="bugs money logo" />
           BUGS MONEY
         </Menu.Item>

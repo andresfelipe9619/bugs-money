@@ -17,8 +17,8 @@ export default class Google extends Component {
           console.log("ID token:", googleUser.getAuthResponse().id_token);
         }}
         onLoginFailure={() => console.log("Login failed")}
-        width={225}
-        height={54}
+        width={378}
+        height={48}
         longTitle={true}
         theme="light"
       />

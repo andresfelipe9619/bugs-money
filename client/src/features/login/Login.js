@@ -1,20 +1,27 @@
-import Yup from "yup";
 import React from "react";
-import { Formik } from "formik";
 import { connect } from "react-redux";
 import {
+  Form,
+  Button,
+  Message,
+  Grid,
+  Header,
+  Segment,
+  Image
+} from "semantic-ui-react";
+import {
   loginRequest,
+  loginFacebookRequest,
   loginGoogleRequest
 } from "../../services/redux/actions/authActions";
-const imaginaryThings = [
-  { label: "Thing 1", value: 1 },
-  { label: "Thing 2", value: 2 },
-  { label: "Thing 3", value: 3 },
-  { label: "Thing 4", value: 4 },
-  { label: "Thing 5", value: 5 }
-];
+import withSemanticUIFormik from "./hoc/FormikSUI";
+import * as Yup from "yup";
+import { Redirect } from "react-router-dom";
+import Facebook from "./social/Facebook";
+import Google from "./social/Google";
 
-const UserForm = props => {
+// Our inner form component. Will be wrapped with Formik({..})
+const MyInnerForm = props => {
   const {
     values,
     touched,
@@ -22,93 +29,84 @@ const UserForm = props => {
     dirty,
     isSubmitting,
     handleChange,
-    setFieldValue,
     handleBlur,
     handleSubmit,
-    handleReset
+    handleReset,
+    loginRequest
   } = props;
-
   return (
-    <form className="p-5" onSubmit={handleSubmit}>
-      <h1>Hello this is form!</h1>
-      <div className="form-group">
-        <label>Imaginary Email</label>
-        <input
-          name="email"
-          type="text"
-          className={`form-control ${errors.email &&
-            touched.email &&
-            "is-invalid"}`}
-          value={values.email}
-          onChange={handleChange}
-          onBlur={handleBlur}
-        />
-        {errors.email &&
-          touched.email && (
-            <div className="invalid-feedback">{errors.email}</div>
-          )}
-      </div>
-      <div className="form-group">
-        <label>Imaginary Username</label>
-        <input
-          name="username"
-          type="text"
-          className={`form-control ${errors.username &&
-            touched.username &&
-            "is-invalid"}`}
-          value={values.username}
-          onChange={handleChange}
-          onBlur={handleBlur}
-        />
-        {errors.username &&
-          touched.username && (
-            <div className="invalid-feedback">{errors.username}</div>
-          )}
-      </div>
+    <Grid
+      style={{
+        height: "100%"
+      }}
+      verticalAlign="middle"
+      centered
+    >
+      <Grid.Row centered>
+        <Grid.Column width={6} style={{ paddingTop: "2em", maxWidth: 450 }}>
+          <Header as="h2" color="black" textAlign="center">
+            Ingresa con tu cuenta
+          </Header>
+          <Segment stacked>
+            {Object.keys(errors).length > 0 ? (
+              <Message
+                error
+                header="Hay problemas con el ingreso"
+                list={Object.keys(errors).map(key => errors[key])}
+              />
+            ) : null}
+            <Form size="large" onSubmit={loginRequest}>
+              <Form.Input
+                label="Correo electrónico"
+                labelPosition="left"
+                fluid
+                icon="user"
+                type="email"
+                name="email"
+                iconPosition="left"
+                placeholder="Correo electrónico..."
+                onChange={handleChange}
+              />
+              <Form.Input
+                label="Contraseña"
+                labelPosition="left"
+                type="password"
+                fluid
+                icon="lock"
+                iconPosition="left"
+                name="password"
+                placeholder="Contraseña..."
+                onChange={handleChange}
+              />
+              <Button
+                id="submit-login"
+                type="submit"
+                style={{ width: "100%", height: "auto" }}
+              >
+                Iniciar Sesión
+              </Button>
+            </Form>
+            <Header as="h2" color="black" textAlign="center">
+              O{" "}
+            </Header>
+            <Grid.Row>
+              <Grid.Column width={3}>
+                <Facebook />
+              </Grid.Column>
 
-      <button
-        type="submit"
-        className="btn btn-outline-primary"
-        disabled={isSubmitting}
-      >
-        {isSubmitting ? "WAIT PLIZ" : "CLICK ME"}
-      </button>
-    </form>
+              <Grid.Column width={3}>
+                <Google />
+              </Grid.Column>
+            </Grid.Row>
+          </Segment>
+        </Grid.Column>
+      </Grid.Row>
+    </Grid>
   );
 };
 
-const LoginFormiked = Formik({
-  mapPropsToValues: props => ({
-    email: props.user.email,
-    username: props.user.username,
-    imaginaryThingId: props.user.imaginaryThingId
-  }),
-
-  validationSchema: Yup.object().shape({
-    email: Yup.string()
-      .email("Invalid email address")
-      .required("Email is required!"),
-    username: Yup.string().required("This man needs a username")
-  }),
-
-  handleSubmit: (values, { setSubmitting }) => {
-    this.props.loginRequest();
-    setTimeout(() => {
-      // submit them do the server. do whatever you like!
-      alert(JSON.stringify(values, null, 2));
-      setSubmitting(false);
-    }, 1000);
-  }
-})(UserForm);
-
 const mapState = state => {
-  return {
-    //   message: state.registerReducer.registerLoaded,
-    //   isLoading: state.registerReducer.registerLoading,
-    //   hasErrored: state.registerReducer.registerErrored,
-    //   alertError: state.alertReducer.alertError,
-    //   registerSuccess: state.registerReducer.registerSuccess,
-  };
+  return {};
 };
 
 const mapDispatch = dispatch => {
@@ -116,19 +114,29 @@ const mapDispatch = dispatch => {
     loginRequest: user => {
       dispatch(loginRequest(user));
     }
-    //   requestRegister: (user) => {
-    //     dispatch(register(user));
-    //   },
-    //   showErrorMessage: (msg) => {
-    //     dispatch(alertError(msg));
-    //   },
-    //   showSuccessMessage: (msg) => {
-    //     dispatch(alertSuccess(msg));
-    //   },
   };
 };
 
-export default connect(
+const ConnectedForm = connect(
   mapState,
   mapDispatch
-)(LoginFormiked);
+)(MyInnerForm);
+
+const Login = withSemanticUIFormik({
+  mapPropsToValues: () => ({ email: "", agree: false }),
+  validationSchema: Yup.object().shape({
+    email: Yup.string()
+      .email("Correo invalido")
+      .required("Correo es requerido!"),
+    password: Yup.string().required("Constrasea requerida!")
+  }),
+  handleSubmit: (values, { setSubmitting }) => {
+    setTimeout(() => {
+      alert(JSON.stringify(values, null, 2));
+      setSubmitting(false);
+    }, 1000);
+  },
+  displayName: "BasicForm" // helps with React DevTools
+})(ConnectedForm);
+
+export default Login;

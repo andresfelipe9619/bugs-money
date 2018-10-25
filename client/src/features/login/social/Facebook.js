@@ -22,10 +22,7 @@ export default class Facebook extends Component {
       fbContent = (
         <div
           style={{
-            width: "400px",
-            margin: "auto",
-            background: "#f4f4f4",
-            padding: "20px"
+            background: "#f4f4f4"
           }}
         >
           <img src={this.state.picture} alt={this.state.name} />
@@ -41,7 +38,10 @@ export default class Facebook extends Component {
           fields="name,email,picture"
           callback={this.responseFacebook}
           render={renderProps => (
-            <FacebookLoginButton onClick={renderProps.onClick} />
+            <FacebookLoginButton
+              style={{ width: "100%", heigth: "auto" }}
+              onClick={renderProps.onClick}
+            />
           )}
         />
       );
