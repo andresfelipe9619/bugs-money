@@ -1,7 +1,8 @@
-import _ from 'lodash';
-import React from 'react';
-
-import {Icon, Menu, Sidebar} from 'semantic-ui-react';
+import _ from "lodash";
+import React from "react";
+import logo from "../../assets/images/king_icon.png";
+import { Icon, Menu, Sidebar } from "semantic-ui-react";
+import { Link } from "react-router-dom";
 
 const MobileSidebar = ({
   children,
@@ -9,7 +10,7 @@ const MobileSidebar = ({
   onPusherClick,
   onToggle,
   rightItems,
-  visible,
+  visible
 }) => (
   <Sidebar.Pushable>
     <Sidebar
@@ -20,8 +21,8 @@ const MobileSidebar = ({
       vertical
       visible={visible}
     >
-      {_.map(leftItems, (item) => {
-        let {content, ...rest} = item;
+      {_.map(leftItems, item => {
+        let { content, ...rest } = item;
         return (
           <Menu.Item {...rest}>
             <Icon name={item.name} />
@@ -33,15 +34,18 @@ const MobileSidebar = ({
     <Sidebar.Pusher
       dimmed={visible}
       onClick={onPusherClick}
-      style={{minHeight: '100vh'}}
+      style={{ minHeight: "100vh" }}
     >
       <Menu fixed="top" inverted>
         <Menu.Item onClick={onToggle}>
           <Icon name="sidebar" />
         </Menu.Item>
-        <Menu.Item header>SMART BUDGETING</Menu.Item>
+        <Menu.Item as={Link} to="/" header>
+          <img src={logo} alt="bugs money logo" />
+          BUGS MONEY
+        </Menu.Item>
         <Menu.Menu position="right">
-          {_.map(rightItems, (item) => (
+          {_.map(rightItems, item => (
             <Menu.Item {...item} />
           ))}
         </Menu.Menu>

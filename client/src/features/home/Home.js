@@ -1,8 +1,9 @@
-import React, {Component} from 'react';
-import {Segment, Container, Grid, Header} from 'semantic-ui-react';
-import {connect} from 'react-redux';
-import {homePageLoaded} from './redux/actions';
-
+import React, { Component } from "react";
+import { Segment, Container, Grid, Header, Image } from "semantic-ui-react";
+import { connect } from "react-redux";
+import { homePageLoaded } from "./redux/actions";
+import counting_gif from "../../assets/images/counting_money.gif";
+import budget_ico from "../../assets/images/king_budget.jpg";
 class Home extends Component {
   componentDidMount() {
     this.props.homePageLoaded(true);
@@ -18,35 +19,58 @@ class Home extends Component {
         <Grid
           divided="vertically"
           style={{
-            marginTop: '7em',
+            marginTop: "7em"
           }}
         >
           <Grid.Row>
-            <Grid.Column width={5}>
-              <Segment>
-                <Header as="h1" textAlign="center">
-                  MISION
-                </Header>
-                <p />
-              </Segment>
+            <Grid.Column width={8}>
+              <Image src={counting_gif} alt="bugs gif" />
             </Grid.Column>
 
-            <Grid.Column width={5}>
+            <Grid.Column width={8}>
               <Segment>
                 <Header as="h1" textAlign="center">
-                  VISION
+                  Never Run Out of Money Again
                 </Header>
-                <p />
+
+                <p>
+                  {" "}
+                  Lorem ipsum dolor sit amet consectetur adipisicing elit.
+                  Necessitatibus tempore voluptatem, consequatur non sapiente
+                  voluptatum provident assumenda quam voluptate dolorum aliquid.
+                  Velit corrupti iure debitis laudantium voluptatem soluta saepe
+                  atque?{" "}
+                </p>
+
+                <p>
+                  {" "}
+                  Lorem ipsum dolor sit amet consectetur adipisicing elit.
+                  Necessitatibus tempore voluptatem, consequatur non sapiente
+                  voluptatum provident assumenda quam voluptate dolorum aliquid.
+                  Velit corrupti iure debitis laudantium voluptatem soluta saepe
+                  atque?{" "}
+                </p>
+
+                <p>
+                  {" "}
+                  Lorem ipsum dolor sit amet consectetur adipisicing elit.
+                  Necessitatibus tempore voluptatem, consequatur non sapiente
+                  voluptatum provident assumenda quam voluptate dolorum aliquid.
+                  Velit corrupti iure debitis laudantium voluptatem soluta saepe
+                  atque?{" "}
+                </p>
               </Segment>
             </Grid.Column>
-            <Grid.Column width={5}>
-              <Segment>
-                <Header as="h1" textAlign="center">
-                  HISTORIA
-                </Header>
-                <p />
-              </Segment>
+          </Grid.Row>
+          <h2>Manage Your Budget Like a PRO</h2>
+          <Grid.Row>
+            <Grid.Column width={6}>
+              <Image src={budget_ico} alt="bugs gif" />
             </Grid.Column>
+            <Grid.Column width={6}>
+              <Segment />{" "}
+            </Grid.Column>
+            <Grid.Column width={6} />
           </Grid.Row>
         </Grid>
       </Container>
@@ -54,14 +78,14 @@ class Home extends Component {
   }
 }
 
-const mapDispatchToProps = (dispatch) => {
+const mapDispatchToProps = dispatch => {
   return {
-    homePageLoaded: (bool) => {
+    homePageLoaded: bool => {
       dispatch(homePageLoaded(bool));
-    },
+    }
   };
 };
 export default connect(
-    null,
-    mapDispatchToProps
+  null,
+  mapDispatchToProps
 )(Home);
