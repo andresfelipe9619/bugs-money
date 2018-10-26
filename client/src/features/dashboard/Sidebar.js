@@ -41,7 +41,7 @@ const MobileSidebar = ({
           <Icon name="sidebar" />
         </Menu.Item>
         <Menu.Item as={Link} to="/" header>
-          <img src={logo} alt="bugs money logo" />
+          <img src={logo} alt="logo" />
           BUGS MONEY
         </Menu.Item>
         <Menu.Menu position="right">

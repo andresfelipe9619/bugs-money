@@ -29,8 +29,7 @@
     "pg": "^7.5.0",
     "python": "0.0.4",
     "sequelize": "^4.39.0",
-    "underscore": "^1.9.1",
-    "yup": "^0.26.6"
+    "underscore": "^1.9.1"
   },
   "devDependencies": {
     "babel-eslint": "^10.0.1",
