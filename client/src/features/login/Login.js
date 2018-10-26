@@ -55,7 +55,7 @@ const MyInnerForm = props => {
                 list={Object.keys(errors).map(key => errors[key])}
               />
             ) : null}
-            <Form size="large" onSubmit={loginRequest}>
+            <Form size="large" onSubmit={handleSubmit}>
               <Form.Input
                 label="Correo electrónico"
                 labelPosition="left"
@@ -117,26 +117,22 @@ const mapDispatch = dispatch => {
   };
 };
 
-const ConnectedForm = connect(
-  mapState,
-  mapDispatch
-)(MyInnerForm);
-
 const Login = withSemanticUIFormik({
-  mapPropsToValues: () => ({ email: "", agree: false }),
+  mapPropsToValues: () => ({ email: "", password: "" }),
   validationSchema: Yup.object().shape({
     email: Yup.string()
       .email("Correo invalido")
       .required("Correo es requerido!"),
     password: Yup.string().required("Constrasea requerida!")
   }),
-  handleSubmit: (values, { setSubmitting }) => {
-    setTimeout(() => {
-      alert(JSON.stringify(values, null, 2));
-      setSubmitting(false);
-    }, 1000);
+  handleSubmit: (values, { setSubmitting, props }) => {
+    props.loginRequest(values);
+    setSubmitting(false);
   },
   displayName: "BasicForm" // helps with React DevTools
-})(ConnectedForm);
+})(MyInnerForm);
 
-export default Login;
+export default connect(
+  mapState,
+  mapDispatch
+)(Login);
