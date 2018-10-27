@@ -69,8 +69,13 @@ export class Profile extends Component {
   }
 
   hidePrefs() {
-    this.prefs.className = "md-modal";
-    this.overlay.style.visibility = "";
+    if (this.prefs.className === "null") {
+      this.prefs.className = "md-modal";
+      this.overlay.style.visibility = "";
+    } else {
+      this.prefs.className = "md-modal";
+      this.overlay.style.visibility = "";
+    }
   }
 
   showPrefs() {
