@@ -2,7 +2,6 @@ import React from "react";
 import ReactTable from "react-table";
 import "react-table/react-table.css";
 
-import Chance from "chance";
 import checkboxHOC from "react-table/lib/hoc/selectTable";
 
 const CheckboxTable = checkboxHOC(ReactTable);
@@ -11,7 +10,7 @@ function getColumns(data) {
   const columns = [];
   const sample = data[0];
   Object.keys(sample).forEach(key => {
-    if (key !== "_id") {
+    if (key !== "_id" && key !== "id") {
       columns.push({
         accessor: key,
         Header: key
@@ -91,7 +90,7 @@ export default class DataTable extends React.Component {
         // someone asked for an example of a background color change
         // here it is...
         if (r) {
-          const selected = this.isSelected(r.original._id);
+          const selected = this.isSelected(r.original.id);
           return {
             style: {
               backgroundColor: selected ? "lightgreen" : "inherit"
@@ -109,7 +108,7 @@ export default class DataTable extends React.Component {
           ref={r => (this.checkboxTable = r)}
           data={data}
           columns={columns}
-          defaultPageSize={10}
+          defaultPageSize={40}
           className="-striped -highlight"
           {...checkboxProps}
         />

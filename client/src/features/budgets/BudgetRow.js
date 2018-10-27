@@ -1,5 +1,4 @@
 import React, { Component } from "react";
-import { DateInput } from "semantic-ui-calendar-react";
 import { Menu } from "semantic-ui-react";
 
 export default class BudgetRow extends Component {
@@ -18,15 +17,9 @@ export default class BudgetRow extends Component {
 
   render() {
     return (
-      <Menu fixed="top" style={{ marginTop: "60px" }} inverted>
+      <Menu fixed="top" style={{ marginTop: "55px" }} inverted>
         <Menu.Item header>
           3 BILLIONS TO BE BUDGETED
-          {/* <DateInput
-            inline
-            name="date"
-            value={this.state.date}
-            onChange={this.handleDateChange}
-          /> */}
         </Menu.Item>
       </Menu>
     );
