@@ -1,12 +1,11 @@
 
 # Bugs Money
-> Short blurb about what your product does.
+>The System will manage the Financial processes that any person can take, having as base the management of accounts and budget. Can record the movement of your accounts and relate them to your budgets, to generate a consolidated view of your financial status.
 
 [![NPM Version][npm-image]][npm-url]
 [![Build Status][travis-image]][travis-url]
 [![Downloads Stats][npm-downloads]][npm-url]
 
-The System will manage the Financial processes that any person can take, having as base the management of accounts and budget. It should be an application easy to use, and that in simple terms can record the movement of your accounts and relate them to your budgets, to generate a consolidated view of your financial status.
 
 ![](header.png)
 

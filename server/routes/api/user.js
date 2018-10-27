@@ -6,10 +6,10 @@ const _ = require('underscore');
 const Usuario = require('../../models/user');
 const {
   verificaToken,
-  verificaAdminRole, 
+  verificaAdminRole,
 } = require('../../middlewares/authentication');
 
-router.get('/', verificaToken, (req, res) => {
+router.get('/', (req, res) => {
   let desde = req.query.desde || 0;
   desde = Number(desde);
 
@@ -37,7 +37,7 @@ router.get('/', verificaToken, (req, res) => {
       });
 });
 
-router.post('/', [verificaToken, verificaAdminRole], function(req, res) {
+router.post('/', function(req, res) {
   let body = req.body;
 
   let usuario = new Usuario({

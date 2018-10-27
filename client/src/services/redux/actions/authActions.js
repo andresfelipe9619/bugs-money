@@ -103,7 +103,7 @@ export const loginFacebookRequest = user => {
       user
     });
     return axios
-      .get("auth/facebook")
+      .get("login/facebook")
       .then(e => {
         if (e.data.status == "SUCCESS") {
           dispatch(loginSuccess(e.data.user));
@@ -129,7 +129,7 @@ export const loginGoogleRequest = user => {
       user
     });
     return axios
-      .post("auth/google")
+      .post("login/google")
       .then(e => {
         if (e.data.status == "SUCCESS") {
           dispatch(loginSuccess(e.data.user));
@@ -148,28 +148,29 @@ export const loginGoogleRequest = user => {
   };
 };
 
-export const loginRequest = (email, password) => {
+export const loginRequest = user => {
   return dispatch => {
     dispatch({
       type: LOGIN_REQUEST,
-      user: { email, password }
+      user
     });
     return axios
-      .post("user/login", { email, password })
+      .post("api/login", user)
       .then(e => {
-        if (e.data.status == "SUCCESS") {
-          dispatch(loginSuccess(e.data.user));
-          window.location.href = "/";
-        } else {
-          dispatch(loginFailure(e.data.message));
-        }
+        dispatch(loginSuccess(e.data));
+
+        // if (e.data.status == "SUCCESS") {
+        //   window.location.href = "/";
+        // } else {
+        //   dispatch(loginFailure(e.data.message));
+        // }
         dispatch({
           type: LOGIN_REQUEST,
           user: null
         });
       })
       .catch(err => {
-        dispatch(loginFailure(err));
+        dispatch(loginFailure(err.response.data));
       });
   };
 };
