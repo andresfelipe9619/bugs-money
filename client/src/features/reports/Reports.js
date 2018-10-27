@@ -1,17 +1,18 @@
-import React, {Component} from 'react';
-import {connect} from 'react-redux';
-import {reportsPageLoaded} from './redux/actions';
-import {Route, Switch} from 'react-router-dom';
-import Transactions from '../transactions/Transactions';
-import {fetchUsers} from '../../services/api';
-import {success} from '../../services/redux/alertActions';
-import ReportsTab from './ReportsTab';
+import React, { Component } from "react";
+import { connect } from "react-redux";
+import { reportsPageLoaded } from "./redux/actions";
+import { Route, Switch } from "react-router-dom";
+import Transactions from "../transactions/Transactions";
+import Services from "../../services/api";
+import { success } from "../../services/redux/actions/alertActions";
+import ReportsTab from "./ReportsTab";
+import axios from "axios";
 class Reports extends Component {
   componentDidMount() {
     this.props.reportsPageLoaded(true);
-    fetchUsers().then((data) => {
-      console.log(data);
-      this.props.alertSuccess('Holy shit, you\'ve done it right');
+    axios.get("/api/user").then(data => {
+      console.log(data.data);
+      this.props.alertSuccess("Holy shit, you've done it right");
     });
   }
 
@@ -25,7 +26,7 @@ class Reports extends Component {
         <Switch>
           {/* <Route path={this.props.match.url} component={component}/> */}
           <Route
-            path={this.props.match.url + '/transacciones'}
+            path={this.props.match.url + "/transacciones"}
             component={Transactions}
           />
         </Switch>
@@ -34,18 +35,18 @@ class Reports extends Component {
   }
 }
 
-const mapDispatchToProps = (dispatch) => {
+const mapDispatchToProps = dispatch => {
   return {
-    reportsPageLoaded: (bool) => {
+    reportsPageLoaded: bool => {
       dispatch(reportsPageLoaded(bool));
     },
-    alertSuccess: (msg) => {
+    alertSuccess: msg => {
       dispatch(success(msg));
-    },
+    }
   };
 };
 
 export default connect(
-    null,
-    mapDispatchToProps
+  null,
+  mapDispatchToProps
 )(Reports);
