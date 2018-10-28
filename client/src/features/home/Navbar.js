@@ -59,7 +59,7 @@ class NavBar extends Component {
   handleToggle = () => this.setState({ visible: !this.state.visible });
 
   render() {
-    const { children } = this.props;
+    const { children, isLoggedin } = this.props;
     const { visible } = this.state;
 
     return (
@@ -71,6 +71,7 @@ class NavBar extends Component {
             onToggle={this.handleToggle}
             rightItems={rightItems}
             visible={visible}
+            isLoggedin={isLoggedin}
           >
             <NavBarChildren>{children}</NavBarChildren>
           </Sidebar>
@@ -84,8 +85,10 @@ class NavBar extends Component {
   }
 }
 
-const mapStateToProps = dispatch => {
-  return {};
+const mapStateToProps = state => {
+  return {
+    isLoggedin: state.authService.loginSuccess,
+  };
 };
 
 export default connect(mapStateToProps)(NavBar);

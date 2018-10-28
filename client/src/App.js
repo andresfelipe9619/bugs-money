@@ -6,11 +6,7 @@ import Navbar from "./features/home/Navbar.js";
 import { connect } from "react-redux";
 import { history } from "./store/history";
 import { clear } from "./services/redux/actions/alertActions";
-import {
-  PageNotFound,
-  // PrivateRoute,
-  ErrorBoundary
-} from "./features/common";
+import { PageNotFound, PrivateRoute, ErrorBoundary } from "./features/common";
 import {
   LoadableDashboard,
   LoadableHome,
@@ -46,12 +42,10 @@ class App extends Component {
           <Container>
             <Switch>
               <Route exact path="/" component={LoadableHome} />
-              {/* <Route exact path="/contacto" component={Contact} /> */}
-              <Route path="/dashboard" component={LoadableDashboard} />
+              <PrivateRoute path="/dashboard" component={LoadableDashboard} />
               <Route exact path="/registro" component={LoadableRegister} />
               <Route exact path="/ingreso" component={LoadableLogin} />
-              {/* <Route exact path="/dashboard/presupuesto" component={LoadableBudget} /> */}
-              <Route exact path="/perfil" component={LoadableProfile} />
+              <PrivateRoute exact path="/perfil" component={LoadableProfile} />
               <Route component={PageNotFound} />
             </Switch>
           </Container>

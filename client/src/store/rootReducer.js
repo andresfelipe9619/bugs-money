@@ -1,6 +1,5 @@
 import { combineReducers } from "redux";
 import home from "../features/home/redux/reducer";
-// import auth from '../features/auth/redux/reducer';
 // import common from '../features/common/redux/reducer';
 import dashboard from "../features/dashboard/redux/reducer";
 // import transactions from '../features/transactions/redux/reducer';

@@ -129,14 +129,8 @@ export const loginGoogleRequest = user => {
       user
     });
     return axios
-      .post("login/google")
       .then(e => {
-        if (e.data.status == "SUCCESS") {
-          dispatch(loginSuccess(e.data.user));
-          // window.location.href = "/";
-        } else {
-          dispatch(loginFailure(e.data.message));
-        }
+        
         dispatch({
           type: LOGIN_REQUEST,
           user: null
