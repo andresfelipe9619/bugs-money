@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
 import { Link } from "react-router-dom";
-import { Container, Responsive } from "semantic-ui-react";
+import { Container, Responsive, Image } from "semantic-ui-react";
 import { default as Sidebar } from "../dashboard/Sidebar";
 
 const NavBarChildren = ({ children }) => (
@@ -40,10 +40,33 @@ const leftItems = [
   }
 ];
 
-const rightItems = [
-  { as: Link, to: "/ingreso", content: "Ingreso", key: "ingreso" },
-  { as: Link, to: "/registro", content: "Registro", key: "registro" }
-];
+const rightItems = user => {
+  let normal = [
+    { as: Link, to: "/ingreso", content: "Ingreso", key: "ingreso" },
+    { as: Link, to: "/registro", content: "Registro", key: "registro" }
+  ];
+  let loggedin;
+  if (user) {
+    // let userImg = ({url})=> {
+    //
+    // }
+    loggedin = [
+      {
+        as: Link,
+        to: "/perfil",
+        content: user.nombre,
+        key: "perfil",
+        children:  <Image  src={user.img} alt="user-img" avatar />
+      },
+      { as: Link, to: "/", content: "Salir", key: "salir" }
+    ];
+  }
+
+  return {
+    normal,
+    loggedin
+  };
+};
 
 class NavBar extends Component {
   state = {
@@ -59,7 +82,7 @@ class NavBar extends Component {
   handleToggle = () => this.setState({ visible: !this.state.visible });
 
   render() {
-    const { children, isLoggedin } = this.props;
+    const { children, user } = this.props;
     const { visible } = this.state;
 
     return (
@@ -69,9 +92,9 @@ class NavBar extends Component {
             leftItems={leftItems}
             onPusherClick={this.handlePusher}
             onToggle={this.handleToggle}
-            rightItems={rightItems}
+            rightItems={rightItems(user)}
             visible={visible}
-            isLoggedin={isLoggedin}
+            isLoggedin={user}
           >
             <NavBarChildren>{children}</NavBarChildren>
           </Sidebar>
@@ -87,7 +110,7 @@ class NavBar extends Component {
 
 const mapStateToProps = state => {
   return {
-    isLoggedin: state.authService.loginSuccess,
+    user: state.authService.loginSuccess
   };
 };
 

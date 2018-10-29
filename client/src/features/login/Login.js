@@ -9,10 +9,11 @@ import {
   Segment,
   Image
 } from "semantic-ui-react";
+import { success } from "../../services/redux/actions/alertActions";
 import {
-  loginRequest,
-  loginFacebookRequest,
-  loginGoogleRequest
+  loginRequest
+  // loginFacebookRequest,
+  // loginGoogleRequest
 } from "../../services/redux/actions/authActions";
 import withSemanticUIFormik from "./hoc/FormikSUI";
 import * as Yup from "yup";
@@ -23,21 +24,25 @@ import Google from "./social/Google";
 // Our inner form component. Will be wrapped with Formik({..})
 const MyInnerForm = props => {
   const {
-    values,
-    touched,
     errors,
-    dirty,
     isSubmitting,
     handleChange,
-    handleBlur,
     handleSubmit,
-    handleReset,
-    loginSuccess,
-    loginFailure
+    userHasLoggedin,
+    loginHasFailed
   } = props;
-  console.log(JSON.stringify(props, null, 2))
-  if (loginSuccess) {
-    return <Redirect to="/" />;
+  
+  if (userHasLoggedin) {
+    return (
+      <Redirect
+        to={{
+          pathname: "/dashboard/presupuesto",
+          state: {
+            from: props.location
+          }
+        }}
+      />
+    );
   } else {
     return (
       <Grid
@@ -59,11 +64,11 @@ const MyInnerForm = props => {
                   header="Campos invalidos"
                   list={Object.keys(errors).map(key => errors[key])}
                 />
-              ) : loginFailure ? (
+              ) : loginHasFailed ? (
                 <Message
                   error
                   header="Hay problemas con el inicio de sesion"
-                  content={loginFailure.err.message}
+                  content={loginHasFailed.err.message}
                 />
               ) : null}
               <Form size="large" onSubmit={handleSubmit}>
@@ -119,7 +124,8 @@ const MyInnerForm = props => {
 
 const mapState = state => {
   return {
-    user: state.authService.loginSuccess
+    userHasLoggedin: state.authService.loginSuccess,
+    loginHasFailed: state.authService.loginFailure
   };
 };
 
@@ -131,22 +137,22 @@ const mapDispatch = dispatch => {
   };
 };
 
-const Login = withSemanticUIFormik({
-  mapPropsToValues: () => ({ email: "", password: "" }),
-  validationSchema: Yup.object().shape({
-    email: Yup.string()
-      .email("Correo invalido")
-      .required("Correo es requerido!"),
-    password: Yup.string().required("Constrasea requerida!")
-  }),
-  handleSubmit: (values, { setSubmitting, props }) => {
-    props.loginRequest(values);
-    setSubmitting(false);
-  },
-  displayName: "BasicForm" // helps with React DevTools
-})(MyInnerForm);
-
 export default connect(
   mapState,
   mapDispatch
-)(Login);
+)(
+  withSemanticUIFormik({
+    mapPropsToValues: () => ({ email: "", password: "" }),
+    validationSchema: Yup.object().shape({
+      email: Yup.string()
+        .email("Correo invalido")
+        .required("Correo es requerido!"),
+      password: Yup.string().required("Constrasea requerida!")
+    }),
+    handleSubmit: (values, { setSubmitting, props }) => {
+      props.loginRequest(values);
+      setSubmitting(false);
+    },
+    displayName: "BasicForm" // helps with React DevTools
+  })(MyInnerForm)
+);

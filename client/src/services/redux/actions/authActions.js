@@ -28,8 +28,8 @@ function loginPageLoading(bool) {
 function loginPageErrored(bool) {
   return { type: LOGIN_PAGE_FAILED, hasErrored: bool };
 }
-const loginSuccess = (email, password) => {
-  return { type: LOGIN_SUCCESS, user: { email, password } };
+const loginSuccess = (user) => {
+  return { type: LOGIN_SUCCESS, user };
 };
 
 const loginFailure = error => {
@@ -51,7 +51,7 @@ export const getProfile = data => {
       .then(res => {
         dispatch({
           type: GET_PROFILE,
-          usuario: res.data
+          usuario: res.data.usuario
         });
       })
       .catch(err => {
@@ -130,7 +130,7 @@ export const loginGoogleRequest = user => {
     });
     return axios
       .then(e => {
-        
+
         dispatch({
           type: LOGIN_REQUEST,
           user: null
@@ -151,13 +151,12 @@ export const loginRequest = user => {
     return axios
       .post("api/login", user)
       .then(e => {
-        dispatch(loginSuccess(e.data));
+        if (e.data.ok) {
+          dispatch(loginSuccess(e.data.usuario));
+        }else {
+          dispatch(loginFailure(e.data))
+        }
 
-        // if (e.data.status == "SUCCESS") {
-        //   window.location.href = "/";
-        // } else {
-        //   dispatch(loginFailure(e.data.message));
-        // }
         dispatch({
           type: LOGIN_REQUEST,
           user: null

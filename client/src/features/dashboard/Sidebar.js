@@ -48,9 +48,9 @@ const MobileSidebar = ({
           BUGS MONEY
         </Menu.Item>
         <Menu.Menu position="right">
-          {_.map(rightItems, item => (
-            <Menu.Item {...item} />
-          ))}
+          {isLoggedin
+            ? _.map(rightItems.loggedin, item => <Menu.Item {...item} />)
+            : _.map(rightItems.normal, item => <Menu.Item {...item} />)}
         </Menu.Menu>
       </Menu>
       {children}

@@ -15,17 +15,7 @@ import { Redirect } from "react-router-dom";
 
 // Our inner form component. Will be wrapped with Formik({..})
 const MyInnerForm = props => {
-  const {
-    values,
-    touched,
-    errors,
-    dirty,
-    isSubmitting,
-    handleChange,
-    handleBlur,
-    handleSubmit,
-    handleReset
-  } = props;
+  const { errors, handleChange, handleSubmit } = props;
 
   return (
     <Grid
