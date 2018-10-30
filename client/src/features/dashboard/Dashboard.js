@@ -5,9 +5,14 @@ import { Route, Switch } from "react-router-dom";
 import Transactions from "../transactions/Transactions";
 import Reports from "../reports/Reports";
 import Budget from "../budgets/Budget";
+import { success } from "../../services/redux/actions/alertActions";
+
 class Dashboard extends Component {
   componentDidMount() {
     this.props.dashboardPageLoaded(true);
+    if ('state' in this.props.location) {
+      this.props.alertSuccess("Que hay de nuevo viejo?");
+    }
   }
 
   componentWillUnmount() {
@@ -34,6 +39,9 @@ const mapDispatchToProps = dispatch => {
   return {
     dashboardPageLoaded: bool => {
       dispatch(dashboardPageLoaded(bool));
+    },
+    alertSuccess: msg => {
+      dispatch(success(msg));
     }
   };
 };

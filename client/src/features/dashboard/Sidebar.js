@@ -10,7 +10,8 @@ const MobileSidebar = ({
   onPusherClick,
   onToggle,
   rightItems,
-  visible
+  visible,
+  isLoggedin
 }) => (
   <Sidebar.Pushable>
     <Sidebar
@@ -37,17 +38,19 @@ const MobileSidebar = ({
       style={{ minHeight: "100vh" }}
     >
       <Menu fixed="top" inverted>
-        <Menu.Item onClick={onToggle}>
-          <Icon name="sidebar" />
-        </Menu.Item>
+        {isLoggedin ? (
+          <Menu.Item onClick={onToggle}>
+            <Icon name="sidebar" />
+          </Menu.Item>
+        ) : null}
         <Menu.Item as={Link} to="/" header>
           <img src={logo} alt="logo" />
           BUGS MONEY
         </Menu.Item>
         <Menu.Menu position="right">
-          {_.map(rightItems, item => (
-            <Menu.Item {...item} />
-          ))}
+          {isLoggedin
+            ? _.map(rightItems.loggedin, item => <Menu.Item {...item} />)
+            : _.map(rightItems.normal, item => <Menu.Item {...item} />)}
         </Menu.Menu>
       </Menu>
       {children}

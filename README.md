@@ -11,13 +11,11 @@
 
 ## Installation
 
-
 Windows, OS X & Linux:
 
 ```sh
 npm run dev-installation
 ```
-
 
 ## Development setup
 

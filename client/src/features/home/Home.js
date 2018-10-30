@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { Segment, Container, Grid, Header } from "semantic-ui-react";
+import { Segment, Container, Grid, Header, Image } from "semantic-ui-react";
 import { connect } from "react-redux";
 import { homePageLoaded } from "./redux/actions";
 import counting_gif from "../../assets/images/counting_money.gif";
@@ -24,9 +24,7 @@ class Home extends Component {
         >
           <Grid.Row>
             <Grid.Column width={8}>
-              <Segment>
-                <img src={counting_gif} alt="bugs gif" />
-              </Segment>
+              <Image src={counting_gif} alt="bugs gif" />
             </Grid.Column>
 
             <Grid.Column width={8}>
@@ -67,9 +65,7 @@ class Home extends Component {
           <h2>Manage Your Budget Like a PRO</h2>
           <Grid.Row>
             <Grid.Column width={6}>
-              <Segment>
-                <img src={budget_ico} alt="bugs gif" />
-              </Segment>{" "}
+              <Image src={budget_ico} alt="bugs gif" />
             </Grid.Column>
             <Grid.Column width={6}>
               <Segment />{" "}
