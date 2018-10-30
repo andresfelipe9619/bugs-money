@@ -1,7 +1,8 @@
 import React, { Component } from "react";
-import PropTypes from "prop-types";
+//import PropTypes from "prop-types";
 import { connect } from "react-redux";
 import { profilePageLoaded } from "./redux/actions";
+import { Divider, Message, Segment } from "semantic-ui-react";
 import {
   SettingsPane,
   SettingsPage,
@@ -10,18 +11,10 @@ import {
 } from "react-settings-pane";
 import "./styles/styles.css";
 import "./styles/bootstrap.min.css";
-// import {
-//   Segment,
-//   Container,
-//   Grid,
-//   Header,
-//   Label,
-//   Input
-// } from "semantic-ui-react";
 export class Profile extends Component {
-  static propTypes = {
-    prop: PropTypes
-  };
+  // static propTypes = {
+  //   prop: PropTypes
+  // };
 
   constructor(props) {
     super(props);
@@ -29,24 +22,21 @@ export class Profile extends Component {
     // You will maybe receive your settings from this.props or do a fetch request in your componentWillMount
     // but here is an example of how it should look like:
     this.state = {
-      "mysettings.general.name": "Johan Sebastián Hernández",
-      "mysettings.general.username": "jseb2520",
-      "mysettings.general.color-theme": "black",
-      "mysettings.general.email": "johanseb2520@gmail.com",
-      "mysettings.general.picture": "earth",
-      "mysettings.profile.firstname": "Johan Sebastián",
-      "mysettings.profile.lastname": "Hernández"
+      "mysettings.general.name": "",
+      "mysettings.general.color-theme": "",
+      "mysettings.general.email": "",
+      "mysettings.general.picture": "",
+      "mysettings.profile.firstname": "",
+      "mysettings.profile.lastname": "",
+      "mysettings.profile.username": ""
     };
-
     // Save settings after close
     this._leavePaneHandler = (wasSaved, newSettings, oldSettings) => {
       // "wasSaved" indicates wheather the pane was just closed or the save button was clicked.
-
       if (wasSaved && newSettings !== oldSettings) {
         // do something with the settings, e.g. save via ajax.
         this.setState(newSettings);
       }
-
       this.hidePrefs();
     };
 
@@ -64,31 +54,28 @@ export class Profile extends Component {
         url: "/settings/profile"
       },
       {
-        title: "Notifications",
-        url: "/settings/notifications"
+        title: "Account",
+        url: "/settings/account"
       },
       {
-        title: "Language",
-        url: "/settings/language"
-      },
-      {
-        title: "Appearance",
-        url: "/settings/appearance"
-      },
-      {
-        title: "Plugins",
-        url: "/settings/plugins"
-      },
-      {
-        title: "About",
+        title: "About Us",
         url: "/settings/about"
       }
     ];
   }
+  //Delete user account
+  deleteAccount() {
+    console.log("Account deleted");
+  }
 
   hidePrefs() {
-    this.prefs.className = "md-modal";
-    this.overlay.style.visibility = "";
+    if (this.prefs.className === "null") {
+      this.prefs.className = "md-modal";
+      this.overlay.style.visibility = "";
+    } else {
+      this.prefs.className = "md-modal";
+      this.overlay.style.visibility = "";
+    }
   }
 
   showPrefs() {
@@ -101,40 +88,45 @@ export class Profile extends Component {
     let settings = this.state;
 
     // Define one of your Settings pages
-    /*
-     const dynamicOptionsForGeneralPage = [
-       {
-         key: null,
-         label: 'Account',
-         type: 'headline',
-       },
-       {
-         key: 'mysettings.general.email',
-         label: 'E-Mail address',
-         type: 'text',
-       },
-       {
-         key: 'mysettings.general.password',
-         label: 'Password',
-         type: 'password',
-       },
-       {
-         key: 'mysettings.general.password-repeat',
-         label: 'Password repeat',
-         type: 'password',
-       },
-       {
-         key: null,
-         label: 'Appearance',
-         type: 'headline',
-       },
-       {
-         key: 'mysettings.general.color-theme',
-         label: 'Color Theme',
-         type: 'custom',
-         component: <select><option value="blue">Blue</option><option value="red">Red</option></select>,
-       }
-     ];*/
+
+    const dynamicOptionsForGeneralPage = [
+      {
+        key: null,
+        label: "Account",
+        type: "headline"
+      },
+      {
+        key: "mysettings.general.email",
+        label: "E-Mail address",
+        type: "text"
+      },
+      {
+        key: "mysettings.general.password",
+        label: "Password",
+        type: "password"
+      },
+      {
+        key: "mysettings.general.password-repeat",
+        label: "Password repeat",
+        type: "password"
+      },
+      {
+        key: null,
+        label: "Appearance",
+        type: "headline"
+      },
+      {
+        key: "mysettings.general.color-theme",
+        label: "Color Theme",
+        type: "custom",
+        component: (
+          <select>
+            <option value="blue">Blue</option>
+            <option value="red">Red</option>
+          </select>
+        )
+      }
+    ];
 
     // Then use with:
     // <SettingsPage handler="/settings/general" options={dynamicOptionsForGeneralPage} />
@@ -142,11 +134,6 @@ export class Profile extends Component {
     // Return your Settings Pane
     return (
       <div>
-        <div className="page-header">
-          <h1>
-            Configuración <small>Example</small>
-          </h1>
-        </div>
         <div style={{ margin: "30px 0 90px 0" }}>
           <button
             onClick={this.showPrefs.bind(this)}
@@ -169,7 +156,7 @@ export class Profile extends Component {
             onChange={this._settingsChanged}
             onPaneLeave={this._leavePaneHandler}
           >
-            <SettingsMenu headline="General Settings" />
+            <SettingsMenu headline="Settings" />
             <SettingsContent header>
               <SettingsPage handler="/settings/general">
                 <fieldset className="form-group">
@@ -183,23 +170,6 @@ export class Profile extends Component {
                     onChange={this._settingsChanged}
                     defaultValue={settings["mysettings.general.name"]}
                   />
-                </fieldset>
-                <fieldset className="form-group">
-                  <label htmlFor="generalUsername">Username: </label>
-                  <div className="input-group">
-                    <span className="input-group-addon" id="basic-addon1">
-                      @
-                    </span>
-                    <input
-                      type="text"
-                      name="mysettings.general.username"
-                      className="form-control"
-                      placeholder="Username"
-                      aria-describedby="basic-addon1"
-                      onChange={this._settingsChanged}
-                      defaultValue={settings["mysettings.general.username"]}
-                    />
-                  </div>
                 </fieldset>
                 <fieldset className="form-group">
                   <label htmlFor="generalMail">E-Mail address: </label>
@@ -268,6 +238,23 @@ export class Profile extends Component {
                   />
                 </fieldset>
                 <fieldset className="form-group">
+                  <label htmlFor="profileUsername">Username: </label>
+                  <div className="input-group">
+                    <span className="input-group-addon" id="basic-addon1">
+                      @
+                    </span>
+                    <input
+                      type="text"
+                      name="mysettings.profile.username"
+                      className="form-control"
+                      placeholder="Username"
+                      aria-describedby="basic-addon1"
+                      onChange={this._settingsChanged}
+                      defaultValue={settings["mysettings.profile.username"]}
+                    />
+                  </div>
+                </fieldset>
+                <fieldset className="form-group">
                   <label htmlFor="profileBiography">Biography: </label>
                   <textarea
                     className="form-control"
@@ -279,6 +266,37 @@ export class Profile extends Component {
                   />
                 </fieldset>
               </SettingsPage>
+              <SettingsPage handler="/settings/account">
+                <div>
+                  <Message>
+                    <Message.Header>About Deleting your Account</Message.Header>
+                    <p>
+                      This section is critical. Here you can delete your
+                      account, which means deleting all your account information
+                      and settings. <strong>THIS CAN'T BE UNDONE</strong>
+                    </p>
+                  </Message>
+                  <Divider />
+                  <button
+                    id="deleteAccountBtn"
+                    className="btn btn-danger"
+                    onClick={this.deleteAccount()}
+                  >
+                    <strong>Delete Account</strong>
+                  </button>
+                </div>
+              </SettingsPage>
+              <SettingsPage handler="/settings/about">
+                <div>
+                  <Segment>
+                    <p>
+                      We are a group of Systems Engineer students from Universidad del Valle, Cali, Colombia.
+                      This application is part of a project for the Software Development class 2018-2.<br/>
+                      Feel free to check our GitHub Repo <a href="https://github.com/andresfelipe9619/bugs-money" target="_blank">here</a>
+                    </p>
+                  </Segment>
+                </div>
+              </SettingsPage>
             </SettingsContent>
           </SettingsPane>
         </div>
@@ -288,37 +306,13 @@ export class Profile extends Component {
 
   componentDidMount() {
     this.props.profilePageLoaded(true);
+    // this.prefs.className = "md_modal show";
+    // this.showPrefs.bind(this);
   }
 
   componentWillUnmount() {
     this.props.profilePageLoaded(false);
   }
-
-  // return (
-  //   <Container>
-  //     <Grid
-  //       divided="vertically"
-  //       style={{
-  //         marginTop: "7em"
-  //       }}
-  //     >
-  //       <Grid.Row>
-  //         <Grid.Column>
-
-  //         </Grid.Column>
-
-  //         <Grid.Column>
-  //           <Header as="h3" textAlign="left">
-  //             Opciones de Usuario:
-  //           </Header>
-  //           <Segment>
-
-  //           </Segment>
-  //         </Grid.Column>
-  //       </Grid.Row>
-  //     </Grid>
-  //   </Container>
-  // );
 }
 
 const mapStateToProps = state => ({});

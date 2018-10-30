@@ -1,24 +1,19 @@
-import React, {Component} from 'react';
-import {Container} from 'semantic-ui-react';
-import {Route, Switch, withRouter} from 'react-router-dom';
-import {SemanticToastContainer, toast} from 'react-semantic-toasts';
-import Navbar from './features/home/Navbar.js';
-import {connect} from 'react-redux';
-import {history} from './store/history';
-import {clear} from './services/redux/alertActions';
-import {
-  PageNotFound,
-  // PrivateRoute,
-  ErrorBoundary,
-} from './features/common';
+import React, { Component } from "react";
+import { Container } from "semantic-ui-react";
+import { Route, Switch, withRouter } from "react-router-dom";
+import { SemanticToastContainer, toast } from "react-semantic-toasts";
+import Navbar from "./features/home/Navbar.js";
+import { connect } from "react-redux";
+import { history } from "./store/history";
+import { clear } from "./services/redux/actions/alertActions";
+import { PageNotFound, PrivateRoute, ErrorBoundary } from "./features/common";
 import {
   LoadableDashboard,
   LoadableHome,
   LoadableLogin,
   LoadableRegister,
-  LoadableBudget,
-  LoadableProfile,
-} from './features';
+  LoadableProfile
+} from "./features";
 class App extends Component {
   constructor(props) {
     super(props);
@@ -30,15 +25,15 @@ class App extends Component {
   }
 
   render() {
-    const {alert} = this.props;
+    const { alert } = this.props;
     if (alert && alert.message) {
       // setTimeout(() => this.props.clear(), 5000);
       toast({
         type: alert.type,
         // icon: alert.type,
-        title: alert.type + 'Toast',
+        title: alert.type + "Toast",
         description: alert.message,
-        time: 5000,
+        time: 5000
       });
     }
     return (
@@ -47,12 +42,10 @@ class App extends Component {
           <Container>
             <Switch>
               <Route exact path="/" component={LoadableHome} />
-              {/* <Route exact path="/contacto" component={Contact} /> */}
-              <Route exact path="/dashboard" component={LoadableDashboard} />
+              <PrivateRoute path="/dashboard" component={LoadableDashboard} />
               <Route exact path="/registro" component={LoadableRegister} />
               <Route exact path="/ingreso" component={LoadableLogin} />
-              <Route exact path="/dashboard/presupuesto" component={LoadableBudget} />
-              <Route exact path="/perfil" component={LoadableProfile} />
+              <PrivateRoute exact path="/perfil" component={LoadableProfile} />
               <Route component={PageNotFound} />
             </Switch>
           </Container>
@@ -64,7 +57,7 @@ class App extends Component {
 }
 function mapStateToProps(state) {
   return {
-    alert: state.alert,
+    alert: state.alert
   };
 }
 
@@ -72,13 +65,13 @@ function mapDispatchToProps(dispatch) {
   return {
     clear: () => {
       dispatch(clear());
-    },
+    }
   };
 }
 
 export default withRouter(
-    connect(
-        mapStateToProps,
-        mapDispatchToProps
-    )(App)
+  connect(
+    mapStateToProps,
+    mapDispatchToProps
+  )(App)
 );

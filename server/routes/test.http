@@ -1,0 +1,14 @@
+POST http://localhost:5000/api/login/google
+content-type: application/json
+User-Agent: vscode-restclient
+# token: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c3VhcmlvIjp7InJvbGUiOiJVU0VSX1JPTEUiLCJlc3RhZG8iOnRydWUsImdvb2dsZSI6dHJ1ZSwiX2lkIjoiNWJjOTQ2MTBiZmE4M2IwYTg0Y2U4ZWVhIiwibm9tYnJlIjoiQ0FSTE9TIEFORFJFUyBDQURFTkEgUEFESUxMQSIsImVtYWlsIjoiY2FybG9zLmNhZGVuYUBjb3JyZW91bml2YWxsZS5lZHUuY28iLCJpbWciOiJodHRwczovL2xoMy5nb29nbGV1c2VyY29udGVudC5jb20vLXVaT2g3QXYtNTdJL0FBQUFBQUFBQUFJL0FBQUFBQUFBQUQ0L3NwamVGM3VtYWhZL3M5Ni1jL3Bob3RvLmpwZyIsIl9fdiI6MH0sImlhdCI6MTUzOTkxNzg2MCwiZXhwIjoxNTM5OTIwNDUyfQ.MwiJOOYYeqdFYvBcrEKwEtCzYJEOr9kzH4MFIGvaZkA
+
+{
+    "email": "google23@gmail.com",
+    "password": "secret",
+    "google": true
+}
+
+# C:\Users\Alumno\Desktop\bugs-money>mongo ds045507.mlab.com:45507/cafe-test -u cafe-user -p azahella333
+
+# MONGO_URI mongodb://cafe-user:azahella333@ds045507.mlab.com:45507/cafe-test

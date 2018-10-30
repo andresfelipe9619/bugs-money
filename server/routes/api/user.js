@@ -6,10 +6,10 @@ const _ = require('underscore');
 const Usuario = require('../../models/user');
 const {
   verificaToken,
-  verificaAdminRole, 
+  verificaAdminRole,
 } = require('../../middlewares/authentication');
 
-router.get('/', verificaToken, (req, res) => {
+router.get('/', (req, res) => {
   let desde = req.query.desde || 0;
   desde = Number(desde);
 
@@ -37,7 +37,7 @@ router.get('/', verificaToken, (req, res) => {
       });
 });
 
-router.post('/', [verificaToken, verificaAdminRole], function(req, res) {
+router.post('/', function(req, res) {
   let body = req.body;
 
   let usuario = new Usuario({
@@ -62,10 +62,7 @@ router.post('/', [verificaToken, verificaAdminRole], function(req, res) {
   });
 });
 
-router.put('/:id', [verificaToken, verificaAdminRole], function(
-    req,
-    res
-) {
+router.put('/:id', [verificaToken, verificaAdminRole], function(req, res) {
   let id = req.params.id;
   let body = _.pick(req.body, ['nombre', 'email', 'img', 'role', 'estado']);
 
@@ -89,10 +86,7 @@ router.put('/:id', [verificaToken, verificaAdminRole], function(
   );
 });
 
-router.delete('/:id', [verificaToken, verificaAdminRole], function(
-    req,
-    res
-) {
+router.delete('/:id', [verificaToken, verificaAdminRole], function(req, res) {
   let id = req.params.id;
 
   // Usuario.findByIdAndRemove(id, (err, usuarioBorrado) => {

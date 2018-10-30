@@ -24,8 +24,7 @@ mongoose.connect(
     {useNewUrlParser: true},
     (err, res) => {
       if (err) throw err;
-
-      console.log('Base de datos ONLINE');
+      console.log(`Connected to ${process.env.URLDB} succesfully`);
     }
 );
 
