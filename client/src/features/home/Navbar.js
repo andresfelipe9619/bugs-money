@@ -1,11 +1,14 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
 import { Link } from "react-router-dom";
-import { Container, Responsive } from "semantic-ui-react";
+import { Responsive } from "semantic-ui-react";
 import { default as Sidebar } from "../dashboard/Sidebar";
+import "./styles/home.css";
 
 const NavBarChildren = ({ children }) => (
-  <Container style={{ marginTop: "5em" }}>{children}</Container>
+  <div className="main_div" style={{ marginTop: "4em" }}>
+    {children}
+  </div>
 );
 
 const leftItems = [

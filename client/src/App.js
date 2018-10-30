@@ -43,7 +43,7 @@ class App extends Component {
     return (
       <ErrorBoundary>
         <Navbar>
-          <Container>
+          <div className="Appjs-div">
             <Switch>
               <Route exact path="/" component={LoadableHome} />
               {/* <Route exact path="/contacto" component={Contact} /> */}
@@ -54,8 +54,8 @@ class App extends Component {
               <Route exact path="/perfil" component={LoadableProfile} />
               <Route component={PageNotFound} />
             </Switch>
-          </Container>
-          <SemanticToastContainer position="top-right" />
+          </div>
+          <SemanticToastContainer position="right" />
         </Navbar>
       </ErrorBoundary>
     );
