@@ -31,7 +31,7 @@ const MyInnerForm = props => {
     userHasLoggedin,
     loginHasFailed
   } = props;
-  
+
   if (userHasLoggedin) {
     return (
       <Redirect
@@ -68,10 +68,14 @@ const MyInnerForm = props => {
                 <Message
                   error
                   header="Hay problemas con el inicio de sesion"
-                  content={loginHasFailed.err.message}
+                  content={
+                    "err" in loginHasFailed
+                      ? loginHasFailed.err.message
+                      : loginHasFailed
+                  }
                 />
               ) : null}
-              <Form size="large" onSubmit={handleSubmit}>
+              <Form size="large" onSubmit={handleSubmit} loading={isSubmitting}>
                 <Form.Input
                   label="Correo electrónico"
                   labelPosition="left"
@@ -150,9 +154,11 @@ export default connect(
       password: Yup.string().required("Constrasea requerida!")
     }),
     handleSubmit: (values, { setSubmitting, props }) => {
-      props.loginRequest(values);
-      setSubmitting(false);
+      setTimeout(() => {
+        props.loginRequest(values);
+        setSubmitting(false);
+      }, 1000);
     },
-    displayName: "BasicForm" // helps with React DevTools
+    displayName: "LoginForm"
   })(MyInnerForm)
 );

@@ -11,24 +11,10 @@ import {
   REGISTER_FAILURE,
   GET_PROFILE,
   UPDATE_PROFILE,
-  UPDATE_AVATAR,
-  LOGIN_PAGE_FAILED,
-  LOGIN_PAGE_LOADING,
-  LOGIN_PAGE_LOADED
+  UPDATE_AVATAR
 } from "./constants";
 
-function loginPageLoaded(message) {
-  return { type: LOGIN_PAGE_LOADED, message };
-}
-
-function loginPageLoading(bool) {
-  return { type: LOGIN_PAGE_LOADING, isLoading: bool };
-}
-
-function loginPageErrored(bool) {
-  return { type: LOGIN_PAGE_FAILED, hasErrored: bool };
-}
-const loginSuccess = (user) => {
+const loginSuccess = user => {
   return { type: LOGIN_SUCCESS, user };
 };
 
@@ -48,14 +34,14 @@ export const getProfile = data => {
   return dispatch => {
     return axios
       .get(`user/profile/`)
-      .then(res => {
+      .then(response => {
         dispatch({
           type: GET_PROFILE,
-          usuario: res.data.usuario
+          usuario: response.data.usuario
         });
       })
-      .catch(err => {
-        console.log(err);
+      .catch(error => {
+        console.log(error);
       });
   };
 };
@@ -74,8 +60,8 @@ export const updateProfile = user => {
           usuario: res.data
         });
       })
-      .catch(err => {
-        console.log(err);
+      .catch(error => {
+        console.log(error);
       });
   };
 };
@@ -83,15 +69,15 @@ export const updateProfile = user => {
 export const updateAvatar = user => {
   return dispatch => {
     return axios
-      .post(`user/avater/`, { user })
+      .post(`user/avatar/`, { user })
       .then(res => {
         dispatch({
           type: UPDATE_AVATAR,
           avatar: res.data
         });
       })
-      .catch(err => {
-        console.log(err);
+      .catch(error => {
+        console.log(error);
       });
   };
 };
@@ -104,20 +90,20 @@ export const loginFacebookRequest = user => {
     });
     return axios
       .get("login/facebook")
-      .then(e => {
-        if (e.data.status == "SUCCESS") {
-          dispatch(loginSuccess(e.data.user));
+      .then(response => {
+        if (response.data.ok) {
+          dispatch(loginSuccess(response.data.user));
           // window.location.href = "/";
         } else {
-          dispatch(loginFailure(e.data.message));
+          dispatch(loginFailure(response.data.error.message));
         }
         dispatch({
           type: LOGIN_REQUEST,
           user: null
         });
       })
-      .catch(err => {
-        dispatch(loginFailure(err));
+      .catch(error => {
+        dispatch(loginFailure(error));
       });
   };
 };
@@ -129,15 +115,14 @@ export const loginGoogleRequest = user => {
       user
     });
     return axios
-      .then(e => {
-
+      .then(response => {
         dispatch({
           type: LOGIN_REQUEST,
           user: null
         });
       })
-      .catch(err => {
-        dispatch(loginFailure(err));
+      .catch(error => {
+        dispatch(loginFailure(error));
       });
   };
 };
@@ -150,20 +135,21 @@ export const loginRequest = user => {
     });
     return axios
       .post("api/login", user)
-      .then(e => {
-        if (e.data.ok) {
-          dispatch(loginSuccess(e.data.usuario));
-        }else {
-          dispatch(loginFailure(e.data))
+      .then(response => {
+        if (response.data.ok) {
+          dispatch(loginSuccess(response.data.usuario));
+        } else {
+          dispatch(loginFailure(response.data));
         }
-
         dispatch({
           type: LOGIN_REQUEST,
           user: null
         });
       })
-      .catch(err => {
-        dispatch(loginFailure(err.response.data));
+      .catch(error => {
+        "response" in error ?
+        dispatch(loginFailure(error.response.data)) :
+        dispatch(loginFailure(error));
       });
   };
 };
@@ -174,33 +160,41 @@ export const registerRequest = user => {
       user
     });
     return axios
-      .post("user/sign_up", { ...user })
-      .then(e => {
-        if (e.data.status == "SUCCESS") {
+      .post("api/user", user)
+      .then(response => {
+        if (response.data.ok) {
           dispatch(registerSuccess(user));
         } else {
-          dispatch(registerFailure(e.data.message));
+          dispatch(registerFailure(response.data));
         }
+        dispatch({
+          type: REGISTER_REQUEST,
+          user: null
+        });
       })
-      .catch(err => {
-        dispatch(registerFailure(err));
+      .catch(error => {
+        "data" in error ?
+        dispatch(registerFailure(error.data.err)) :
+        dispatch(registerFailure(error));
       });
   };
 };
 
-export const logoutRequest = data => {
+export const logoutRequest = user => {
   return dispatch => {
-    return axios
-      .get(`logout`)
-      .then(res => {
-        dispatch({
-          type: LOGOUT_REQUEST,
-          usuario: res.data
-        });
-        window.location.href = "/";
-      })
-      .catch(err => {
-        loginFailure(err);
-      });
+    dispatch({
+      type: LOGOUT_REQUEST,
+      user
+    });
+    // return axios
+    //   .get(`api/logout`)
+    //   .then(response => {
+    //     if (response.data.ok) {
+          dispatch(loginSuccess(null));
+      //   }
+      // })
+      // .catch(error => {
+      //   loginFailure(error);
+      // });
   };
 };

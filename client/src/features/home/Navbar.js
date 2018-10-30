@@ -1,64 +1,66 @@
-import React, { Component } from "react";
-import { connect } from "react-redux";
-import { Link } from "react-router-dom";
-import { Container, Responsive, Image } from "semantic-ui-react";
-import { default as Sidebar } from "../dashboard/Sidebar";
-
+import React, { Component } from 'react';
+import { connect } from 'react-redux';
+import { Link } from 'react-router-dom';
+import { Container, Responsive, Image } from 'semantic-ui-react';
+import { default as Sidebar } from '../dashboard/Sidebar';
+import king from '../../assets/images/king_icon.png';
+import {logoutRequest} from '../../services/redux/actions/authActions';
 const NavBarChildren = ({ children }) => (
-  <Container style={{ marginTop: "5em" }}>{children}</Container>
+  <Container style={{ marginTop: '5em' }}>{children}</Container>
 );
 
+
+const Avatar = ({name, img}) => {
+  return (
+    <div>
+      <Image src={img?img:king} alt="user-img" avatar/>
+      <span>{name}</span>
+    </div>
+  )
+}
+
 const leftItems = [
-  { as: Link, to: "/", content: "Inicio", key: "inicio", name: "home" },
-  { as: Link, to: "/perfil", content: "Perfil", key: "perfil", name: "user" },
+  { as: Link, to: '/', content: 'Inicio', key: 'inicio', name: 'home' },
+  { as: Link, to: '/perfil', content: 'Perfil', key: 'perfil', name: 'user' },
   {
     as: Link,
-    to: "/dashboard/presupuesto",
-    content: "Presupuesto",
-    key: "presupuesto",
-    name: "money bill alternate outline"
-  },
-  // {
-  //   as: Link,
-  //   to: '/dashboard/transacciones',
-  //   content: 'Transacciones',
-  //   key: 'transacciones', name: ''
-  // },
-  {
-    as: Link,
-    to: "/dashboard/cuentas",
-    content: "Cuentas",
-    key: "cuentas",
-    name: "credit card outline"
+    to: '/dashboard/presupuesto',
+    content: 'Presupuesto',
+    key: 'presupuesto',
+    name: 'money bill alternate outline'
   },
   {
     as: Link,
-    to: "/dashboard/reportes",
-    content: "Reportes",
-    key: "reportes",
-    name: "line graph"
+    to: '/dashboard/cuentas',
+    content: 'Cuentas',
+    key: 'cuentas',
+    name: 'credit card outline'
+  },
+  {
+    as: Link,
+    to: '/dashboard/reportes',
+    content: 'Reportes',
+    key: 'reportes',
+    name: 'line graph'
   }
 ];
 
-const rightItems = user => {
+const rightItems = (user, logout) => {
   let normal = [
-    { as: Link, to: "/ingreso", content: "Ingreso", key: "ingreso" },
-    { as: Link, to: "/registro", content: "Registro", key: "registro" }
+    { as: Link, to: '/ingreso', content: 'Ingreso', key: 'ingreso' },
+    { as: Link, to: '/registro', content: 'Registro', key: 'registro' }
   ];
-  let loggedin;
+  let loggedin = [];
+
   if (user) {
-    // let userImg = ({url})=> {
-    //
-    // }
     loggedin = [
       {
         as: Link,
-        to: "/perfil",
-        content: user.nombre,
-        key: "perfil",
-        children:  <Image  src={user.img} alt="user-img" avatar />
+        to: '/perfil',
+        key: 'avatar',
+        children: <Avatar name={user.nombre} img={user.img}/>
       },
-      { as: Link, to: "/", content: "Salir", key: "salir" }
+      { content: 'Salir', key: 'salir', onClick: logout }
     ];
   }
 
@@ -82,7 +84,7 @@ class NavBar extends Component {
   handleToggle = () => this.setState({ visible: !this.state.visible });
 
   render() {
-    const { children, user } = this.props;
+    const { children, user, logout } = this.props;
     const { visible } = this.state;
 
     return (
@@ -92,7 +94,7 @@ class NavBar extends Component {
             leftItems={leftItems}
             onPusherClick={this.handlePusher}
             onToggle={this.handleToggle}
-            rightItems={rightItems(user)}
+            rightItems={rightItems(user, logout)}
             visible={visible}
             isLoggedin={user}
           >
@@ -108,10 +110,19 @@ class NavBar extends Component {
   }
 }
 
-const mapStateToProps = state => {
+const mapState = state => {
   return {
     user: state.authService.loginSuccess
   };
 };
 
-export default connect(mapStateToProps)(NavBar);
+const mapDispatch = dispatch => {
+  return {
+    logout: (user) => {
+      user ?
+       dispatch(logoutRequest(user))
+       : console.log('No user to logout')
+    }
+  }
+}
+export default connect(mapState, mapDispatch)(NavBar);
