@@ -290,9 +290,19 @@ export class Profile extends Component {
                 <div>
                   <Segment>
                     <p>
-                      We are a group of Systems Engineer students from Universidad del Valle, Cali, Colombia.
-                      This application is part of a project for the Software Development class 2018-2.<br/>
-                      Feel free to check our GitHub Repo <a href="https://github.com/andresfelipe9619/bugs-money" target="_blank">here</a>
+                      We are a group of Systems Engineer students from
+                      Universidad del Valle, Cali, Colombia. This application is
+                      part of a project for the Software Development class
+                      2018-2.
+                      <br />
+                      Feel free to check our GitHub Repo{" "}
+                      <a
+                        href="https://github.com/andresfelipe9619/bugs-money"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                      >
+                        here
+                      </a>
                     </p>
                   </Segment>
                 </div>
