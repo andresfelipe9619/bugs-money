@@ -1,12 +1,5 @@
 import React, { Component } from "react";
-import {
-  Segment,
-  Container,
-  Grid,
-  Header,
-  Image,
-  Divider
-} from "semantic-ui-react";
+import { Container, Header, Divider } from "semantic-ui-react";
 import { connect } from "react-redux";
 import { homePageLoaded } from "./redux/actions";
 import counting_gif from "../../assets/images/counting_money.gif";
@@ -84,6 +77,7 @@ class Home extends Component {
         >
           <div className="title-items black-text">
             <h2>Budgets on another Level</h2>
+            <br />
             <p>
               With Bugs Money you can easily manage your monthly budget, add all
               your accounts, keep all you transactions in one place
@@ -111,6 +105,7 @@ class Home extends Component {
         >
           <div className="title-items black-text">
             <h2>Never Run Out Of Money Again</h2>
+            <br />
             <p>
               Get instant reports on how have you spent your money, how much is
               available and how much do you owe according to your budget
@@ -124,6 +119,7 @@ class Home extends Component {
             </span>
           </div>
         </div>
+        <br />
         <br />
         <div className="content2 wow slideInRight" data-wow-delay="0.3s">
           <Container fluid className="wow zoomIn" data-wow-delay="0.7s">

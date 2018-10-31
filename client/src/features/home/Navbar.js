@@ -3,7 +3,7 @@ import { connect } from "react-redux";
 import { Link } from "react-router-dom";
 import { Responsive } from "semantic-ui-react";
 import { default as Sidebar } from "../dashboard/Sidebar";
-import "./styles/home.css";
+import "./styles/navbar.css";
 
 const NavBarChildren = ({ children }) => (
   <div className="main_div" style={{ marginTop: "4em" }}>
