@@ -11,7 +11,7 @@ services:
     ports:
       - "5000:5000"
     volumes:
-      - ./:/usr/src/app/
+      - ./server:/usr/src/app/server
     depends_on:
       - mongodb
     command: npm run start

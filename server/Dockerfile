@@ -7,6 +7,6 @@ RUN npm i -g nodemon
 COPY package*.json ./
 RUN npm install
 
-COPY server ./server
+COPY . .
 EXPOSE 5000
 CMD [ "npm", "run", "start" ]
