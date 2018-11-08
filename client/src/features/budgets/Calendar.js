@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { Rail, Sticky, Image, Header } from "semantic-ui-react";
+// import { Rail, Sticky, Image, Header } from "semantic-ui-react";
 import { MonthInput, YearInput } from "semantic-ui-calendar-react";
 
 export default class Calendar extends Component {

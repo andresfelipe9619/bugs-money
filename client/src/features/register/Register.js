@@ -5,15 +5,15 @@ import {
   Message,
   Grid,
   Header,
-  Segment,
-  Image,
-  Checkbox
+  Segment
+  // Image,
+  // Checkbox
 } from "semantic-ui-react";
 import { connect } from "react-redux";
 import withSemanticUIFormik from "../login/hoc/FormikSUI";
 import * as Yup from "yup";
 import { Redirect } from "react-router-dom";
-import { success } from "../../services/redux/actions/alertActions";
+// import { success } from "../../services/redux/actions/alertActions";
 import {
   registerRequest
   // loginFacebookRequest,
@@ -180,6 +180,6 @@ export default connect(
         setSubmitting(false);
       }, 1000);
     },
-    displayName: "RegisterForm" 
+    displayName: "RegisterForm"
   })(MyInnerForm)
 );

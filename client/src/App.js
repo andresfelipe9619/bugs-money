@@ -39,17 +39,17 @@ class App extends Component {
     return (
       <ErrorBoundary>
         <Navbar>
-          <Container>
-            <Switch>
-              <Route exact path="/" component={LoadableHome} />
-              <PrivateRoute path="/dashboard" component={LoadableDashboard} />
-              <Route exact path="/registro" component={LoadableRegister} />
-              <Route exact path="/ingreso" component={LoadableLogin} />
-              <PrivateRoute exact path="/perfil" component={LoadableProfile} />
-              <Route component={PageNotFound} />
-            </Switch>
-          </Container>
-          <SemanticToastContainer position="top-right" />
+          {/* <Container> */}
+          <Switch>
+            <Route exact path="/" component={LoadableHome} />
+            <PrivateRoute path="/dashboard" component={LoadableDashboard} />
+            <Route exact path="/registro" component={LoadableRegister} />
+            <Route exact path="/ingreso" component={LoadableLogin} />
+            <PrivateRoute exact path="/perfil" component={LoadableProfile} />
+            <Route component={PageNotFound} />
+          </Switch>
+          <SemanticToastContainer position="bottom-right" />
+          {/* </Container> */}
         </Navbar>
       </ErrorBoundary>
     );

@@ -1,9 +1,9 @@
 import React, { Component } from "react";
-import { Grid, Segment } from "semantic-ui-react";
+import { Grid } from "semantic-ui-react";
 import DataTable from "./../dashboard/DataTable";
 import BudgetRow from "./BudgetRow";
 import Calendar from "./Calendar";
-import test from "./test"
+import test from "./test";
 export default class Budget extends Component {
   render() {
     return (
