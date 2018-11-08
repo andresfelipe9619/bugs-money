@@ -11,12 +11,12 @@ services:
     ports:
       - "5000:5000"
     volumes:
-      - ./server:/usr/src/app/server
+      - ./:/usr/src/app/
     depends_on:
       - mongodb
     command: npm run start
   client:
-    build: ./front
+    build: ./client
     expose:
       - "3000"
     ports:
