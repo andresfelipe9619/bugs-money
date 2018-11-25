@@ -1,24 +1,8 @@
 import React, { Component } from "react";
-import { connect } from "react-redux";
-import { reportsPageLoaded } from "./redux/actions";
 import { Route, Switch } from "react-router-dom";
 import Transactions from "../transactions/Transactions";
-import Services from "../../services/api";
-import { success } from "../../services/redux/actions/alertActions";
 import ReportsTab from "./ReportsTab";
-import axios from "axios";
 class Reports extends Component {
-  componentDidMount() {
-    this.props.reportsPageLoaded(true);
-    axios.get("/api/user").then(data => {
-      console.log(data.data);
-      this.props.alertSuccess("Holy shit, you've done it right");
-    });
-  }
-
-  componentWillUnmount() {
-    this.props.reportsPageLoaded(false);
-  }
   render() {
     return (
       <div>
@@ -34,19 +18,4 @@ class Reports extends Component {
     );
   }
 }
-
-const mapDispatchToProps = dispatch => {
-  return {
-    reportsPageLoaded: bool => {
-      dispatch(reportsPageLoaded(bool));
-    },
-    alertSuccess: msg => {
-      dispatch(success(msg));
-    }
-  };
-};
-
-export default connect(
-  null,
-  mapDispatchToProps
-)(Reports);
+export default Reports;

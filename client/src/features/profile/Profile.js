@@ -1,7 +1,6 @@
 import React, { Component } from "react";
 //import PropTypes from "prop-types";
 import { connect } from "react-redux";
-import { profilePageLoaded } from "./redux/actions";
 import { Divider, Message, Segment } from "semantic-ui-react";
 import {
   SettingsPane,
@@ -21,15 +20,15 @@ export class Profile extends Component {
 
     // You will maybe receive your settings from this.props or do a fetch request in your componentWillMount
     // but here is an example of how it should look like:
-    // this.state = {
-    //   "mysettings.general.name": "",
-    //   "mysettings.general.color-theme": "",
-    //   "mysettings.general.email": "",
-    //   "mysettings.general.picture": "",
-    //   "mysettings.profile.firstname": "",
-    //   "mysettings.profile.lastname": "",
-    //   "mysettings.profile.username": ""
-    // };
+    this.state = {
+      "mysettings.general.name": "",
+      "mysettings.general.color-theme": "",
+      "mysettings.general.email": "",
+      "mysettings.general.picture": "",
+      "mysettings.profile.firstname": "",
+      "mysettings.profile.lastname": "",
+      "mysettings.profile.username": ""
+    };
     // Save settings after close
     this._leavePaneHandler = (wasSaved, newSettings, oldSettings) => {
       // "wasSaved" indicates wheather the pane was just closed or the save button was clicked.
@@ -91,44 +90,44 @@ export class Profile extends Component {
 
     // Define one of your Settings pages
 
-    const dynamicOptionsForGeneralPage = [
-      {
-        key: null,
-        label: "Account",
-        type: "headline"
-      },
-      {
-        key: "mysettings.general.email",
-        label: "E-Mail address",
-        type: "text"
-      },
-      {
-        key: "mysettings.general.password",
-        label: "Password",
-        type: "password"
-      },
-      {
-        key: "mysettings.general.password-repeat",
-        label: "Password repeat",
-        type: "password"
-      },
-      {
-        key: null,
-        label: "Appearance",
-        type: "headline"
-      },
-      {
-        key: "mysettings.general.color-theme",
-        label: "Color Theme",
-        type: "custom",
-        component: (
-          <select>
-            <option value="blue">Blue</option>
-            <option value="red">Red</option>
-          </select>
-        )
-      }
-    ];
+    // const dynamicOptionsForGeneralPage = [
+    //   {
+    //     key: null,
+    //     label: "Account",
+    //     type: "headline"
+    //   },
+    //   {
+    //     key: "mysettings.general.email",
+    //     label: "E-Mail address",
+    //     type: "text"
+    //   },
+    //   {
+    //     key: "mysettings.general.password",
+    //     label: "Password",
+    //     type: "password"
+    //   },
+    //   {
+    //     key: "mysettings.general.password-repeat",
+    //     label: "Password repeat",
+    //     type: "password"
+    //   },
+    //   {
+    //     key: null,
+    //     label: "Appearance",
+    //     type: "headline"
+    //   },
+    //   {
+    //     key: "mysettings.general.color-theme",
+    //     label: "Color Theme",
+    //     type: "custom",
+    //     component: (
+    //       <select>
+    //         <option value="blue">Blue</option>
+    //         <option value="red">Red</option>
+    //       </select>
+    //     )
+    //   }
+    // ];
 
     // Then use with:
     // <SettingsPage handler="/settings/general" options={dynamicOptionsForGeneralPage} />
@@ -320,7 +319,7 @@ export class Profile extends Component {
     // this.prefs.className = "md_modal show";
     // this.showPrefs.bind(this);
   }
-
+  
 }
 
 const mapStateToProps = state => ({

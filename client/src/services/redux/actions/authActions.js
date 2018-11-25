@@ -10,6 +10,7 @@ import {
   LOGIN_GOOGLE_REQUEST,
   LOGIN_FACEBOOK_REQUEST
 } from "./constants";
+import {successAlert} from './alertActions';
 import API from "../../api";
 
 const loginRequest = user => ({ type: LOGIN_REQUEST, user });
@@ -62,9 +63,12 @@ export const login = user => {
 
     return API.Auth.login(user)
       .then(response => {
-        response.ok 
-          ? dispatch(loginSuccess(response.usuario))
-          : dispatch(loginFailure(response));
+        if(response.ok){
+          dispatch(loginSuccess(response.usuario))
+          dispatch(successAlert("Que Hay de Nuevo Viejo?"))
+        }else{
+          dispatch(loginFailure(response));
+        } 
         
         dispatch(loginRequest(null));
       })

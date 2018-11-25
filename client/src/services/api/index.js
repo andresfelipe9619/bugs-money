@@ -1,6 +1,6 @@
 import axios from "axios";
 const API_ROOT = "/api";
-const API_YNAB = "api.youneedabudget.com/v1";
+// const API_YNAB = "api.youneedabudget.com/v1";
 
 const responseBody = response => response.data;
 
@@ -8,9 +8,9 @@ let server = axios.create({
   baseURL: API_ROOT
 });
 
-let ynab = axios.create({
-  baseURL: API_YNAB
-});
+// let ynab = axios.create({
+//   baseURL: API_YNAB
+// });
 // let token = null;
 // // request header
 // server.interceptors.request.use(
@@ -27,12 +27,12 @@ let ynab = axios.create({
 //   }
 // );
 
-const ynabRequests = {
-  del: url => ynab.del(`${url}`),
-  get: url => ynab.get(`${url}`),
-  put: (url, body) => ynab.put(`${url}`, body),
-  post: (url, body) => ynab.post(`${url}`, body)
-};
+// const ynabRequests = {
+//   del: url => ynab.del(`${url}`),
+//   get: url => ynab.get(`${url}`),
+//   put: (url, body) => ynab.put(`${url}`, body),
+//   post: (url, body) => ynab.post(`${url}`, body)
+// };
 
 const serverRequests = {
   del: url => server.del(`${url}`).then(responseBody),

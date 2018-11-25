@@ -1,10 +1,25 @@
 import React, { Component } from "react";
 import { Grid } from "semantic-ui-react";
 import DataTable from "./../dashboard/DataTable";
+import { toast } from "react-semantic-toasts";
 import BudgetRow from "./BudgetRow";
 import Calendar from "./Calendar";
+import { connect } from "react-redux";
 import test from "./test";
-export default class Budget extends Component {
+class Budget extends Component {
+  componentDidMount() {
+    const { alert } = this.props;
+    if (alert && alert.message) {
+      // setTimeout(() => this.props.clear(), 5000);
+      toast({
+        type: alert.type,
+        icon: alert.icon,
+        title: alert.type + "Toast",
+        description: alert.message,
+        time: 5000
+      });
+    }
+  }
   render() {
     return (
       <Grid divided>
@@ -25,3 +40,11 @@ export default class Budget extends Component {
     );
   }
 }
+
+function mapStateToProps(state) {
+  return {
+    alert: state.alert
+  };
+}
+
+export default connect(mapStateToProps)(Budget);

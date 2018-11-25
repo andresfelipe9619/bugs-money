@@ -7,18 +7,14 @@ import {
   Grid,
   Header,
   Segment,
-  Image
 } from "semantic-ui-react";
-import { success } from "../../services/redux/actions/alertActions";
-import {
- login
-} from "../../services/redux/actions/authActions";
+import { login } from "../../services/redux/actions/authActions";
 import withSemanticUIFormik from "./hoc/FormikSUI";
 import * as Yup from "yup";
 import { Redirect } from "react-router-dom";
 import Facebook from "./social/Facebook";
 import Google from "./social/Google";
-
+  
 // Our inner form component. Will be wrapped with Formik({..})
 const MyInnerForm = props => {
   const {
