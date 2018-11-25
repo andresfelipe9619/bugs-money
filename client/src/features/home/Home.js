@@ -1,23 +1,15 @@
 import React, { Component } from "react";
 import { Container, Header, Divider } from "semantic-ui-react";
-import { connect } from "react-redux";
-import { homePageLoaded } from "./redux/actions";
-import counting_gif from "../../assets/images/counting_money.gif";
 import budget_ico from "../../assets/images/king_budget.jpg";
 import no_money from "../../assets/images/no_money.jpg";
 import "./styles/home.css";
 import WOW from "wowjs";
-class Home extends Component {
+export default class Home extends Component {
   componentDidMount() {
-    this.props.homePageLoaded(true);
     const wow = new WOW.WOW();
     wow.init();
   }
-
-  componentWillUnmount() {
-    this.props.homePageLoaded(false);
-  }
-
+  
   render() {
     return (
       <div className="App">
@@ -140,15 +132,3 @@ class Home extends Component {
     );
   }
 }
-
-const mapDispatchToProps = dispatch => {
-  return {
-    homePageLoaded: bool => {
-      dispatch(homePageLoaded(bool));
-    }
-  };
-};
-export default connect(
-  null,
-  mapDispatchToProps
-)(Home);

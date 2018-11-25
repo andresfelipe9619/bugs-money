@@ -11,9 +11,7 @@ import {
 } from "semantic-ui-react";
 import { success } from "../../services/redux/actions/alertActions";
 import {
-  loginRequest
-  // loginFacebookRequest,
-  // loginGoogleRequest
+ login
 } from "../../services/redux/actions/authActions";
 import withSemanticUIFormik from "./hoc/FormikSUI";
 import * as Yup from "yup";
@@ -69,9 +67,9 @@ const MyInnerForm = props => {
                   error
                   header="Hay problemas con el inicio de sesion"
                   content={
-                    "err" in loginHasFailed
-                      ? loginHasFailed.err.message
-                      : loginHasFailed
+                    "err" in loginHasFailed || "errors" in loginHasFailed ? (
+                      <p>{JSON.stringify(loginHasFailed, null, 4)}</p>
+                    ) : null
                   }
                 />
               ) : null}
@@ -136,7 +134,7 @@ const mapState = state => {
 const mapDispatch = dispatch => {
   return {
     loginRequest: user => {
-      dispatch(loginRequest(user));
+      dispatch(login(user));
     }
   };
 };

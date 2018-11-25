@@ -15,7 +15,7 @@ import * as Yup from "yup";
 import { Redirect } from "react-router-dom";
 // import { success } from "../../services/redux/actions/alertActions";
 import {
-  registerRequest
+  register
   // loginFacebookRequest,
   // loginGoogleRequest
 } from "../../services/redux/actions/authActions";
@@ -144,7 +144,7 @@ const mapState = state => {
 const mapDispatch = dispatch => {
   return {
     registerRequest: user => {
-      dispatch(registerRequest(user));
+      dispatch(register(user));
     }
   };
 };

@@ -21,21 +21,23 @@ export class Profile extends Component {
 
     // You will maybe receive your settings from this.props or do a fetch request in your componentWillMount
     // but here is an example of how it should look like:
-    this.state = {
-      "mysettings.general.name": "",
-      "mysettings.general.color-theme": "",
-      "mysettings.general.email": "",
-      "mysettings.general.picture": "",
-      "mysettings.profile.firstname": "",
-      "mysettings.profile.lastname": "",
-      "mysettings.profile.username": ""
-    };
+    // this.state = {
+    //   "mysettings.general.name": "",
+    //   "mysettings.general.color-theme": "",
+    //   "mysettings.general.email": "",
+    //   "mysettings.general.picture": "",
+    //   "mysettings.profile.firstname": "",
+    //   "mysettings.profile.lastname": "",
+    //   "mysettings.profile.username": ""
+    // };
     // Save settings after close
     this._leavePaneHandler = (wasSaved, newSettings, oldSettings) => {
       // "wasSaved" indicates wheather the pane was just closed or the save button was clicked.
       if (wasSaved && newSettings !== oldSettings) {
         // do something with the settings, e.g. save via ajax.
-        this.setState(newSettings);
+        // this.setState(newSettings);
+        console.log('update user profile');
+        
       }
       this.hidePrefs();
     };
@@ -135,7 +137,7 @@ export class Profile extends Component {
     return (
       <div>
         <div style={{ margin: "30px 0 90px 0" }}>
-          <button
+          <button 
             onClick={this.showPrefs.bind(this)}
             className="btn btn-default"
           >
@@ -246,7 +248,7 @@ export class Profile extends Component {
                     <input
                       type="text"
                       name="mysettings.profile.username"
-                      className="form-control"
+                      className="form-control" 
                       placeholder="Username"
                       aria-describedby="basic-addon1"
                       onChange={this._settingsChanged}
@@ -315,26 +317,17 @@ export class Profile extends Component {
   }
 
   componentDidMount() {
-    this.props.profilePageLoaded(true);
     // this.prefs.className = "md_modal show";
     // this.showPrefs.bind(this);
   }
 
-  componentWillUnmount() {
-    this.props.profilePageLoaded(false);
-  }
 }
 
-const mapStateToProps = state => ({});
+const mapStateToProps = state => ({
+  userHasLoggedin: state.authService.loginSuccess,
+});
 
-const mapDispatchToProps = dispatch => {
-  return {
-    profilePageLoaded: bool => {
-      dispatch(profilePageLoaded(bool));
-    }
-  };
-};
 export default connect(
   mapStateToProps,
-  mapDispatchToProps
+  null
 )(Profile);

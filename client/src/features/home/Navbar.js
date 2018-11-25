@@ -4,7 +4,7 @@ import { Link } from "react-router-dom";
 import { Container, Responsive, Image } from "semantic-ui-react";
 import { default as Sidebar } from "../dashboard/Sidebar";
 import king from "../../assets/images/king_icon.png";
-import { logoutRequest } from "../../services/redux/actions/authActions";
+import { logout } from "../../services/redux/actions/authActions";
 import "./styles/navbar.css";
 
 const NavBarChildren = ({ children }) => (
@@ -122,8 +122,8 @@ const mapState = state => {
 
 const mapDispatch = dispatch => {
   return {
-    logout: user => {
-      user ? dispatch(logoutRequest(user)) : console.log("No user to logout");
+    logoutRequest: user => {
+      user ? dispatch(logout(user)) : console.log("No user to logout");
     }
   };
 };
