@@ -7,7 +7,7 @@ client/node_modules
 
 # testing
 coverage
-
+codealike*
 # production
 client/build
 
