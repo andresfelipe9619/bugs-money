@@ -1,38 +1,11 @@
 import axios from "axios";
 const API_ROOT = "/api";
-// const API_YNAB = "api.youneedabudget.com/v1";
 
 const responseBody = response => response.data;
 
 let server = axios.create({
   baseURL: API_ROOT
 });
-
-// let ynab = axios.create({
-//   baseURL: API_YNAB
-// });
-// let token = null;
-// // request header
-// server.interceptors.request.use(
-//   config => {
-//     // Do something before request is sent
-//     if (token) {
-//       config.headers = { Authorization: token };
-//     }
-
-//     return config;
-//   },
-//   error => {
-//     return Promise.reject(error);
-//   }
-// );
-
-// const ynabRequests = {
-//   del: url => ynab.del(`${url}`),
-//   get: url => ynab.get(`${url}`),
-//   put: (url, body) => ynab.put(`${url}`, body),
-//   post: (url, body) => ynab.post(`${url}`, body)
-// };
 
 const serverRequests = {
   del: url => server.del(`${url}`).then(responseBody),
@@ -45,8 +18,8 @@ const Auth = {
   profile: () => serverRequests.get("/profile"),
   login: user => serverRequests.post("/login", user),
   loginGoogle: user => serverRequests.post("/login/google", user),
-  register: user => serverRequests.post("/user",  user ),
-  save: user => serverRequests.put("/user", user )
+  register: user => serverRequests.post("/user", user),
+  save: user => serverRequests.put("/user", user)
 };
 
 const Account = {
@@ -55,7 +28,7 @@ const Account = {
 };
 
 const Transaction = {
-  getAll: page => serverRequests.get(`/transaction`),
+  getAll: () => serverRequests.get(`/transaction`),
   del: id => serverRequests.del(`/transaction/${id}`),
   get: id => serverRequests.get(`/transaction/${id}`),
   unfavorite: id => serverRequests.del(`/transaction/${id}/favorite`),
@@ -63,7 +36,7 @@ const Transaction = {
     serverRequests.put(`/transaction/${transaction}`, {
       transaction
     }),
-  create: article => serverRequests.post("/transaction", { article })
+  create: transaction => serverRequests.post("/transaction", { transaction })
 };
 
 const User = {
@@ -72,12 +45,9 @@ const User = {
   getAll: () => serverRequests.get(`/user`).then(responseBody)
 };
 
-export default{
+export default {
   Auth,
   User,
   Transaction,
   Account
-  // setToken: _token => {
-  //   token = _token;
-  // }
 };
