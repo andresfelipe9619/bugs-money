@@ -3,7 +3,7 @@ const API_ROOT = "/api";
 
 const responseBody = response => response.data;
 
-let server = axios.create({
+const server = axios.create({
   baseURL: API_ROOT
 });
 
@@ -31,7 +31,6 @@ const Transaction = {
   getAll: () => serverRequests.get(`/transaction`),
   del: id => serverRequests.del(`/transaction/${id}`),
   get: id => serverRequests.get(`/transaction/${id}`),
-  unfavorite: id => serverRequests.del(`/transaction/${id}/favorite`),
   update: transaction =>
     serverRequests.put(`/transaction/${transaction}`, {
       transaction

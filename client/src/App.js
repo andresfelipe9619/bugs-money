@@ -13,22 +13,19 @@ import {
   LoadableProfile
 } from "./features";
 class App extends Component {
-
   render() {
     return (
       <ErrorBoundary>
         <Navbar>
-          {/* <Container> */}
           <Switch>
             <Route exact path="/" component={LoadableHome} />
-            <PrivateRoute path="/dashboard" component={LoadableDashboard} />
+            <Route path="/dashboard" component={LoadableDashboard} />
             <Route exact path="/registro" component={LoadableRegister} />
             <Route exact path="/ingreso" component={LoadableLogin} />
             <PrivateRoute exact path="/perfil" component={LoadableProfile} />
             <Route component={PageNotFound} />
           </Switch>
-          <SemanticToastContainer position="top-right"/>
-          {/* </Container> */}
+          <SemanticToastContainer position="bottom-right" />
         </Navbar>
       </ErrorBoundary>
     );
@@ -40,9 +37,9 @@ function mapStateToProps(state) {
   };
 }
 
-
 export default withRouter(
   connect(
-    mapStateToProps, null
+    mapStateToProps,
+    null
   )(App)
 );

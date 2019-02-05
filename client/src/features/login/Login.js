@@ -6,7 +6,7 @@ import {
   Message,
   Grid,
   Header,
-  Segment,
+  Segment
 } from "semantic-ui-react";
 import { login } from "../../services/redux/actions/authActions";
 import withSemanticUIFormik from "./hoc/FormikSUI";
@@ -14,7 +14,7 @@ import * as Yup from "yup";
 import { Redirect } from "react-router-dom";
 import Facebook from "./social/Facebook";
 import Google from "./social/Google";
-  
+
 // Our inner form component. Will be wrapped with Formik({..})
 const MyInnerForm = props => {
   const {
@@ -145,7 +145,7 @@ export default connect(
       email: Yup.string()
         .email("Correo invalido")
         .required("Correo es requerido!"),
-      password: Yup.string().required("Constrasea requerida!")
+      password: Yup.string().required("Constraseña requerida!")
     }),
     handleSubmit: (values, { setSubmitting, props }) => {
       setTimeout(() => {

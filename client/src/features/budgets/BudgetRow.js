@@ -17,7 +17,7 @@ export default class BudgetRow extends Component {
 
   render() {
     return (
-      <Menu fixed="top" style={{ marginTop: "55px" }} inverted>
+      <Menu style={{ marginTop: "55px" }} inverted>
         <Menu.Item header>
           3 BILLIONS TO BE BUDGETED
         </Menu.Item>
