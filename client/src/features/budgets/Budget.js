@@ -25,7 +25,7 @@ class Budget extends Component {
     }
   }
 
-  handleOnEdit = id => {};
+  handleOnEdit = budget => {};
   handleOnview = id => {};
   handleOnDelete = id => {};
   handleOnCreate = budget => {};
@@ -46,9 +46,13 @@ class Budget extends Component {
           </Grid.Column>
         </Grid.Row>
         <Grid.Row centered style={{ marginTop: "100px" }}>
-          <Grid.Column width={12}>
+          <Grid.Column width={16}>
             {budgets && budgets.categories ? (
-              <DataTable {...handlers} data={budgets.categories} />
+              <DataTable
+                actions
+                handlers={handlers}
+                data={budgets.categories}
+              />
             ) : (
               <p>No hay nada presupuestado viejo, que tal si te creas algo?</p>
             )}
