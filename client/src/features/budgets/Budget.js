@@ -8,8 +8,10 @@ import test from "./test";
 class Budget extends Component {
   state = {
     budgets: [],
+    isModalOpen: false,
     currentBudget: null
   };
+
   componentDidMount() {
     const { alert } = this.props;
     this.setState({ budgets: test.budgets });
@@ -23,12 +25,17 @@ class Budget extends Component {
       });
     }
   }
+  openModal = () => {
+    this.setState({ isModalOpen: true });
+  };
+  closeModal = () => {
+    this.setState({ isModalOpen: false });
+  };
+  changeModalState = () => {};
   handleOnCreate = budget => e => {};
   handleOnEdit = budget => e => {};
   handleOnView = budget => e => {};
   handleOnDelete = budget => e => {
-    console.log("budget", budget);
-    console.log("budgesssst", this.state.budgets);
     let budgets = this.state.budgets.filter(b => b["name"] !== budget["name"]);
     this.setState({ budgets });
   };
@@ -36,13 +43,14 @@ class Budget extends Component {
 
   render() {
     const handlers = {
+      openModal: this.openModal,
+      closeModal: this.closeModal,
       handleOnEdit: this.handleOnEdit,
       handleOnView: this.handleOnView,
       handleOnCreate: this.handleOnCreate,
       handleOnDelete: this.handleOnDelete
     };
     const { budgets } = this.state;
-    console.log("budgets", budgets);
     return (
       <Grid divided>
         <Grid.Row>
