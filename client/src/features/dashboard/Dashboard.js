@@ -3,6 +3,7 @@ import { Route, Switch } from "react-router-dom";
 import Transactions from "../transactions/Transactions";
 import Reports from "../reports/Reports";
 import Budget from "../budgets/Budget";
+import Cuentas from './Cuentas';
 
 class Dashboard extends Component {
 
@@ -12,6 +13,10 @@ class Dashboard extends Component {
         <Route
           path={this.props.match.url + "/presupuesto"}
           component={Budget}
+        />
+        <Route
+          path={this.props.match.url + "/cuentas"}
+          component={Cuentas}
         />
         <Route
           path={this.props.match.url + "/transacciones"}

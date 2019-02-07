@@ -5,6 +5,7 @@ import no_money from "../../assets/images/no_money.jpg";
 import "./styles/home.css";
 import WOW from "wowjs";
 export default class Home extends Component {
+  
   componentDidMount() {
     const wow = new WOW.WOW();
     wow.init();
