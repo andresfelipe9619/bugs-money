@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { Menu } from "semantic-ui-react";
+import { Grid, Menu } from "semantic-ui-react";
 
 export default class BudgetRow extends Component {
   state = {
@@ -17,11 +17,23 @@ export default class BudgetRow extends Component {
 
   render() {
     return (
-      <Menu style={{ marginTop: "55px" }} inverted>
-        <Menu.Item header>
-          3 BILLIONS TO BE BUDGETED
-        </Menu.Item>
-      </Menu>
+      <React.Fragment>
+        <Grid.Row>
+          <Grid.Column width={16}>
+            {" "}
+            <Menu style={{ marginTop: "55px" }} inverted>
+              <Menu.Item header>PRESUPUESTOS</Menu.Item>
+              <Menu.Item>PRESUPUESTOS</Menu.Item>
+              <Menu.Item position="right">+</Menu.Item>
+            </Menu>
+          </Grid.Column>
+        </Grid.Row>
+        <Grid.Row>
+          <Grid.Column width={4}>ss</Grid.Column>
+          <Grid.Column width={4}>ss</Grid.Column>
+          <Grid.Column width={4}>ss</Grid.Column>
+        </Grid.Row>
+      </React.Fragment>
     );
   }
 }
