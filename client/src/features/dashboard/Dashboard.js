@@ -3,7 +3,7 @@ import { Route, Switch } from "react-router-dom";
 import Transactions from "../transactions/Transactions";
 import Reports from "../reports/Reports";
 import Budget from "../budgets/Budget";
-import Cuentas from './Cuentas';
+import Cuentas from '../accounts/Cuentas';
 
 class Dashboard extends Component {
 

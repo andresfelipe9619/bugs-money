@@ -1,7 +1,6 @@
 import React from "react";
 import ReactTable from "react-table";
 import "react-table/react-table.css";
-<<<<<<< Updated upstream
 import { Button, Icon } from "semantic-ui-react";
 import "./styles/data.table.css";
 const ActionsCell = ({
@@ -28,25 +27,6 @@ const ActionsCell = ({
     )}
   </Button.Group>
 );
-=======
-import checkboxHOC from "react-table/lib/hoc/selectTable";
-
-const CheckboxTable = checkboxHOC(ReactTable);
-
-function getColumns(data) {
-  const columns = [];
-  const sample = data[0];
-  Object.keys(sample).forEach(key => {
-    if (key !== "_id" && key !== "id") {
-      columns.push({
-        accessor: key,
-        Header: key
-      });
-    }
-  });
-  return columns;
-}
->>>>>>> Stashed changes
 
 export default class DataTable extends React.PureComponent {
   getColumns = data => {
