@@ -2,22 +2,33 @@ import React from "react";
 import ReactTable from "react-table";
 import "react-table/react-table.css";
 import { Button, Icon } from "semantic-ui-react";
-
-const ActionsCell = ({ handleOnEdit, handleOnDelete, handleOnView }) => (
+import "./styles/data.table.css";
+const ActionsCell = ({
+  handleOnEdit,
+  handleOnDelete,
+  handleOnView,
+  original
+}) => (
   <Button.Group>
-    <Button icon onClick={handleOnView}>
-      <Icon name="eye" />
-    </Button>
-    <Button icon>
-      <Icon name="edit" onClick={handleOnEdit} />
-    </Button>{" "}
-    <Button icon>
-      <Icon name="trash" onClick={handleOnDelete} />
-    </Button>
+    {handleOnView && (
+      <Button icon onClick={handleOnView(original)}>
+        <Icon name="eye" />
+      </Button>
+    )}
+    {handleOnEdit && (
+      <Button icon>
+        <Icon name="edit" onClick={handleOnEdit(original)} />
+      </Button>
+    )}{" "}
+    {handleOnDelete && (
+      <Button icon>
+        <Icon name="trash" onClick={handleOnDelete(original)} />
+      </Button>
+    )}
   </Button.Group>
 );
 
-export default class DataTable extends React.Component {
+export default class DataTable extends React.PureComponent {
   getColumns = data => {
     const columns = [];
     const sample = data[0];
@@ -25,7 +36,8 @@ export default class DataTable extends React.Component {
       if (key !== "_id" && key !== "id") {
         let column = {
           accessor: key,
-          Header: key
+          Header: key,
+          className: "center"
         };
         columns.push(column);
       }
@@ -33,7 +45,7 @@ export default class DataTable extends React.Component {
     if (this.props.actions) {
       columns.push({
         Header: "",
-        Cell: cellInfo => <ActionsCell {...this.props.hanlers} {...cellInfo} />
+        Cell: cellInfo => <ActionsCell {...this.props.handlers} {...cellInfo} />
       });
     }
     return columns;
@@ -41,6 +53,7 @@ export default class DataTable extends React.Component {
 
   render() {
     const { data } = this.props;
+    console.log("table data", data);
     if (!data) return null;
     const columns = this.getColumns(data);
     return (

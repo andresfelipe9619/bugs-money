@@ -12,8 +12,7 @@ class Budget extends Component {
   };
   componentDidMount() {
     const { alert } = this.props;
-    this.setState({ budgets: test.data.budget });
-
+    this.setState({ budgets: test.budgets });
     if (alert && alert.message) {
       toast({
         type: alert.type,
@@ -24,35 +23,37 @@ class Budget extends Component {
       });
     }
   }
-
-  handleOnEdit = budget => {};
-  handleOnview = id => {};
-  handleOnDelete = id => {};
-  handleOnCreate = budget => {};
+  handleOnCreate = budget => e => {};
+  handleOnEdit = budget => e => {};
+  handleOnView = budget => e => {};
+  handleOnDelete = budget => e => {
+    console.log("budget", budget);
+    console.log("budgesssst", this.state.budgets);
+    let budgets = this.state.budgets.filter(b => b["name"] !== budget["name"]);
+    this.setState({ budgets });
+  };
+  handleOnCreate = budget => e => {};
 
   render() {
     const handlers = {
       handleOnEdit: this.handleOnEdit,
-      handleOnview: this.handleOnview,
+      handleOnView: this.handleOnView,
       handleOnCreate: this.handleOnCreate,
       handleOnDelete: this.handleOnDelete
     };
     const { budgets } = this.state;
+    console.log("budgets", budgets);
     return (
       <Grid divided>
         <Grid.Row>
-          <Grid.Column width={12}>
+          <Grid.Column width={16}>
             <BudgetRow />
           </Grid.Column>
         </Grid.Row>
         <Grid.Row centered style={{ marginTop: "100px" }}>
           <Grid.Column width={16}>
-            {budgets && budgets.categories ? (
-              <DataTable
-                actions
-                handlers={handlers}
-                data={budgets.categories}
-              />
+            {budgets && budgets.length > 0 ? (
+              <DataTable actions handlers={handlers} data={budgets} />
             ) : (
               <p>No hay nada presupuestado viejo, que tal si te creas algo?</p>
             )}
