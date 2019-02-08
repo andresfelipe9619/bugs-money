@@ -1,36 +1,24 @@
 # Bugs Money
 
-> Short blurb about what your product does.
+> The System will manage the Financial processes that any person can take, having as base the management of accounts and budget. Can record the movement of your accounts and relate them to your budgets, to generate a consolidated view of your financial status.
 
 [![NPM Version][npm-image]][npm-url]
-[![Build Status][travis-image]][travis-url]
-[![Downloads Stats][npm-downloads]][npm-url]
 
-The System will manage the Financial processes that any person can take, having as base the management of accounts and budget. It should be an application easy to use, and that in simple terms can record the movement of your accounts and relate them to your budgets, to generate a consolidated view of your financial status.
+[![Build Status][travis-image]][travis-url]
+
+[![Downloads Stats][npm-downloads]][npm-url]
 
 ![](header.png)
 
-## Installation
-
-Windows, OS X & Linux:
-
-```sh
-npm run dev-installation
-```
-
 ## Development setup
 
-Once you have installed all the dependencies, open the MongoDB instance and run the app
+We are using Docker, so you just have to compose the containers and access the server by docker machine ip (http://192.168.99.100) and the respective ports (3000 for the client and 5000 for the server ).
 
 ```sh
-mongod
-mongo
-```
+docker-compose build
 
-then
+docker-compose up
 
-```sh
-npm run dev
 ```
 
 ## Contributing
@@ -52,6 +40,7 @@ npm run dev
 
 ## Built with:
 
+- Docker
 - React js
 - Node js
 - Redux

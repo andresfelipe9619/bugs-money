@@ -1,12 +1,27 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
 import { Link } from "react-router-dom";
-import { Container, Responsive } from "semantic-ui-react";
+import { Container, Responsive, Image } from "semantic-ui-react";
 import { default as Sidebar } from "../dashboard/Sidebar";
+import king from "../../assets/images/king_icon.png";
+import { logout } from "../../services/redux/actions/authActions";
+import "./styles/navbar.css";
 
 const NavBarChildren = ({ children }) => (
-  <Container style={{ marginTop: "5em" }}>{children}</Container>
+  <Container style={{ marginTop: "4em" }}>{children}</Container>
+  // <div className="main_div" style={{ marginTop: "4em" }}>
+  //   {children}
+  // </div>
 );
+
+const Avatar = ({ name, img }) => {
+  return (
+    <div>
+      <Image src={img ? img : king} alt="user-img" avatar />
+      <span>{name}</span>
+    </div>
+  );
+};
 
 const leftItems = [
   { as: Link, to: "/", content: "Inicio", key: "inicio", name: "home" },
@@ -18,12 +33,6 @@ const leftItems = [
     key: "presupuesto",
     name: "money bill alternate outline"
   },
-  // {
-  //   as: Link,
-  //   to: '/dashboard/transacciones',
-  //   content: 'Transacciones',
-  //   key: 'transacciones', name: ''
-  // },
   {
     as: Link,
     to: "/dashboard/cuentas",
@@ -40,10 +49,30 @@ const leftItems = [
   }
 ];
 
-const rightItems = [
-  { as: Link, to: "/ingreso", content: "Ingreso", key: "ingreso" },
-  { as: Link, to: "/registro", content: "Registro", key: "registro" }
-];
+const rightItems = (user, logout) => {
+  let normal = [
+    { as: Link, to: "/ingreso", content: "Ingreso", key: "ingreso" },
+    { as: Link, to: "/registro", content: "Registro", key: "registro" }
+  ];
+  let loggedin = [];
+
+  if (user) {
+    loggedin = [
+      {
+        as: Link,
+        to: "/perfil",
+        key: "avatar",
+        children: <Avatar name={user.nombre} img={user.img} />
+      },
+      { content: "Salir", key: "salir", onClick: logout }
+    ];
+  }
+
+  return {
+    normal,
+    loggedin
+  };
+};
 
 class NavBar extends Component {
   state = {
@@ -59,7 +88,7 @@ class NavBar extends Component {
   handleToggle = () => this.setState({ visible: !this.state.visible });
 
   render() {
-    const { children } = this.props;
+    const { children, user, logout } = this.props;
     const { visible } = this.state;
 
     return (
@@ -69,8 +98,9 @@ class NavBar extends Component {
             leftItems={leftItems}
             onPusherClick={this.handlePusher}
             onToggle={this.handleToggle}
-            rightItems={rightItems}
+            rightItems={rightItems(user, logout)}
             visible={visible}
+            isLoggedin={user}
           >
             <NavBarChildren>{children}</NavBarChildren>
           </Sidebar>
@@ -84,8 +114,20 @@ class NavBar extends Component {
   }
 }
 
-const mapStateToProps = dispatch => {
-  return {};
+const mapState = state => {
+  return {
+    user: state.authService.loginSuccess
+  };
 };
 
-export default connect(mapStateToProps)(NavBar);
+const mapDispatch = dispatch => {
+  return {
+    logoutRequest: user => {
+      user ? dispatch(logout(user)) : console.log("No user to logout");
+    }
+  };
+};
+export default connect(
+  mapState,
+  mapDispatch
+)(NavBar);

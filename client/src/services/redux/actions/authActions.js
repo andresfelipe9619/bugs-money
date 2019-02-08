@@ -1,212 +1,108 @@
 import axios from "axios";
 import {
   LOGIN_REQUEST,
-  LOGIN_GOOGLE_REQUEST,
-  LOGIN_FACEBOOK_REQUEST,
   LOGIN_SUCCESS,
   LOGIN_FAILURE,
   LOGOUT_REQUEST,
   REGISTER_REQUEST,
   REGISTER_SUCCESS,
   REGISTER_FAILURE,
-  GET_PROFILE,
-  UPDATE_PROFILE,
-  UPDATE_AVATAR,
-  LOGIN_PAGE_FAILED,
-  LOGIN_PAGE_LOADING,
-  LOGIN_PAGE_LOADED
+  LOGIN_GOOGLE_REQUEST,
+  LOGIN_FACEBOOK_REQUEST
 } from "./constants";
+import {successAlert} from './alertActions';
+import API from "../../api";
 
-function loginPageLoaded(message) {
-  return { type: LOGIN_PAGE_LOADED, message };
-}
+const loginRequest = user => ({ type: LOGIN_REQUEST, user });
+const loginSuccess = user => ({ type: LOGIN_SUCCESS, user });
+const loginFailure = error => ({ type: LOGIN_FAILURE, error });
 
-function loginPageLoading(bool) {
-  return { type: LOGIN_PAGE_LOADING, isLoading: bool };
-}
+const logoutRequest = user => ({ type: LOGOUT_REQUEST, user });
+const loginGoogleRequest = user => ({ type: LOGIN_GOOGLE_REQUEST, user });
+const loginFacebookRequest = user => ({ type: LOGIN_FACEBOOK_REQUEST, user });
 
-function loginPageErrored(bool) {
-  return { type: LOGIN_PAGE_FAILED, hasErrored: bool };
-}
-const loginSuccess = (email, password) => {
-  return { type: LOGIN_SUCCESS, user: { email, password } };
-};
+const registerRequest = user => ({ type: REGISTER_REQUEST, user });
+const registerSuccess = user => ({ type: REGISTER_SUCCESS, user });
+const registerFailure = error => ({ type: REGISTER_FAILURE, error });
 
-const loginFailure = error => {
-  return { type: LOGIN_FAILURE, error };
-};
-
-const registerSuccess = (email, password) => {
-  return { type: REGISTER_SUCCESS, user: { email, password } };
-};
-
-const registerFailure = error => {
-  return { type: REGISTER_FAILURE, error };
-};
-
-export const getProfile = data => {
+export const loginFacebook = user => {
   return dispatch => {
+    dispatch(loginFacebookRequest(user));
     return axios
-      .get(`user/profile/`)
-      .then(res => {
-        dispatch({
-          type: GET_PROFILE,
-          usuario: res.data
-        });
+      .get("login/facebook")
+      .then(response => {
+        response.ok 
+          ? dispatch(loginSuccess(response.user))
+          : dispatch(loginFailure(response.error.message));
+
+        dispatch(loginFacebookRequest(null));
       })
-      .catch(err => {
-        console.log(err);
+      .catch(error => {
+        dispatch(loginFailure(error));
       });
   };
 };
 
-export const updateProfile = user => {
+export const loginGoogle = user => {
   return dispatch => {
-    dispatch({
-      type: UPDATE_PROFILE,
-      usuario: user
-    });
+    dispatch(loginGoogleRequest(user));
+
     return axios
-      .put(`user/updateprofile/`, { ...user })
-      .then(res => {
-        dispatch({
-          type: UPDATE_PROFILE,
-          usuario: res.data
-        });
+      .then(response => {
+        dispatch(loginGoogleRequest(null));
       })
-      .catch(err => {
-        console.log(err);
+      .catch(error => {
+        dispatch(loginFailure(error));
       });
   };
 };
 
-export const updateAvatar = user => {
+export const login = user => {
   return dispatch => {
-    return axios
-      .post(`user/avater/`, { user })
-      .then(res => {
-        dispatch({
-          type: UPDATE_AVATAR,
-          avatar: res.data
-        });
+    dispatch(loginRequest(user));
+
+    return API.Auth.login(user)
+      .then(response => {
+        if(response.ok){
+          dispatch(loginSuccess(response.usuario))
+          dispatch(successAlert("Que Hay de Nuevo Viejo?"))
+        }else{
+          dispatch(loginFailure(response));
+        } 
+        
+        dispatch(loginRequest(null));
       })
-      .catch(err => {
-        console.log(err);
+      .catch(error => {
+        "response" in error
+          ? dispatch(loginFailure(error.response))
+          : dispatch(loginFailure(error));
       });
   };
 };
 
-export const loginFacebookRequest = user => {
+export const register = user => {
   return dispatch => {
-    dispatch({
-      type: LOGIN_FACEBOOK_REQUEST,
-      user
-    });
-    return axios
-      .get("auth/facebook")
-      .then(e => {
-        if (e.data.status == "SUCCESS") {
-          dispatch(loginSuccess(e.data.user));
-          // window.location.href = "/";
-        } else {
-          dispatch(loginFailure(e.data.message));
-        }
-        dispatch({
-          type: LOGIN_REQUEST,
-          user: null
-        });
+    dispatch(registerRequest(user));
+
+    return API.Auth.register(user)
+      .then(response => {
+        response.ok 
+          ? dispatch(registerSuccess(user))
+          : dispatch(registerFailure(response));
+        
+        dispatch(registerRequest(null));
       })
-      .catch(err => {
-        dispatch(loginFailure(err));
+      .catch(error => {
+        "data" in error
+          ? dispatch(registerFailure(error.err))
+          : dispatch(registerFailure(error));
       });
   };
 };
 
-export const loginGoogleRequest = user => {
+export const logout = user => {
   return dispatch => {
-    dispatch({
-      type: LOGIN_GOOGLE_REQUEST,
-      user
-    });
-    return axios
-      .post("auth/google")
-      .then(e => {
-        if (e.data.status == "SUCCESS") {
-          dispatch(loginSuccess(e.data.user));
-          // window.location.href = "/";
-        } else {
-          dispatch(loginFailure(e.data.message));
-        }
-        dispatch({
-          type: LOGIN_REQUEST,
-          user: null
-        });
-      })
-      .catch(err => {
-        dispatch(loginFailure(err));
-      });
-  };
-};
-
-export const loginRequest = (email, password) => {
-  return dispatch => {
-    dispatch({
-      type: LOGIN_REQUEST,
-      user: { email, password }
-    });
-    return axios
-      .post("user/login", { email, password })
-      .then(e => {
-        if (e.data.status == "SUCCESS") {
-          dispatch(loginSuccess(e.data.user));
-          window.location.href = "/";
-        } else {
-          dispatch(loginFailure(e.data.message));
-        }
-        dispatch({
-          type: LOGIN_REQUEST,
-          user: null
-        });
-      })
-      .catch(err => {
-        dispatch(loginFailure(err));
-      });
-  };
-};
-export const registerRequest = user => {
-  return dispatch => {
-    dispatch({
-      type: REGISTER_REQUEST,
-      user
-    });
-    return axios
-      .post("user/sign_up", { ...user })
-      .then(e => {
-        if (e.data.status == "SUCCESS") {
-          dispatch(registerSuccess(user));
-        } else {
-          dispatch(registerFailure(e.data.message));
-        }
-      })
-      .catch(err => {
-        dispatch(registerFailure(err));
-      });
-  };
-};
-
-export const logoutRequest = data => {
-  return dispatch => {
-    return axios
-      .get(`logout`)
-      .then(res => {
-        dispatch({
-          type: LOGOUT_REQUEST,
-          usuario: res.data
-        });
-        window.location.href = "/";
-      })
-      .catch(err => {
-        loginFailure(err);
-      });
+    dispatch(logoutRequest(user))
+    dispatch(loginSuccess(null));
   };
 };

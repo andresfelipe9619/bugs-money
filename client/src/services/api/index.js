@@ -1,65 +1,47 @@
 import axios from "axios";
-const API_ROOT = "/api/";
-const responseBody = res => {
-  console.log(res);
-  return res;
-};
-let instance = axios.create({
+const API_ROOT = "/api";
+
+const responseBody = response => response.data;
+
+const server = axios.create({
   baseURL: API_ROOT
 });
-// let token = null;
-// // request header
-// instance.interceptors.request.use(
-//   config => {
-//     // Do something before request is sent
-//     if (token) {
-//       config.headers = { Authorization: token };
-//     }
 
-//     return config;
-//   },
-//   error => {
-//     return Promise.reject(error);
-//   }
-// );
-
-const requests = {
-  del: url => instance.del(`${url}`),
-  get: url => instance.get(`${url}`),
-  put: (url, body) => instance.put(`${url}`, body),
-  post: (url, body) => instance.post(`${url}`, body)
+const serverRequests = {
+  del: url => server.del(`${url}`).then(responseBody),
+  get: url => server.get(`${url}`).then(responseBody),
+  put: (url, body) => server.put(`${url}`, body).then(responseBody),
+  post: (url, body) => server.post(`${url}`, body).then(responseBody)
 };
 
 const Auth = {
-  profile: () => requests.get("/profile"),
-  login: (email, password) =>
-    requests.post("/user/login", { user: { email, password } }),
-  register: (email, password) =>
-    requests.post("/user", { user: { email, password } }),
-  save: user => requests.put("/user", { user })
+  profile: () => serverRequests.get("/profile"),
+  login: user => serverRequests.post("/login", user),
+  loginGoogle: user => serverRequests.post("/login/google", user),
+  register: user => serverRequests.post("/user", user),
+  save: user => serverRequests.put("/user", user)
 };
 
 const Account = {
-  getAll: () => requests.get("/account"),
-  get: account => requests.get(`/account/${account}`)
+  getAll: () => serverRequests.get("/account"),
+  get: account => serverRequests.get(`/account/${account}`)
 };
 
 const Transaction = {
-  getAll: page => requests.get(`/transaction`),
-  del: id => requests.del(`/transaction/${id}`),
-  get: id => requests.get(`/transaction/${id}`),
-  unfavorite: id => requests.del(`/transaction/${id}/favorite`),
+  getAll: () => serverRequests.get(`/transaction`),
+  del: id => serverRequests.del(`/transaction/${id}`),
+  get: id => serverRequests.get(`/transaction/${id}`),
   update: transaction =>
-    requests.put(`/transaction/${transaction}`, {
+    serverRequests.put(`/transaction/${transaction}`, {
       transaction
     }),
-  create: article => requests.post("/transaction", { article })
+  create: transaction => serverRequests.post("/transaction", { transaction })
 };
 
 const User = {
-  delete: id => requests.del(`/user/${id}`),
-  get: id => requests.get(`/user/${id}`),
-  getAll: () => requests.get(`/user`)
+  delete: id => serverRequests.del(`/user/${id}`),
+  get: id => serverRequests.get(`/user/${id}`),
+  getAll: () => serverRequests.get(`/user`).then(responseBody)
 };
 
 export default {
@@ -67,7 +49,4 @@ export default {
   User,
   Transaction,
   Account
-  // setToken: _token => {
-  //   token = _token;
-  // }
 };

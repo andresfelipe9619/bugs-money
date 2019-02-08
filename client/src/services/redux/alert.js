@@ -10,17 +10,20 @@ export default function alert(state = {}, action) {
     case SUCCESS_ALERT:
       return {
         type: "success",
-        message: action.message
+        message: action.message,
+        icon: "thumbs up"
       };
     case ERROR_ALERT:
       return {
         type: "danger",
-        message: action.message
+        message: action.message,
+        icon: "close"
       };
     case WARNING_ALERT:
       return {
         type: "warning",
-        message: action.message
+        message: action.message,
+        icon:  "warning sign"
       };
     case CLEAR_ALERT:
       return {};

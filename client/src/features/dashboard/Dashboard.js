@@ -1,18 +1,11 @@
 import React, { Component } from "react";
-import { connect } from "react-redux";
-import { dashboardPageLoaded } from "./redux/actions";
 import { Route, Switch } from "react-router-dom";
 import Transactions from "../transactions/Transactions";
 import Reports from "../reports/Reports";
 import Budget from "../budgets/Budget";
-class Dashboard extends Component {
-  componentDidMount() {
-    this.props.dashboardPageLoaded(true);
-  }
 
-  componentWillUnmount() {
-    this.props.dashboardPageLoaded(false);
-  }
+class Dashboard extends Component {
+
   render() {
     return (
       <Switch>
@@ -30,15 +23,4 @@ class Dashboard extends Component {
   }
 }
 
-const mapDispatchToProps = dispatch => {
-  return {
-    dashboardPageLoaded: bool => {
-      dispatch(dashboardPageLoaded(bool));
-    }
-  };
-};
-
-export default connect(
-  null,
-  mapDispatchToProps
-)(Dashboard);
+export default Dashboard;

@@ -1,17 +1,39 @@
-import {PROFILE_PAGE_LOADED, } from './constants';
+import {
+  REQUEST_PROFILE,
+  UPDATE_PROFILE,
+  UPDATE_AVATAR  } from "./constants";
 
-function profileLoaded(state = true, action) {
+const requestProfile = (state = {}, action) => {
   switch (action.type) {
-    case PROFILE_PAGE_LOADED:
-      return action.isloaded;
+    case REQUEST_PROFILE:
+      return action.usuario;
     default:
       return state;
   }
-}
+};
 
+const updateProfile = (state = {}, action) => {
+  switch (action.type) {
+    case UPDATE_PROFILE:
+      return action.usuario;
+    default:
+      return state;
+  }
+};
+
+const updateAvatar = (state = {}, action) => {
+  switch (action.type) {
+    case UPDATE_AVATAR:
+      return action.avatar;
+    default:
+      return state;
+  }
+};
 
 export default function profileReducer(state = {}, action) {
   return {
-    homeLoaded: profileLoaded(state.homeLoaded, action),
+    profile: requestProfile(state.profile, action),
+    profileUpdated: updateProfile(state.profileUpdated, action),
+    avatarUpdated: updateAvatar(state.avatarUpdated, action)
   };
 }
