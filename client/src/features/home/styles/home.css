@@ -1,4 +1,4 @@
- @import url("https://fonts.googleapis.com/css?family=Dosis");
+@import url("https://fonts.googleapis.com/css?family=Dosis");
 @import url("https://fonts.googleapis.com/css?family=Merriweather");
 
 body,
@@ -15,11 +15,12 @@ html {
 .App-header {
   width: 100%;
   height: 80%;
-  background-image: url("https://images.unsplash.com/photo-1477346611705-65d1883cee1e?ixlib=rb-0.3.5&s=cd0aec193345638fc873c681465b7778&auto=format&fit=crop&w=1050&q=80");
+  background-image: url("../../../assets/images/home-background.jpeg");
   background-position: 50%;
   background-repeat: no-repeat;
   background-size: cover;
   background-position-y: 20%;
+  position: static;
 }
 
 .manage-title-header {
@@ -40,6 +41,20 @@ html {
 .manage-title {
   margin: 0;
   color: #140244;
+  font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Oxygen,
+    Ubuntu, Cantarell, Open Sans, Helvetica Neue, sans-serif;
+  font-size: 1em;
+  font-weight: 100;
+  width: 100%;
+  z-index: -1000;
+  background: -webkit-linear-gradient(290deg, #02ccba, #aa7ecd);
+  background: -o-linear-gradient(290deg, #02ccba, #aa7ecd);
+  background: linear-gradient(160deg, #02ccba, #aa7ecd);
+}
+
+.manage-title-tech {
+  margin: 0;
+  color: #fff;
   font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Oxygen,
     Ubuntu, Cantarell, Open Sans, Helvetica Neue, sans-serif;
   font-size: 1em;
@@ -103,9 +118,23 @@ html {
   padding: 4%;
   padding-left: 4%;
   padding-right: 4%;
-  -ms-transform: skew(0deg, -2deg);
-  transform: skew(0deg, -2deg);
-  -webkit-transform: skew(0deg, -2deg);
+}
+
+.content4 {
+  background: -webkit-linear-gradient(90deg, #d30c0c, #380404);
+  -webkit-transform-origin: left bottom;
+  -moz-transform-origin: left bottom;
+  -ms-transform-origin: left bottom;
+  transform-origin: left bottom;
+  color: #fff;
+  font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Oxygen,
+    Ubuntu, Cantarell, Open Sans, Helvetica Neue, sans-serif;
+  font-size: 3em;
+  padding: 4%;
+  padding-left: 4%;
+  padding-right: 4%;
+  position: static;
+  z-index: 1;
 }
 
 .title-items {
@@ -113,9 +142,6 @@ html {
   -ms-flex: 1 1;
   flex: 1 1;
   margin-bottom: 1vh;
-  background: -webkit-linear-gradient(290deg, #aa7ecd, #02ccba);
-  background: -o-linear-gradient(290deg, #aa7ecd, #02ccba);
-  background: linear-gradient(160deg, #aa7ecd, #02ccba);
   align-content: center;
 }
 
@@ -156,6 +182,8 @@ html {
   -ms-flex-direction: column;
   flex-direction: column;
   height: 100%;
+  align-content: center;
+  padding-bottom: 2em;
 }
 
 .gifs img {
@@ -169,9 +197,17 @@ html {
   -webkit-box-shadow: 5px 5px 25px 0 rgba(46, 61, 73, 0.2);
   box-shadow: 5px 5px 25px 0 rgba(46, 61, 73, 0.2);
   overflow: hidden;
+  align-content: center;
+}
+
+.sections-container {
+  background: url("../../../assets/images/bg-money.png");
+  background-repeat: no-repeat;
+  position: static;
 }
 
 .section {
+  background-color: #fff;
   width: 70%;
   margin-top: 4%;
   position: relative;
@@ -215,14 +251,6 @@ html {
     color: #000;
     font-size: 110px;
   }
-
-  .content,
-  .content2,
-  .content3 {
-    -ms-transform: skew(0deg, -1.5deg);
-    transform: skew(0deg, -1.5deg);
-    -webkit-transform: skew(0deg, -1.5deg);
-  }
 }
 
 @media screen and (max-width: 800px) {
@@ -251,4 +279,8 @@ html {
   .gifs img {
     max-width: 80%;
   }
-} 
+  .manage-title-tech {
+    font-size: 20%;
+    line-height: 1;
+  }
+}
