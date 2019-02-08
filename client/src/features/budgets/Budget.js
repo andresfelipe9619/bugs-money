@@ -5,6 +5,7 @@ import { toast } from "react-semantic-toasts";
 import BudgetRow from "./BudgetRow";
 import { connect } from "react-redux";
 import test from "./test";
+import AddBudgetModal from "./modals/AddBudget";
 class Budget extends Component {
   state = {
     budgets: [],
@@ -25,10 +26,12 @@ class Budget extends Component {
       });
     }
   }
-  openModal = () => {
+  openModal = e => {
+    console.log("MOdal OPEN");
     this.setState({ isModalOpen: true });
   };
-  closeModal = () => {
+  closeModal = e => {
+    console.log("MOdal CLOSE");
     this.setState({ isModalOpen: false });
   };
   changeModalState = () => {};
@@ -50,12 +53,12 @@ class Budget extends Component {
       handleOnCreate: this.handleOnCreate,
       handleOnDelete: this.handleOnDelete
     };
-    const { budgets } = this.state;
+    const { budgets, isModalOpen } = this.state;
     return (
       <Grid divided>
         <Grid.Row>
           <Grid.Column width={16}>
-            <BudgetRow />
+            <BudgetRow {...handlers} />
           </Grid.Column>
         </Grid.Row>
         <Grid.Row centered style={{ marginTop: "100px" }}>
@@ -67,6 +70,7 @@ class Budget extends Component {
             )}
           </Grid.Column>
         </Grid.Row>
+        <AddBudgetModal closeModal={this.closeModal} open={isModalOpen} />
       </Grid>
     );
   }

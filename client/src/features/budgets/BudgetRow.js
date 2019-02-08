@@ -31,11 +31,11 @@ export default class BudgetRow extends Component {
             <Menu style={{ marginTop: "55px" }} inverted>
               <Menu.Item header>PRESUPUESTOS</Menu.Item>
               <Menu.Item>
-                <label for="date">Fecha</label>
+                <label htmlFor="date">Fecha</label>
                 <input
                   type="date"
                   name="date"
-                  value={new Date()}
+                  value={new Date("2015-03-25")}
                   onChange={this.handleOnChange}
                 />
               </Menu.Item>
