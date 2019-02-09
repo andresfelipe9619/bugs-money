@@ -3,7 +3,7 @@ import { withFormik } from "formik";
 
 const withSemanticUIFormik = props => WrappedComponent => {
   return withFormik(props)(
-    class extends React.Component {
+    class extends React.PureComponent {
       handleBlur = (e, data) => {
         if (data && data.name) {
           this.props.setFieldValue(data.name, data.value);

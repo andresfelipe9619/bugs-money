@@ -6,10 +6,12 @@ import * as Yup from "yup";
 const MyInnerForm = props => {
   const {
     errors,
+    submitText,
     isSubmitting,
     handleChange,
     handleSubmit,
-    handleOnCancel
+    handleOnCancel,
+    values: { name, account, startDate, limit }
   } = props;
   return (
     <Grid
@@ -34,6 +36,7 @@ const MyInnerForm = props => {
                 <Form.Input
                   label="Nombre presupuesto"
                   labelPosition="left"
+                  value={name}
                   fluid
                   icon="money"
                   type="text"
@@ -50,6 +53,7 @@ const MyInnerForm = props => {
                   icon="lock"
                   iconPosition="left"
                   name="account"
+                  value={account}
                   placeholder="Cuenta..."
                   onChange={handleChange}
                 />
@@ -63,6 +67,7 @@ const MyInnerForm = props => {
                   icon="calendar"
                   iconPosition="left"
                   name="startDate"
+                  value={startDate}
                   onChange={handleChange}
                 />
                 <Form.Input
@@ -73,6 +78,7 @@ const MyInnerForm = props => {
                   icon="dollar"
                   iconPosition="left"
                   name="limit"
+                  value={limit}
                   placeholder="Cantidad..."
                   onChange={handleChange}
                 />
@@ -106,7 +112,7 @@ const MyInnerForm = props => {
               </Button>
 
               <Button type="submit" color="green">
-                <Icon name="checkmark" /> Agregar Presupuesto
+                <Icon name="checkmark" /> {submitText || "No hay acción"}
               </Button>
             </Form>
           </Segment>
@@ -117,13 +123,14 @@ const MyInnerForm = props => {
 };
 
 const BudgetForm = withSemanticUIFormik({
-  mapPropsToValues: () => ({
-    name: "",
-    category: "",
-    limit: 0,
-    account: "",
-    startDate: "",
-    period: ""
+  mapPropsToValues: ({ budget }) => ({
+    name: (budget && budget.name) || "",
+    categoryId: (budget && budget.categoryId) || "",
+    limit: (budget && budget.limit) || 0,
+    account: (budget && budget.account) || "",
+    nature: (budget && budget.nature) || ""
+    // startDate: budget.startDate || "",
+    // period: budget.period || ""
   }),
   validationSchema: Yup.object().shape({
     name: Yup.string().required("Nombre es requerido!"),
@@ -135,7 +142,8 @@ const BudgetForm = withSemanticUIFormik({
   }),
   handleSubmit: (values, { setSubmitting, props }) => {
     setTimeout(() => {
-      props.handleOnCreate(values);
+      console.log("values", values);
+      props.handleOnConfirm(values);
       props.handleOnCancel();
       setSubmitting(false);
     }, 1000);

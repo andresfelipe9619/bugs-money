@@ -4,24 +4,24 @@ import "react-table/react-table.css";
 import { Button, Icon } from "semantic-ui-react";
 import "./styles/data.table.css";
 const ActionsCell = ({
-  handleOnEdit,
+  handleOnUpdate,
   handleOnDelete,
   handleOnView,
   original
 }) => (
   <Button.Group>
     {handleOnView && (
-      <Button icon onClick={handleOnView(original)}>
+      <Button icon size="tiny" onClick={handleOnView(original)}>
         <Icon name="eye" />
       </Button>
     )}
-    {handleOnEdit && (
-      <Button icon>
-        <Icon name="edit" onClick={handleOnEdit(original)} />
+    {handleOnUpdate && (
+      <Button icon size="tiny">
+        <Icon name="edit" onClick={handleOnUpdate(original)} />
       </Button>
     )}{" "}
     {handleOnDelete && (
-      <Button icon>
+      <Button icon size="tiny">
         <Icon name="trash" onClick={handleOnDelete(original)} />
       </Button>
     )}
@@ -53,7 +53,6 @@ export default class DataTable extends React.PureComponent {
 
   render() {
     const { data } = this.props;
-    console.log("table data", data);
     if (!data) return null;
     const columns = this.getColumns(data);
     return (
