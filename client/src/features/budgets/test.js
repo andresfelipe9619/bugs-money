@@ -68,8 +68,9 @@ const test = {
   budgets: [
     {
       id: 944602,
-      tagId: 10634104,
+      categoryId: 10634104,
       name: "Home",
+      nature: "expense",
       limit: 400000,
       spent: 0,
       balance: 400000,
@@ -77,8 +78,9 @@ const test = {
     },
     {
       id: 944603,
-      tagId: 10634105,
+      categoryId: 10634105,
       name: "Comida",
+      nature: "expense",
       limit: 300000,
       spent: 300000,
       balance: 0,
@@ -86,8 +88,9 @@ const test = {
     },
     {
       id: 944604,
-      tagId: 10634106,
+      categoryId: 10634106,
       name: "Salary",
+      nature: "income",
       limit: 2500000,
       spent: 2500000,
       balance: 0,
@@ -95,8 +98,9 @@ const test = {
     },
     {
       id: 944614,
-      tagId: 10634136,
+      categoryId: 10634136,
       name: "Cristopher",
+      nature: "expense",
       limit: 500000,
       spent: 0,
       balance: 500000,
@@ -104,8 +108,9 @@ const test = {
     },
     {
       id: 944615,
-      tagId: 10634137,
+      categoryId: 10634137,
       name: "Membresias de Software",
+      nature: "expense",
       limit: 150000,
       spent: 0,
       balance: 150000,

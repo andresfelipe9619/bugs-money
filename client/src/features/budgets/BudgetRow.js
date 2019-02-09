@@ -1,10 +1,10 @@
 import React, { Component } from "react";
-import { Grid, Menu, Button, Icon } from "semantic-ui-react";
+import { Grid, Menu, Button, Icon, Input } from "semantic-ui-react";
 
 const MoneyPlaceholder = ({ text, money, color }) => (
   <Menu inverted color={color} vertical>
     <Menu.Item>{text}</Menu.Item>
-    <Menu.Item>{money}</Menu.Item>
+    <Menu.Item>{`$ ${money.toLocaleString()}`}</Menu.Item>
   </Menu>
 );
 export default class BudgetRow extends Component {
@@ -22,7 +22,7 @@ export default class BudgetRow extends Component {
   };
 
   render() {
-    const { openModal } = this.props;
+    const { openModal, saved, income, expense } = this.props;
     return (
       <Grid>
         <Grid.Row>
@@ -31,12 +31,11 @@ export default class BudgetRow extends Component {
             <Menu style={{ marginTop: "55px" }} inverted>
               <Menu.Item header>PRESUPUESTOS</Menu.Item>
               <Menu.Item>
-                <label htmlFor="date">Fecha</label>
-                <input
+                <Input
+                  icon="calendar"
                   type="date"
-                  name="date"
-                  value={new Date("2015-03-25")}
-                  onChange={this.handleOnChange}
+                  name="name"
+                  iconPosition="left"
                 />
               </Menu.Item>
               <Menu.Item position="right">
@@ -51,17 +50,17 @@ export default class BudgetRow extends Component {
         <Grid.Row>
           <Grid.Column width={1}>{""}</Grid.Column>
           <Grid.Column width={5}>
-            <MoneyPlaceholder text={"Ingresos"} color={"green"} money={10000} />
-          </Grid.Column>
-          <Grid.Column width={5}>
-            <MoneyPlaceholder text={"Gastos"} color={"red"} money={10000} />{" "}
-          </Grid.Column>
-          <Grid.Column width={5}>
             <MoneyPlaceholder
-              color={"blue"}
-              text={"Presupuestado"}
-              money={10000}
-            />{" "}
+              text={"Ingresos"}
+              color={"green"}
+              money={income}
+            />
+          </Grid.Column>
+          <Grid.Column width={5}>
+            <MoneyPlaceholder text={"Gastos"} color={"red"} money={expense} />{" "}
+          </Grid.Column>
+          <Grid.Column width={5}>
+            <MoneyPlaceholder color={"blue"} text={"Guardado"} money={saved} />{" "}
           </Grid.Column>
         </Grid.Row>
       </Grid>

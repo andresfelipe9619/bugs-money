@@ -3,6 +3,9 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
+    "@fortawesome/fontawesome-svg-core": "^1.2.14",
+    "@fortawesome/free-solid-svg-icons": "^5.7.1",
+    "@fortawesome/react-fontawesome": "^0.1.4",
     "@nivo/bar": "^0.50.0",
     "@nivo/pie": "^0.50.0",
     "autoprefixer": "7.1.6",
@@ -36,6 +39,7 @@
     "isomorphic-fetch": "^2.2.1",
     "jest": "20.0.4",
     "lodash": "^4.17.11",
+    "moment": "^2.24.0",
     "normalizr": "^3.2.4",
     "object-assign": "4.1.1",
     "postcss-flexbugs-fixes": "3.2.0",
