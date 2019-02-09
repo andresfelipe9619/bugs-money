@@ -4,7 +4,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 import BudgetForm from "../BudgetForm";
 
-const UpdateBudgetModal = ({ open, closeModal, handleOnConfirm }) => (
+const UpdateBudgetModal = ({ open, closeModal, handleOnConfirm, budget }) => (
   <Modal
     closeIcon
     open={open}
@@ -17,6 +17,7 @@ const UpdateBudgetModal = ({ open, closeModal, handleOnConfirm }) => (
     </Header>
     <Modal.Content>
       <BudgetForm
+        budget={budget}
         submitText={"Actualizar presuspuesto"}
         handleOnCancel={closeModal}
         handleOnConfirm={handleOnConfirm}

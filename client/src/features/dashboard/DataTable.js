@@ -53,7 +53,6 @@ export default class DataTable extends React.PureComponent {
 
   render() {
     const { data } = this.props;
-    console.log("table data", data);
     if (!data) return null;
     const columns = this.getColumns(data);
     return (

@@ -53,8 +53,10 @@ class Budget extends Component {
   };
 
   updateBudget = budget => {
-    let budgets = { ...this.state.budget };
-    let i = this.state.budgets.findIndex(b => b === budget.categoryId);
+    console.log("budget", budget);
+    let budgets = [...this.state.budgets];
+    let i = budgets.findIndex(b => b.categoryId === budget.categoryId);
+    if (i === -1) return;
     budgets[i] = budget;
     this.setState({ budgets });
   };
@@ -77,7 +79,7 @@ class Budget extends Component {
     this.setState({ isModalOpen: { [modal]: false } });
   };
 
-  handleOnCreate = budget => e => {
+  handleOnCreate = budget => {
     if (!budget) return;
     this.createBudget(budget);
   };
@@ -173,6 +175,7 @@ class Budget extends Component {
           handleOnConfirm={handlers.handleOnCreate}
         />
         <UpdateBudgetModal
+          budget={currentBudget || null}
           open={isModalOpen.update}
           closeModal={this.closeModal("update")}
           handleOnConfirm={this.updateBudget}
