@@ -5,17 +5,17 @@ import {
   Message,
   Grid,
   Header,
-  Segment,
-  Image,
-  Checkbox
+  Segment
+  // Image,
+  // Checkbox
 } from "semantic-ui-react";
 import { connect } from "react-redux";
 import withSemanticUIFormik from "../login/hoc/FormikSUI";
 import * as Yup from "yup";
 import { Redirect } from "react-router-dom";
-import { success } from "../../services/redux/actions/alertActions";
+// import { success } from "../../services/redux/actions/alertActions";
 import {
-  registerRequest
+  register
   // loginFacebookRequest,
   // loginGoogleRequest
 } from "../../services/redux/actions/authActions";
@@ -144,7 +144,7 @@ const mapState = state => {
 const mapDispatch = dispatch => {
   return {
     registerRequest: user => {
-      dispatch(registerRequest(user));
+      dispatch(register(user));
     }
   };
 };
@@ -180,6 +180,6 @@ export default connect(
         setSubmitting(false);
       }, 1000);
     },
-    displayName: "RegisterForm" 
+    displayName: "RegisterForm"
   })(MyInnerForm)
 );

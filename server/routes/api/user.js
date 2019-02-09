@@ -62,7 +62,7 @@ router.post('/', function(req, res) {
   });
 });
 
-router.put('/:id', [verificaToken, verificaAdminRole], function(req, res) {
+router.put('/:id', function(req, res) {
   let id = req.params.id;
   let body = _.pick(req.body, ['nombre', 'email', 'img', 'role', 'estado']);
 
@@ -86,7 +86,7 @@ router.put('/:id', [verificaToken, verificaAdminRole], function(req, res) {
   );
 });
 
-router.delete('/:id', [verificaToken, verificaAdminRole], function(req, res) {
+router.delete('/:id', function(req, res) {
   let id = req.params.id;
 
   // Usuario.findByIdAndRemove(id, (err, usuarioBorrado) => {

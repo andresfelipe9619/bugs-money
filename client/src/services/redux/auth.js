@@ -1,16 +1,13 @@
 import {
   LOGIN_REQUEST,
-  LOGIN_GOOGLE_REQUEST,
-  LOGIN_FACEBOOK_REQUEST,
   LOGIN_SUCCESS,
   LOGIN_FAILURE,
   LOGOUT_REQUEST,
   REGISTER_REQUEST,
   REGISTER_SUCCESS,
   REGISTER_FAILURE,
-  GET_PROFILE,
-  UPDATE_PROFILE,
-  UPDATE_AVATAR
+  LOGIN_GOOGLE_REQUEST,
+  LOGIN_FACEBOOK_REQUEST,
 } from "./actions/constants";
 
 const loginFailure = (state = false, action) => {
@@ -94,45 +91,17 @@ const loginSuccess = (state = null, action) => {
   }
 };
 
-const getProfile = (state = {}, action) => {
-  switch (action.type) {
-    case GET_PROFILE:
-      return action.usuario;
-    default:
-      return state;
-  }
-};
-
-const updateProfile = (state = {}, action) => {
-  switch (action.type) {
-    case UPDATE_PROFILE:
-      return action.usuario;
-    default:
-      return state;
-  }
-};
-
-const updateAvatar = (state = {}, action) => {
-  switch (action.type) {
-    case UPDATE_AVATAR:
-      return action.avatar;
-    default:
-      return state;
-  }
-};
 
 export default function reducer(state = {}, action) {
   return {
-    profile: getProfile(state.profile, action),
     loginFailure: loginFailure(state.loginFailure, action),
     loginRequest: loginRequest(state.loginRequest, action),
-    registerSuccess: registerSuccess(state.registerSuccess, action),
-    registerFailure: registerFailure(state.registerFailure, action),
-    loginGoogle: loginGoogleRequest(state.loginGoogle, action),
-    loginFacebook: loginFacebookRequest(state.loginFacebook, action),
     loginSuccess: loginSuccess(state.loginSuccess, action),
     logoutRequest: logoutRequest(state.logoutRequest, action),
-    profileUpdated: updateProfile(state.profileUpdated, action),
-    avatarUpdated: updateAvatar(state.avatarUpdated, action)
+    loginGoogle: loginGoogleRequest(state.loginGoogle, action),
+    registerRequest: registerRequest(state.registerRequest, action),
+    registerSuccess: registerSuccess(state.registerSuccess, action),
+    registerFailure: registerFailure(state.registerFailure, action),
+    loginFacebook: loginFacebookRequest(state.loginFacebook, action),
   };
 }

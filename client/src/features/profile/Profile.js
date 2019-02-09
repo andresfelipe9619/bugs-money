@@ -1,7 +1,6 @@
 import React, { Component } from "react";
 //import PropTypes from "prop-types";
 import { connect } from "react-redux";
-import { profilePageLoaded } from "./redux/actions";
 import { Divider, Message, Segment } from "semantic-ui-react";
 import {
   SettingsPane,
@@ -35,7 +34,9 @@ export class Profile extends Component {
       // "wasSaved" indicates wheather the pane was just closed or the save button was clicked.
       if (wasSaved && newSettings !== oldSettings) {
         // do something with the settings, e.g. save via ajax.
-        this.setState(newSettings);
+        // this.setState(newSettings);
+        console.log('update user profile');
+        
       }
       this.hidePrefs();
     };
@@ -89,44 +90,44 @@ export class Profile extends Component {
 
     // Define one of your Settings pages
 
-    const dynamicOptionsForGeneralPage = [
-      {
-        key: null,
-        label: "Account",
-        type: "headline"
-      },
-      {
-        key: "mysettings.general.email",
-        label: "E-Mail address",
-        type: "text"
-      },
-      {
-        key: "mysettings.general.password",
-        label: "Password",
-        type: "password"
-      },
-      {
-        key: "mysettings.general.password-repeat",
-        label: "Password repeat",
-        type: "password"
-      },
-      {
-        key: null,
-        label: "Appearance",
-        type: "headline"
-      },
-      {
-        key: "mysettings.general.color-theme",
-        label: "Color Theme",
-        type: "custom",
-        component: (
-          <select>
-            <option value="blue">Blue</option>
-            <option value="red">Red</option>
-          </select>
-        )
-      }
-    ];
+    // const dynamicOptionsForGeneralPage = [
+    //   {
+    //     key: null,
+    //     label: "Account",
+    //     type: "headline"
+    //   },
+    //   {
+    //     key: "mysettings.general.email",
+    //     label: "E-Mail address",
+    //     type: "text"
+    //   },
+    //   {
+    //     key: "mysettings.general.password",
+    //     label: "Password",
+    //     type: "password"
+    //   },
+    //   {
+    //     key: "mysettings.general.password-repeat",
+    //     label: "Password repeat",
+    //     type: "password"
+    //   },
+    //   {
+    //     key: null,
+    //     label: "Appearance",
+    //     type: "headline"
+    //   },
+    //   {
+    //     key: "mysettings.general.color-theme",
+    //     label: "Color Theme",
+    //     type: "custom",
+    //     component: (
+    //       <select>
+    //         <option value="blue">Blue</option>
+    //         <option value="red">Red</option>
+    //       </select>
+    //     )
+    //   }
+    // ];
 
     // Then use with:
     // <SettingsPage handler="/settings/general" options={dynamicOptionsForGeneralPage} />
@@ -135,7 +136,7 @@ export class Profile extends Component {
     return (
       <div>
         <div style={{ margin: "30px 0 90px 0" }}>
-          <button
+          <button 
             onClick={this.showPrefs.bind(this)}
             className="btn btn-default"
           >
@@ -246,7 +247,7 @@ export class Profile extends Component {
                     <input
                       type="text"
                       name="mysettings.profile.username"
-                      className="form-control"
+                      className="form-control" 
                       placeholder="Username"
                       aria-describedby="basic-addon1"
                       onChange={this._settingsChanged}
@@ -290,9 +291,19 @@ export class Profile extends Component {
                 <div>
                   <Segment>
                     <p>
-                      We are a group of Systems Engineer students from Universidad del Valle, Cali, Colombia.
-                      This application is part of a project for the Software Development class 2018-2.<br/>
-                      Feel free to check our GitHub Repo <a href="https://github.com/andresfelipe9619/bugs-money" target="_blank">here</a>
+                      We are a group of Systems Engineer students from
+                      Universidad del Valle, Cali, Colombia. This application is
+                      part of a project for the Software Development class
+                      2018-2.
+                      <br />
+                      Feel free to check our GitHub Repo{" "}
+                      <a
+                        href="https://github.com/andresfelipe9619/bugs-money"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                      >
+                        here
+                      </a>
                     </p>
                   </Segment>
                 </div>
@@ -305,26 +316,17 @@ export class Profile extends Component {
   }
 
   componentDidMount() {
-    this.props.profilePageLoaded(true);
     // this.prefs.className = "md_modal show";
     // this.showPrefs.bind(this);
   }
-
-  componentWillUnmount() {
-    this.props.profilePageLoaded(false);
-  }
+  
 }
 
-const mapStateToProps = state => ({});
+const mapStateToProps = state => ({
+  userHasLoggedin: state.authService.loginSuccess,
+});
 
-const mapDispatchToProps = dispatch => {
-  return {
-    profilePageLoaded: bool => {
-      dispatch(profilePageLoaded(bool));
-    }
-  };
-};
 export default connect(
   mapStateToProps,
-  mapDispatchToProps
+  null
 )(Profile);

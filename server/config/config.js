@@ -33,10 +33,12 @@ process.env.SEED = process.env.SEED || 'este-es-el-seed-desarrollo';
 let urlDB;
 
 if (process.env.NODE_ENV === 'dev') {
-  // urlDB = 'mongodb://Admin:jseb2520@ds237723.mlab.com:37723/test-bugs-money';
-  urlDB = 'mongodb://cafe-user:azahella333@ds045507.mlab.com:45507/cafe-test';
+  // urlDB = 'mongodb://localhost:27017/bugs_money';
+  // urlDB = 'mongodb://cafe-user:azahella333@ds045507.mlab.com:45507/cafe-test';
+  urlDB = 'mongodb://admin:superadmin1@ds159273.mlab.com:59273/bugsmoney';
 } else {
-  urlDB = process.env.MONGO_URI;
+  // urlDB = 'mongodb://cafe-user:azahella333@ds045507.mlab.com:45507/cafe-test';
+  urlDB = 'mongodb://admin:superadmin1@ds159273.mlab.com:59273/bugsmoney';
 }
 
 process.env.URLDB = urlDB;

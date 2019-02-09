@@ -1,54 +1,58 @@
-import React, { Component } from 'react';
-import { connect } from 'react-redux';
-import { Link } from 'react-router-dom';
-import { Container, Responsive, Image } from 'semantic-ui-react';
-import { default as Sidebar } from '../dashboard/Sidebar';
-import king from '../../assets/images/king_icon.png';
-import {logoutRequest} from '../../services/redux/actions/authActions';
+import React, { Component } from "react";
+import { connect } from "react-redux";
+import { Link } from "react-router-dom";
+import { Container, Responsive, Image } from "semantic-ui-react";
+import { default as Sidebar } from "../dashboard/Sidebar";
+import king from "../../assets/images/king_icon.png";
+import { logout } from "../../services/redux/actions/authActions";
+import "./styles/navbar.css";
+
 const NavBarChildren = ({ children }) => (
-  <Container style={{ marginTop: '5em' }}>{children}</Container>
+  <Container style={{ marginTop: "4em" }}>{children}</Container>
+  // <div className="main_div" style={{ marginTop: "4em" }}>
+  //   {children}
+  // </div>
 );
 
-
-const Avatar = ({name, img}) => {
+const Avatar = ({ name, img }) => {
   return (
     <div>
-      <Image src={img?img:king} alt="user-img" avatar/>
+      <Image src={img ? img : king} alt="user-img" avatar />
       <span>{name}</span>
     </div>
-  )
-}
+  );
+};
 
 const leftItems = [
-  { as: Link, to: '/', content: 'Inicio', key: 'inicio', name: 'home' },
-  { as: Link, to: '/perfil', content: 'Perfil', key: 'perfil', name: 'user' },
+  { as: Link, to: "/", content: "Inicio", key: "inicio", name: "home" },
+  { as: Link, to: "/perfil", content: "Perfil", key: "perfil", name: "user" },
   {
     as: Link,
-    to: '/dashboard/presupuesto',
-    content: 'Presupuesto',
-    key: 'presupuesto',
-    name: 'money bill alternate outline'
+    to: "/dashboard/presupuesto",
+    content: "Presupuesto",
+    key: "presupuesto",
+    name: "money bill alternate outline"
   },
   {
     as: Link,
-    to: '/dashboard/cuentas',
-    content: 'Cuentas',
-    key: 'cuentas',
-    name: 'credit card outline'
+    to: "/dashboard/cuentas",
+    content: "Cuentas",
+    key: "cuentas",
+    name: "credit card outline"
   },
   {
     as: Link,
-    to: '/dashboard/reportes',
-    content: 'Reportes',
-    key: 'reportes',
-    name: 'line graph'
+    to: "/dashboard/reportes",
+    content: "Reportes",
+    key: "reportes",
+    name: "line graph"
   }
 ];
 
 const rightItems = (user, logout) => {
   let normal = [
-    { as: Link, to: '/ingreso', content: 'Ingreso', key: 'ingreso' },
-    { as: Link, to: '/registro', content: 'Registro', key: 'registro' }
+    { as: Link, to: "/ingreso", content: "Ingreso", key: "ingreso" },
+    { as: Link, to: "/registro", content: "Registro", key: "registro" }
   ];
   let loggedin = [];
 
@@ -56,11 +60,11 @@ const rightItems = (user, logout) => {
     loggedin = [
       {
         as: Link,
-        to: '/perfil',
-        key: 'avatar',
-        children: <Avatar name={user.nombre} img={user.img}/>
+        to: "/perfil",
+        key: "avatar",
+        children: <Avatar name={user.nombre} img={user.img} />
       },
-      { content: 'Salir', key: 'salir', onClick: logout }
+      { content: "Salir", key: "salir", onClick: logout }
     ];
   }
 
@@ -118,11 +122,12 @@ const mapState = state => {
 
 const mapDispatch = dispatch => {
   return {
-    logout: (user) => {
-      user ?
-       dispatch(logoutRequest(user))
-       : console.log('No user to logout')
+    logoutRequest: user => {
+      user ? dispatch(logout(user)) : console.log("No user to logout");
     }
-  }
-}
-export default connect(mapState, mapDispatch)(NavBar);
+  };
+};
+export default connect(
+  mapState,
+  mapDispatch
+)(NavBar);
