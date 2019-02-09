@@ -26,7 +26,7 @@ class App extends Component {
             <Route path="/dashboard" component={LoadableDashboard} />
             <Route exact path="/registro" component={LoadableRegister} />
             <Route exact path="/ingreso" component={LoadableLogin} />
-            <PrivateRoute exact path="/perfil" component={LoadableProfile} />
+            <Route exact path="/perfil" component={LoadableProfile} />
             <Route component={PageNotFound} />
           </Switch>
           <SemanticToastContainer position="bottom-right" />

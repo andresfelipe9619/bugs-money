@@ -11,17 +11,17 @@ const ActionsCell = ({
 }) => (
   <Button.Group>
     {handleOnView && (
-      <Button icon onClick={handleOnView(original)}>
+      <Button icon size="tiny" onClick={handleOnView(original)}>
         <Icon name="eye" />
       </Button>
     )}
     {handleOnUpdate && (
-      <Button icon>
+      <Button icon size="tiny">
         <Icon name="edit" onClick={handleOnUpdate(original)} />
       </Button>
     )}{" "}
     {handleOnDelete && (
-      <Button icon>
+      <Button icon size="tiny">
         <Icon name="trash" onClick={handleOnDelete(original)} />
       </Button>
     )}

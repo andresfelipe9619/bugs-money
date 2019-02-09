@@ -1,15 +1,24 @@
 import React, { Component } from "react";
-import { Container, Header, Divider } from "semantic-ui-react";
+import { Container, Header, Divider, Icon, Image } from "semantic-ui-react";
+import { connect } from "react-redux";
+import { homePageLoaded } from "./redux/actions";
 import budget_ico from "../../assets/images/king_budget.jpg";
 import no_money from "../../assets/images/no_money.jpg";
+// import mongoDB from "../../assets/images/MongoDB.jpg";
+import mongoDB from "../../assets/images/mongodb.svg";
 import "./styles/home.css";
 import WOW from "wowjs";
-export default class Home extends Component {
+class Home extends Component {
   componentDidMount() {
+    this.props.homePageLoaded(true);
     const wow = new WOW.WOW();
     wow.init();
   }
-  
+
+  componentWillUnmount() {
+    this.props.homePageLoaded(false);
+  }
+
   render() {
     return (
       <div className="App">
@@ -54,64 +63,62 @@ export default class Home extends Component {
             </a>
           </Container>
         </div>
-        <br />
-
-        <div
-          className="section wow slideInLeft"
-          data-wow-delay="0.1s"
-          data-wow-iteration="1"
-          data-wow-offset="320"
-          style={{
-            visibility: "visible",
-            animationDelay: "0.1s",
-            animationIterationCount: "1"
-          }}
-        >
-          <div className="title-items black-text">
-            <h2>Budgets on another Level</h2>
-            <br />
-            <p>
-              With Bugs Money you can easily manage your monthly budget, add all
-              your accounts, keep all you transactions in one place
-            </p>
-            <br />
+        <div className="sections-container" style={{ paddingBottom: "10px" }}>
+          <br />
+          <div
+            className="section wow slideInLeft"
+            data-wow-delay="0.1s"
+            data-wow-iteration="1"
+            style={{
+              visibility: "visible",
+              animationDelay: "0.1s",
+              animationIterationCount: "1"
+            }}
+          >
+            <div className="title-items black-text">
+              <h2>Budgets on another Level</h2>
+              <br />
+              <p style={{ paddingRight: "1em" }}>
+                With Bugs Money you can easily manage your monthly budget, add
+                all your accounts, keep all you transactions in one place
+              </p>
+              <br />
+            </div>
+            <div className="gifs">
+              <span>
+                <img src={budget_ico} alt="bugs-pro" />
+              </span>
+            </div>
           </div>
-          <div className="gifs">
-            <span>
-              <img src={budget_ico} alt="bugs-pro" />
-            </span>
+          <br />
+          <br />
+          <div
+            className="section wow slideInRight"
+            data-wow-delay="0.3s"
+            data-wow-iteration="1"
+            style={{
+              visibility: "visible",
+              animationDelay: "0.1s",
+              animationIterationCount: "1"
+            }}
+          >
+            <div className="title-items black-text">
+              <h2>Never Run Out Of Money Again</h2>
+              <br />
+              <p>
+                Get instant reports on how have you spent your money, how much
+                is available and how much do you owe according to your budget
+                settings.
+              </p>
+              <br />
+            </div>
+            <div className="gifs">
+              <span>
+                <img src={no_money} alt="bugs-poor" />
+              </span>
+            </div>
           </div>
         </div>
-        <br />
-        <br />
-        <div
-          className="section wow slideInRight"
-          data-wow-delay="0.3s"
-          data-wow-iteration="1"
-          data-wow-offset="120"
-          style={{
-            visibility: "visible",
-            animationDelay: "0.1s",
-            animationIterationCount: "1"
-          }}
-        >
-          <div className="title-items black-text">
-            <h2>Never Run Out Of Money Again</h2>
-            <br />
-            <p>
-              Get instant reports on how have you spent your money, how much is
-              available and how much do you owe according to your budget
-              settings.
-            </p>
-            <br />
-          </div>
-          <div className="gifs">
-            <span>
-              <img src={no_money} alt="bugs-poor" />
-            </span>
-          </div>
-        </div>
-        <br />
         <br />
         <div className="content2 wow slideInRight" data-wow-delay="0.3s">
           <Container fluid className="wow zoomIn" data-wow-delay="0.7s">
@@ -128,7 +135,50 @@ export default class Home extends Component {
             </a>
           </Container>
         </div>
+        <div className="content4">
+          <Container
+            fluid
+            className="wow zoomIn"
+            data-wow-delay="0.7s"
+            textAlign="center"
+          >
+            <a
+              className="manage-title-tech manage-highlight"
+              style={{ fontSize: "80px" }}
+            >
+              Tech Used to make this App
+            </a>
+            <Container className="Tech-Icons wow flipInX" data-wow-delay="0.9s">
+              <br />
+              <br />
+              <Icon.Group size="huge">
+                <Icon name="node" />
+              </Icon.Group>
+              <br />
+              <br />
+              <Icon.Group size="huge">
+                <Icon name="react" />
+              </Icon.Group>
+              <br />
+              <Icon.Group size="huge">
+                <Image src={mongoDB} />
+              </Icon.Group>
+            </Container>
+          </Container>
+        </div>
       </div>
     );
   }
 }
+
+const mapDispatchToProps = dispatch => {
+  return {
+    homePageLoaded: bool => {
+      dispatch(homePageLoaded(bool));
+    }
+  };
+};
+export default connect(
+  null,
+  mapDispatchToProps
+)(Home);

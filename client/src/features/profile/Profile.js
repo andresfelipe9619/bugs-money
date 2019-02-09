@@ -1,5 +1,4 @@
 import React, { Component } from "react";
-//import PropTypes from "prop-types";
 import { connect } from "react-redux";
 import { Divider, Message, Segment } from "semantic-ui-react";
 import {
@@ -10,11 +9,8 @@ import {
 } from "react-settings-pane";
 import "./styles/styles.css";
 import "./styles/bootstrap.min.css";
-export class Profile extends Component {
-  // static propTypes = {
-  //   prop: PropTypes
-  // };
 
+export class Profile extends Component {
   constructor(props) {
     super(props);
 
@@ -27,16 +23,17 @@ export class Profile extends Component {
       "mysettings.general.picture": "",
       "mysettings.profile.firstname": "",
       "mysettings.profile.lastname": "",
-      "mysettings.profile.username": ""
+      "mysettings.profile.username": "",
+      show: true
     };
+
     // Save settings after close
     this._leavePaneHandler = (wasSaved, newSettings, oldSettings) => {
       // "wasSaved" indicates wheather the pane was just closed or the save button was clicked.
       if (wasSaved && newSettings !== oldSettings) {
         // do something with the settings, e.g. save via ajax.
         // this.setState(newSettings);
-        console.log('update user profile');
-        
+        console.log("update user profile");
       }
       this.hidePrefs();
     };
@@ -88,67 +85,14 @@ export class Profile extends Component {
     // Get settings
     let settings = this.state;
 
-    // Define one of your Settings pages
-
-    // const dynamicOptionsForGeneralPage = [
-    //   {
-    //     key: null,
-    //     label: "Account",
-    //     type: "headline"
-    //   },
-    //   {
-    //     key: "mysettings.general.email",
-    //     label: "E-Mail address",
-    //     type: "text"
-    //   },
-    //   {
-    //     key: "mysettings.general.password",
-    //     label: "Password",
-    //     type: "password"
-    //   },
-    //   {
-    //     key: "mysettings.general.password-repeat",
-    //     label: "Password repeat",
-    //     type: "password"
-    //   },
-    //   {
-    //     key: null,
-    //     label: "Appearance",
-    //     type: "headline"
-    //   },
-    //   {
-    //     key: "mysettings.general.color-theme",
-    //     label: "Color Theme",
-    //     type: "custom",
-    //     component: (
-    //       <select>
-    //         <option value="blue">Blue</option>
-    //         <option value="red">Red</option>
-    //       </select>
-    //     )
-    //   }
-    // ];
-
-    // Then use with:
-    // <SettingsPage handler="/settings/general" options={dynamicOptionsForGeneralPage} />
-
     // Return your Settings Pane
     return (
       <div>
-        <div style={{ margin: "30px 0 90px 0" }}>
-          <button 
-            onClick={this.showPrefs.bind(this)}
-            className="btn btn-default"
-          >
-            Show Preferences
-          </button>
-        </div>
         <div>
           <h4>Result</h4>
           <pre className="well">{JSON.stringify(settings, null, 4)}</pre>
         </div>
         <div ref={ref => (this.overlay = ref)} className="overlay" />
-
         <div ref={ref => (this.prefs = ref)} className="md-modal">
           <SettingsPane
             items={this._menu}
@@ -247,7 +191,7 @@ export class Profile extends Component {
                     <input
                       type="text"
                       name="mysettings.profile.username"
-                      className="form-control" 
+                      className="form-control"
                       placeholder="Username"
                       aria-describedby="basic-addon1"
                       onChange={this._settingsChanged}
@@ -316,14 +260,12 @@ export class Profile extends Component {
   }
 
   componentDidMount() {
-    // this.prefs.className = "md_modal show";
-    // this.showPrefs.bind(this);
+    this.showPrefs();
   }
-  
 }
 
 const mapStateToProps = state => ({
-  userHasLoggedin: state.authService.loginSuccess,
+  userHasLoggedin: state.authService.loginSuccess
 });
 
 export default connect(
