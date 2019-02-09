@@ -8,7 +8,7 @@ import { logout } from "../../services/redux/actions/authActions";
 import "./styles/navbar.css";
 
 const NavBarChildren = ({ children }) => (
-  <Container style={{ marginTop: "4em" }}>{children}</Container>
+  <div style={{ marginTop: "4em" }}>{children}</div>
   // <div className="main_div" style={{ marginTop: "4em" }}>
   //   {children}
   // </div>
