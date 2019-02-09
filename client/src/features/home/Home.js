@@ -135,7 +135,7 @@ class Home extends Component {
             </a>
           </Container>
         </div>
-        <div className="content4 wow" data-wow-delay="0.5s">
+        <div className="content4">
           <Container
             fluid
             className="wow zoomIn"
