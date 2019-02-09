@@ -6,6 +6,7 @@ import * as Yup from "yup";
 const MyInnerForm = props => {
   const {
     errors,
+    submitText,
     isSubmitting,
     handleChange,
     handleSubmit,
@@ -106,7 +107,7 @@ const MyInnerForm = props => {
               </Button>
 
               <Button type="submit" color="green">
-                <Icon name="checkmark" /> Agregar Presupuesto
+                <Icon name="checkmark" /> {submitText || "No hay acción"}
               </Button>
             </Form>
           </Segment>
@@ -135,7 +136,7 @@ const BudgetForm = withSemanticUIFormik({
   }),
   handleSubmit: (values, { setSubmitting, props }) => {
     setTimeout(() => {
-      props.handleOnCreate(values);
+      props.handleOnConfirm(values);
       props.handleOnCancel();
       setSubmitting(false);
     }, 1000);

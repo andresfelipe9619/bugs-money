@@ -1,4 +1,4 @@
-import React, { Component } from "react";
+import React, { PureComponent } from "react";
 import { Grid, Menu, Button, Icon, Input } from "semantic-ui-react";
 
 const MoneyPlaceholder = ({ text, money, color }) => (
@@ -7,7 +7,7 @@ const MoneyPlaceholder = ({ text, money, color }) => (
     <Menu.Item>{`$ ${money.toLocaleString()}`}</Menu.Item>
   </Menu>
 );
-export default class BudgetRow extends Component {
+export default class BudgetRow extends PureComponent {
   state = {
     date: "",
     time: "",

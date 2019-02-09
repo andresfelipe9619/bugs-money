@@ -4,7 +4,7 @@ import "react-table/react-table.css";
 import { Button, Icon } from "semantic-ui-react";
 import "./styles/data.table.css";
 const ActionsCell = ({
-  handleOnEdit,
+  handleOnUpdate,
   handleOnDelete,
   handleOnView,
   original
@@ -15,9 +15,9 @@ const ActionsCell = ({
         <Icon name="eye" />
       </Button>
     )}
-    {handleOnEdit && (
+    {handleOnUpdate && (
       <Button icon>
-        <Icon name="edit" onClick={handleOnEdit(original)} />
+        <Icon name="edit" onClick={handleOnUpdate(original)} />
       </Button>
     )}{" "}
     {handleOnDelete && (

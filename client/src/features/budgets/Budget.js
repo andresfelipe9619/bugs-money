@@ -5,14 +5,19 @@ import { toast } from "react-semantic-toasts";
 import BudgetRow from "./BudgetRow";
 import { connect } from "react-redux";
 import test from "./test";
-import AddBudgetModal from "./modals/AddBudget";
+import CreateBudgetModal from "./modals/CreateBudget";
+import UpdateBudgetModal from "./modals/UpdateBudget";
+
 class Budget extends Component {
   state = {
     income: 0,
     expense: 0,
     budgeted: 0,
     budgets: [],
-    isModalOpen: false,
+    isModalOpen: {
+      create: false,
+      update: false
+    },
     currentBudget: null
   };
 
@@ -31,16 +36,7 @@ class Budget extends Component {
     }
   }
 
-  openModal = () => {
-    this.setState({ isModalOpen: true });
-  };
-
-  closeModal = () => {
-    this.setState({ isModalOpen: false });
-  };
-
-  handleOnCreate = budget => {
-    if (!budget) return;
+  createBudget = budget => {
     let mBudget = {
       ...budget,
       spent: 0,
@@ -51,32 +47,66 @@ class Budget extends Component {
     this.setState({ budgets });
   };
 
+  viewBudget = budget => {
+    this.setCurrentBudget(budget);
+    window.scrollTo({ top: 800, behavior: "smooth" });
+  };
+
+  updateBudget = budget => {
+    let budgets = { ...this.state.budget };
+    let i = this.state.budgets.findIndex(b => b === budget.categoryId);
+    budgets[i] = budget;
+    this.setState({ budgets });
+  };
+
+  deleteBudget = budget => {
+    let budgets = this.state.budgets.filter(b => b["name"] !== budget["name"]);
+    this.setState({ budgets });
+  };
+
   setCurrentBudget = budget => {
     if (!budget) return;
     this.setState({ currentBudget: budget });
   };
 
-  handleOnEdit = budget => e => {};
+  openModal = modal => () => {
+    this.setState({ isModalOpen: { [modal]: true } });
+  };
+
+  closeModal = modal => () => {
+    this.setState({ isModalOpen: { [modal]: false } });
+  };
+
+  handleOnCreate = budget => e => {
+    if (!budget) return;
+    this.createBudget(budget);
+  };
+
+  handleOnUpdate = budget => e => {
+    console.log("budget", budget);
+    if (!budget) return;
+    this.setCurrentBudget(budget);
+    this.openModal("update")();
+  };
 
   handleOnView = budget => e => {
-    this.setCurrentBudget(budget);
-    window.scrollTo({ top: 800, behavior: "smooth" });
+    if (!budget) return;
+    this.viewBudget(budget);
   };
 
   handleOnDelete = budget => e => {
-    let budgets = this.state.budgets.filter(b => b["name"] !== budget["name"]);
-    this.setState({ budgets });
+    if (!budget) return;
+    this.deleteBudget(budget);
   };
 
   render() {
     const { budgets, isModalOpen, currentBudget } = this.state;
     if (!budgets) return null;
+    console.log("state", this.state);
     const handlers = {
-      openModal: this.openModal,
-      closeModal: this.closeModal,
-      handleOnEdit: this.handleOnEdit,
       handleOnView: this.handleOnView,
       handleOnCreate: this.handleOnCreate,
+      handleOnUpdate: this.handleOnUpdate,
       handleOnDelete: this.handleOnDelete
     };
 
@@ -100,6 +130,7 @@ class Budget extends Component {
               saved={saved}
               income={income}
               expense={expense}
+              openModal={this.openModal("create")}
               {...handlers}
             />
           </Grid.Column>
@@ -136,11 +167,15 @@ class Budget extends Component {
             )}
           </Grid.Column>
         </Grid.Row>
-
-        <AddBudgetModal
-          open={isModalOpen}
-          closeModal={this.closeModal}
-          handleOnCreate={handlers.handleOnCreate}
+        <CreateBudgetModal
+          open={isModalOpen.create}
+          closeModal={this.closeModal("create")}
+          handleOnConfirm={handlers.handleOnCreate}
+        />
+        <UpdateBudgetModal
+          open={isModalOpen.update}
+          closeModal={this.closeModal("update")}
+          handleOnConfirm={this.updateBudget}
         />
       </Grid>
     );
