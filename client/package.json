@@ -88,7 +88,7 @@
   "quokka": {
     "babel": true
   },
-  "proxy": "http://localhost:5000/",
+  "proxy": "https://localhost:5000/",
   "jest": {
     "collectCoverageFrom": [
       "src/**/*.{js,jsx,mjs}"

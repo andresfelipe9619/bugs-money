@@ -2,6 +2,9 @@ let router = require('express').Router();
 
 router.use('/user', require('./user'));
 router.use('/login', require('./login'));
+router.use('/budget', require('./budget'));
+router.use('/account', require('./account'));
+router.use('/transaction', require('./transaction'));
 
 router.use(function(err, req, res, next) {
   if (err.name === 'ValidationError') {

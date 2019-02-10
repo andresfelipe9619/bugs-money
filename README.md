@@ -18,16 +18,18 @@ We are using Docker, so you just have to compose the containers and access the s
 docker-compose build
 
 docker-compose up
-
 ```
 
 ## Contributing
 
-1. Fork it (<https://github.com/andresfelipe9619/bugs-money/fork>)
-2. Create your feature branch (`git checkout -b feature/fooBar`)
-3. Commit your changes (`git commit -am 'Add some fooBar'`)
-4. Push to the branch (`git push origin feature/fooBar`)
-5. Create a new Pull Request
+We follow the [feature branch](https://www.atlassian.com/git/tutorials/comparing-workflows/feature-branch-workflow) workflow.
+
+Clone it (<https://github.com/andresfelipe9619/bugs-money/>)
+
+1. Create your branch (`git checkout -b fooBar`)
+2. Commit your changes (`git commit -am 'Add some fooBar'`)
+3. Push to the branch (`git push origin fooBar`)
+4. Create a new Pull Request
 
 <!-- Markdown link & img dfn's -->
 
