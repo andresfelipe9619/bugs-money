@@ -70,7 +70,7 @@ module.exports = (model, _id = null) => {
           return;
         }
         let id = req.params.id;
-        let body = _.pick(req.body, ['nombre', 'email', 'img', 'role', 'estado']);
+        let body = _.pick(req.body, ['nombre', 'email', 'img', 'estado']);
 
         model.findByIdAndUpdate(
             id,

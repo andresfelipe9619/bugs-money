@@ -21,8 +21,8 @@ class Home extends Component {
 
   render() {
     return (
-      <div className="App">
-        <div className="App-header">
+      <div className="app">
+        <div className="home-app-header">
           <Header
             className="header wow slideInDown"
             textAlign={"center"}
@@ -56,17 +56,20 @@ class Home extends Component {
             <br />
           </div>
         </div>
-        <div className="content wow rollIn" data-wow-delay="0.3s">
+        <div className="home-content wow rollIn" data-wow-delay="0.3s">
           <Container fluid className="wow zoomIn" data-wow-delay="0.4s">
             <a className="manage-title manage-highlight">
               Manage your money like a PRO!!
             </a>
           </Container>
         </div>
-        <div className="sections-container" style={{ paddingBottom: "10px" }}>
+        <div
+          className="home-sections-container"
+          style={{ paddingBottom: "10px" }}
+        >
           <br />
           <div
-            className="section wow slideInLeft"
+            className="home-section wow slideInLeft"
             data-wow-delay="0.1s"
             data-wow-iteration="1"
             style={{
@@ -75,7 +78,7 @@ class Home extends Component {
               animationIterationCount: "1"
             }}
           >
-            <div className="title-items black-text">
+            <div className="home-title-items black-text">
               <h2>Budgets on another Level</h2>
               <br />
               <p style={{ paddingRight: "1em" }}>
@@ -93,7 +96,7 @@ class Home extends Component {
           <br />
           <br />
           <div
-            className="section wow slideInRight"
+            className="home-section wow slideInRight"
             data-wow-delay="0.3s"
             data-wow-iteration="1"
             style={{
@@ -102,7 +105,7 @@ class Home extends Component {
               animationIterationCount: "1"
             }}
           >
-            <div className="title-items black-text">
+            <div className="home-title-items black-text">
               <h2>Never Run Out Of Money Again</h2>
               <br />
               <p>
@@ -120,7 +123,7 @@ class Home extends Component {
           </div>
         </div>
         <br />
-        <div className="content2 wow slideInRight" data-wow-delay="0.3s">
+        <div className="home-content2 wow slideInRight" data-wow-delay="0.3s">
           <Container fluid className="wow zoomIn" data-wow-delay="0.7s">
             <a className="manage-title manage-highlight">
               Add as many accounts as you want!
@@ -128,14 +131,14 @@ class Home extends Component {
           </Container>
         </div>
         <br />
-        <div className="content3 wow slideInLeft" data-wow-delay="0.3s">
+        <div className="home-content3 wow slideInLeft" data-wow-delay="0.3s">
           <Container fluid className="wow zoomIn" data-wow-delay="0.7s">
             <a className="manage-title manage-highlight">
               Keep track of All your Transactions!
             </a>
           </Container>
         </div>
-        <div className="content4">
+        <div className="home-content4">
           <Container
             fluid
             className="wow zoomIn"

@@ -6,7 +6,8 @@
     "server": "nodemon server.js",
     "dev": "concurrently --kill-others-on-fail \"npm run server\" \"npm run client\"",
     "start": "nodemon server.js",
-    "heroku-postbuild": "cd .. && cd client && npm install && npm install --only=dev --no-shrinkwrap && npm run build"
+    "heroku-postbuild": "cd .. && cd client && npm install && npm install --only=dev --no-shrinkwrap && npm run build",
+    "eslint": "eslint --fix ./routes/** ./models/** ./config/** ./middlewares/**"
   },
   "husky": {
     "hooks": {
