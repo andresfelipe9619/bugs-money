@@ -19,14 +19,10 @@ app.use(bodyParser.json());
 app.use(require('./routes'));
 
 mongoose.set('useCreateIndex', true);
-mongoose.connect(
-    process.env.URLDB,
-    {useNewUrlParser: true},
-    (err, res) => {
-      if (err) throw err;
-      console.log(`Connected to ${process.env.URLDB} succesfully`);
-    }
-);
+mongoose.connect(process.env.URLDB, {useNewUrlParser: true}, (err, res) => {
+  if (err) throw err;
+  console.log(`Connected to ${process.env.URLDB} succesfully`);
+});
 
 if (!isProduction) {
   app.use(errorhandler());
@@ -54,22 +50,17 @@ if (isProduction) {
   });
 }
 
-// / catch 404 and forward to error handler
+// Catch 404 and forward to error handler
 app.use(function(req, res, next) {
   let err = new Error('Not Found');
   err.status = 404;
   next(err);
 });
-
-// / error handlers
-
-// development error handler
-// will print stacktrace
+// Eror handlers
 if (!isProduction) {
   app.use(function(err, req, res, next) {
     console.log(err.stack);
     res.status(err.status || 500);
-
     res.json({
       errors: {
         message: err.message,
@@ -77,17 +68,16 @@ if (!isProduction) {
       },
     });
   });
+} else {
+  app.use(function(err, req, res, next) {
+    res.status(err.status || 500);
+    res.json({
+      errors: {
+        message: err.message,
+        error: {},
+      },
+    });
+  });
 }
 
-// production error handler
-// no stacktraces leaked to user
-app.use(function(err, req, res, next) {
-  res.status(err.status || 500);
-  res.json({
-    errors: {
-      message: err.message,
-      error: {},
-    },
-  });
-});
 module.exports = app;

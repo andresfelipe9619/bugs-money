@@ -1,4 +1,0 @@
-GET https://api.youneedabudget.com/v1/budgets/5852d2c4-bfc0-48f3-b202-ddd8ad3c1673
-content-type: application/json
-User-Agent: vscode-restclient
-Authorization: Bearer fccb98840ffbcca549656cc0e53d881f9973c2456d96938ad3bcabc551640b4a  

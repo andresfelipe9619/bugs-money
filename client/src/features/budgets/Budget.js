@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { Grid, Header } from "semantic-ui-react";
+import { Grid, Header, Container } from "semantic-ui-react";
 import DataTable from "./../dashboard/DataTable";
 import { toast } from "react-semantic-toasts";
 import BudgetRow from "./BudgetRow";
@@ -125,62 +125,66 @@ class Budget extends Component {
     let saved = income - expense;
 
     return (
-      <Grid divided>
-        <Grid.Row>
-          <Grid.Column width={16}>
-            <BudgetRow
-              saved={saved}
-              income={income}
-              expense={expense}
-              openModal={this.openModal("create")}
-              {...handlers}
-            />
-          </Grid.Column>
-        </Grid.Row>
-        <Grid.Row centered style={{ marginTop: "100px" }}>
-          <Grid.Column width={16}>
-            {budgets && budgets.length > 0 ? (
-              <DataTable actions handlers={handlers} data={budgets} />
-            ) : (
-              <p>No hay nada presupuestado viejo, que tal si te creas algo?</p>
-            )}
-          </Grid.Column>
-        </Grid.Row>
-        <Grid.Row
-          centered
-          style={{
-            marginTop: "100px",
-            marginBottom: currentBudget ? "0px" : "300px"
-          }}
-        >
-          <Grid.Column width={16}>
-            <Header>
-              {currentBudget && currentBudget.name
-                ? `Transacciones en ${currentBudget.name}`
-                : `Selecciona un presupuesto`}
-            </Header>
-            {currentBudget && budgets.length > 0 ? (
-              <DataTable actions handlers={handlers} data={budgets} />
-            ) : (
-              <p>
-                No hay nada de transacciones viejo, que tal si te mueves un
-                poco?
-              </p>
-            )}
-          </Grid.Column>
-        </Grid.Row>
-        <CreateBudgetModal
-          open={isModalOpen.create}
-          closeModal={this.closeModal("create")}
-          handleOnConfirm={handlers.handleOnCreate}
-        />
-        <UpdateBudgetModal
-          budget={currentBudget || null}
-          open={isModalOpen.update}
-          closeModal={this.closeModal("update")}
-          handleOnConfirm={this.updateBudget}
-        />
-      </Grid>
+      <Container>
+        <Grid divided>
+          <Grid.Row>
+            <Grid.Column width={16}>
+              <BudgetRow
+                saved={saved}
+                income={income}
+                expense={expense}
+                openModal={this.openModal("create")}
+                {...handlers}
+              />
+            </Grid.Column>
+          </Grid.Row>
+          <Grid.Row centered style={{ marginTop: "100px" }}>
+            <Grid.Column width={16}>
+              {budgets && budgets.length > 0 ? (
+                <DataTable actions handlers={handlers} data={budgets} />
+              ) : (
+                <p>
+                  No hay nada presupuestado viejo, que tal si te creas algo?
+                </p>
+              )}
+            </Grid.Column>
+          </Grid.Row>
+          <Grid.Row
+            centered
+            style={{
+              marginTop: "100px",
+              marginBottom: currentBudget ? "0px" : "300px"
+            }}
+          >
+            <Grid.Column width={16}>
+              <Header>
+                {currentBudget && currentBudget.name
+                  ? `Transacciones en ${currentBudget.name}`
+                  : `Selecciona un presupuesto`}
+              </Header>
+              {currentBudget && budgets.length > 0 ? (
+                <DataTable actions handlers={handlers} data={budgets} />
+              ) : (
+                <p>
+                  No hay nada de transacciones viejo, que tal si te mueves un
+                  poco?
+                </p>
+              )}
+            </Grid.Column>
+          </Grid.Row>
+          <CreateBudgetModal
+            open={isModalOpen.create}
+            closeModal={this.closeModal("create")}
+            handleOnConfirm={handlers.handleOnCreate}
+          />
+          <UpdateBudgetModal
+            budget={currentBudget || null}
+            open={isModalOpen.update}
+            closeModal={this.closeModal("update")}
+            handleOnConfirm={this.updateBudget}
+          />
+        </Grid>
+      </Container>
     );
   }
 }

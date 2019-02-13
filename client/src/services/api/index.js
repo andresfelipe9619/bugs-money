@@ -47,6 +47,6 @@ const User = {
 export default {
   Auth,
   User,
+  Account,
   Transaction,
-  Account
 };
