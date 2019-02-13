@@ -1,12 +1,13 @@
-FROM  node:8
+FROM node:8.11.4-alpine
 
-RUN mkdir -p /usr/src/app/server
-WORKDIR /usr/src/app/
+WORKDIR /server
 
 RUN npm i -g nodemon
-COPY package*.json ./
+COPY package*.json /server/
 RUN npm install
 
-COPY . .
+COPY . /server/
+
 EXPOSE 5000
-CMD [ "npm", "run", "start" ]
+
+CMD ["npm", "start"]

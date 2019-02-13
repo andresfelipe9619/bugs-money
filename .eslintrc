@@ -1,11 +1,10 @@
 {
-  "extends": [
-    "react-app",
-    "google"
-  ],
+  "extends": ["react-app", "google"],
   "rules": {
     "require-jsdoc": "off",
     "linebreak-style": "off",
-    "no-invalid-this": "off"
+    "no-invalid-this": "off",
+    "jsx-a11y/href-no-hash": "off",
+    "new-cap": "off"
   }
 }

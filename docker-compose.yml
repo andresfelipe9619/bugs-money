@@ -1,32 +1,26 @@
 version: "2"
 services:
-  mongodb:
-    image: "mongo"
-    ports:
-      - "27017:27017"
-  server:
-    build: ./server
-    expose:
-      - "5000"
-    ports:
-      - "5000:5000"
-    volumes:
-      - ./server:/usr/src/app/server
-    depends_on:
-      - mongodb
-    command: npm run start
   client:
     build: ./client
-    expose:
-      - "3000"
-      - "35729"
+    restart: always
     ports:
       - "3000:3000"
       - "35729:35729"
     volumes:
-      - ./client:/usr/src/app/client
+      - ./client:/client
     links:
       - server
-    depends_on:
-      - server
-    command: npm run start
+    networks:
+      - bugs-money-network
+  server:
+    build: ./server
+    restart: always
+    ports:
+      - "5000:5000"
+    volumes:
+      - ./server:/server
+    networks:
+      - bugs-money-network
+networks:
+  bugs-money-network:
+    driver: bridge
