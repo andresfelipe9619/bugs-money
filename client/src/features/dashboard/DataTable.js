@@ -32,6 +32,7 @@ export default class DataTable extends React.PureComponent {
   getColumns = data => {
     const columns = [];
     const sample = data[0];
+    const { handlers, actions } = this.props;
     Object.keys(sample).forEach(key => {
       if (key !== "_id" && key !== "id") {
         let column = {
@@ -42,10 +43,10 @@ export default class DataTable extends React.PureComponent {
         columns.push(column);
       }
     });
-    if (this.props.actions) {
+    if (actions) {
       columns.push({
         Header: "",
-        Cell: cellInfo => <ActionsCell {...this.props.handlers} {...cellInfo} />
+        Cell: cellInfo => <ActionsCell {...handlers} {...cellInfo} />
       });
     }
     return columns;

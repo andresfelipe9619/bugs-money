@@ -9,7 +9,7 @@ const Usuario = require('../../models/user');
 
 let router = express.Router();
 
-router.post('/', (req, res) => {
+router.post('/login', (req, res) => {
   let body = req.body;
   console.log(req.body);
   Usuario.findOne({email: body.email}, (err, usuarioDB) => {
@@ -78,7 +78,7 @@ async function verify(token) {
   };
 }
 
-router.post('/google', async (req, res) => {
+router.post('/login/google', async (req, res) => {
   let token = req.body.idtoken;
 
   let googleUser = await verify(token).catch((e) => {

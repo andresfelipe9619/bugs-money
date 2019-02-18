@@ -8,11 +8,10 @@ import {
   Header,
   Segment
 } from "semantic-ui-react";
-import { login } from "../../services/redux/actions/authActions";
+import { login, loginGoogle } from "../../services/redux/actions/authActions";
 import withSemanticUIFormik from "./hoc/FormikSUI";
 import * as Yup from "yup";
 import { Redirect } from "react-router-dom";
-import Facebook from "./social/Facebook";
 import Google from "./social/Google";
 
 // Our inner form component. Will be wrapped with Formik({..})
@@ -23,7 +22,8 @@ const MyInnerForm = props => {
     handleChange,
     handleSubmit,
     userHasLoggedin,
-    loginHasFailed
+    loginHasFailed,
+    loginGoogleRequest
   } = props;
 
   if (userHasLoggedin) {
@@ -52,6 +52,7 @@ const MyInnerForm = props => {
               Ingresa con tu cuenta
             </Header>
             <Segment stacked>
+              {console.log(errors)}
               {Object.keys(errors).length > 0 ? (
                 <Message
                   error
@@ -105,11 +106,7 @@ const MyInnerForm = props => {
               </Header>
               <Grid.Row>
                 <Grid.Column width={3}>
-                  <Facebook />
-                </Grid.Column>
-
-                <Grid.Column width={3}>
-                  <Google />
+                  <Google onLoginSuccess={loginGoogleRequest} />
                 </Grid.Column>
               </Grid.Row>
             </Segment>
@@ -131,6 +128,9 @@ const mapDispatch = dispatch => {
   return {
     loginRequest: user => {
       dispatch(login(user));
+    },
+    loginGoogleRequest: user => {
+      dispatch(loginGoogle(user));
     }
   };
 };

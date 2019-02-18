@@ -9,7 +9,7 @@ const {
   verificaAdminRole,
 } = require('../../middlewares/authentication');
 
-router.get('/usuario', verificaToken, (req, res) => {
+router.get('/user', verificaToken, (req, res) => {
   let desde = req.query.desde || 0;
   desde = Number(desde);
 
@@ -37,7 +37,7 @@ router.get('/usuario', verificaToken, (req, res) => {
       });
 });
 
-router.post('/usuario', [verificaToken, verificaAdminRole], function(req, res) {
+router.post('/user', [verificaToken, verificaAdminRole], function(req, res) {
   let body = req.body;
 
   let usuario = new Usuario({
@@ -62,10 +62,7 @@ router.post('/usuario', [verificaToken, verificaAdminRole], function(req, res) {
   });
 });
 
-router.put('/usuario/:id', [verificaToken, verificaAdminRole], function(
-    req,
-    res
-) {
+router.put('/user/:id', [verificaToken, verificaAdminRole], function(req, res) {
   let id = req.params.id;
   let body = _.pick(req.body, ['nombre', 'email', 'img', 'role', 'estado']);
 
@@ -89,7 +86,7 @@ router.put('/usuario/:id', [verificaToken, verificaAdminRole], function(
   );
 });
 
-router.delete('/usuario/:id', [verificaToken, verificaAdminRole], function(
+router.delete('/user/:id', [verificaToken, verificaAdminRole], function(
     req,
     res
 ) {

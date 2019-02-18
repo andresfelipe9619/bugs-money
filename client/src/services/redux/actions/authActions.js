@@ -10,7 +10,7 @@ import {
   LOGIN_GOOGLE_REQUEST,
   LOGIN_FACEBOOK_REQUEST
 } from "./constants";
-import {successAlert} from './alertActions';
+import { successAlert } from "./alertActions";
 import API from "../../api";
 
 const loginRequest = user => ({ type: LOGIN_REQUEST, user });
@@ -31,7 +31,7 @@ export const loginFacebook = user => {
     return axios
       .get("login/facebook")
       .then(response => {
-        response.ok 
+        response.ok
           ? dispatch(loginSuccess(response.user))
           : dispatch(loginFailure(response.error.message));
 
@@ -47,13 +47,16 @@ export const loginGoogle = user => {
   return dispatch => {
     dispatch(loginGoogleRequest(user));
 
-    return axios
-      .then(response => {
-        dispatch(loginGoogleRequest(null));
-      })
-      .catch(error => {
-        dispatch(loginFailure(error));
-      });
+    // return API.Auth.loginGoogle(user)
+    //   .then(response => {
+    //     console.log("response", response);
+    //     if (!response.ok) dispatch(loginFailure(response));
+    //     dispatch(loginSuccess(response.usuario));
+    //     dispatch(loginGoogleRequest(null));
+    //   })
+    //   .catch(error => {
+    //     dispatch(loginFailure(error));
+    //   });
   };
 };
 
@@ -63,13 +66,9 @@ export const login = user => {
 
     return API.Auth.login(user)
       .then(response => {
-        if(response.ok){
-          dispatch(loginSuccess(response.usuario))
-          dispatch(successAlert("Que Hay de Nuevo Viejo?"))
-        }else{
-          dispatch(loginFailure(response));
-        } 
-        
+        if (!response.ok) dispatch(loginFailure(response));
+        dispatch(loginSuccess(response.usuario));
+        dispatch(successAlert("Que Hay de Nuevo Viejo?"));
         dispatch(loginRequest(null));
       })
       .catch(error => {
@@ -86,10 +85,10 @@ export const register = user => {
 
     return API.Auth.register(user)
       .then(response => {
-        response.ok 
+        response.ok
           ? dispatch(registerSuccess(user))
           : dispatch(registerFailure(response));
-        
+
         dispatch(registerRequest(null));
       })
       .catch(error => {
@@ -102,7 +101,7 @@ export const register = user => {
 
 export const logout = user => {
   return dispatch => {
-    dispatch(logoutRequest(user))
+    dispatch(logoutRequest(user));
     dispatch(loginSuccess(null));
   };
 };

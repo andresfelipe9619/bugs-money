@@ -9,7 +9,7 @@ const {verificaToken} = require('../../middlewares/authentication');
 // ===========================//
 // Muestra todas las transacciones
 // ===========================//
-router.get('/transaccion', verificaToken, (req, res) => {
+router.get('/transaction', verificaToken, (req, res) => {
   let desde = req.query.desde || 0;
   desde = Number(desde);
 
@@ -39,7 +39,7 @@ router.get('/transaccion', verificaToken, (req, res) => {
 // ===========================//
 // Muestra la transaccion por ID
 // ===========================//
-router.get('/transaccion/:id', verificaToken, (req, res) => {
+router.get('/transaction/:id', verificaToken, (req, res) => {
   let id = req.params.id;
 
   Transaccion.findById(id)
@@ -73,7 +73,7 @@ router.get('/transaccion/:id', verificaToken, (req, res) => {
 // Crea una transaccion
 // ===========================//
 
-router.post('/transaccion', verificaToken, function(req, res) {
+router.post('/transaction', verificaToken, function(req, res) {
   let body = req.body;
 
   let transaccion = new Transaccion({

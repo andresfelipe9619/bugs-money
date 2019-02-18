@@ -9,7 +9,7 @@ const {verificaToken} = require('../../middlewares/authentication');
 // ===========================//
 // Muestra todos los prsupuestos
 // ===========================//
-router.get('/presupuesto', verificaToken, (req, res) => {
+router.get('/budget', verificaToken, (req, res) => {
   Presupuesto.find({})
       .sort('descripcion')
       .populate('usuario', 'nombre email')
@@ -30,7 +30,7 @@ router.get('/presupuesto', verificaToken, (req, res) => {
 // ===========================//
 // Muestra el presupuesto por ID
 // ===========================//
-router.get('/presupuesto/:id', verificaToken, (req, res) => {
+router.get('/budget/:id', verificaToken, (req, res) => {
   let id = req.params.id;
 
   Presupuesto.findById(id, (err, presupuestoDB) => {
@@ -61,7 +61,7 @@ router.get('/presupuesto/:id', verificaToken, (req, res) => {
 // Crea un pesupusto
 // ===========================//
 
-router.post('/presupuesto', verificaToken, function(req, res) {
+router.post('/budget', verificaToken, function(req, res) {
   let body = req.body;
 
   let presupuesto = new Presupuesto({
@@ -92,7 +92,7 @@ router.post('/presupuesto', verificaToken, function(req, res) {
 // Actualiza el presupuesto por id
 // ===========================//
 
-router.put('/presupuesto/:id', verificaToken, function(req, res) {
+router.put('/budget/:id', verificaToken, function(req, res) {
   let id = req.params.id;
   let body = _.pick(req.body, [
     'nombre',
@@ -134,7 +134,7 @@ router.put('/presupuesto/:id', verificaToken, function(req, res) {
 // elimina el presupuesto por id
 // ===========================//
 
-router.delete('/presupuesto/:id', verificaToken, function(req, res) {
+router.delete('/budget/:id', verificaToken, function(req, res) {
   let id = req.params.id;
   // Presupuesto.findByIdAndRemove(id, (err, usuarioBorrado) => {
   Presupuesto.findByIdAndRemove(id, (err, presupuestoBorrado) => {

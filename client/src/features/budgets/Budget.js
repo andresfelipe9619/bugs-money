@@ -7,7 +7,7 @@ import { connect } from "react-redux";
 import test from "./test";
 import CreateBudgetModal from "./modals/CreateBudget";
 import UpdateBudgetModal from "./modals/UpdateBudget";
-
+import API from "../../services/api";
 class Budget extends Component {
   state = {
     income: 0,
@@ -21,9 +21,10 @@ class Budget extends Component {
     currentBudget: null
   };
 
-  componentDidMount() {
+  async componentDidMount() {
     const { alert } = this.props;
-
+    const res = await API.Budget.getAll();
+    console.log("res", res);
     this.setState({ budgets: test.budgets });
     if (alert && alert.message) {
       toast({
