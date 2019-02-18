@@ -47,7 +47,7 @@ router.post('/', (req, res) => {
         {expiresIn: process.env.CADUCIDAD_TOKEN}
     );
 
-    res.json({
+    return res.json({
       ok: true,
       usuario: usuarioDB,
       token,
@@ -146,7 +146,7 @@ router.post('/google', async (req, res) => {
             {expiresIn: process.env.CADUCIDAD_TOKEN}
         );
 
-        res.json({
+        return res.json({
           ok: true,
           usuario: usuarioDB,
           token,
@@ -154,9 +154,9 @@ router.post('/google', async (req, res) => {
       });
     }
   });
-  // res.json({
-  //     usuario: googleUser
-  // });
+  res.json({
+    usuario: googleUser,
+  });
 });
 
 module.exports = router;

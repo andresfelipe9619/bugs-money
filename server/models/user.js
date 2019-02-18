@@ -8,7 +8,7 @@ let rolesValidos = {
 
 let Schema = mongoose.Schema;
 
-let userSchema = new Schema({
+let usuarioSchema = new Schema({
   nombre: {
     type: String,
     required: [true, 'El nombre es necesario'],
@@ -41,7 +41,7 @@ let userSchema = new Schema({
   },
 });
 
-userSchema.methods.toJSON = function() {
+usuarioSchema.methods.toJSON = function() {
   let user = this;
   let userObject = user.toObject();
   delete userObject.password;
@@ -49,5 +49,5 @@ userSchema.methods.toJSON = function() {
   return userObject;
 };
 
-userSchema.plugin(uniqueValidator, {message: '{PATH} debe de ser unico'});
-module.exports = mongoose.model('Usuario', userSchema);
+usuarioSchema.plugin(uniqueValidator, {message: '{PATH} debe de ser unico'});
+module.exports = mongoose.model('Usuario', usuarioSchema);
