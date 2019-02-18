@@ -9,7 +9,7 @@ const {verificaToken} = require('../../middlewares/authentication');
 // ===========================//
 // Muestra todas las categorias*
 // ===========================//
-router.get('/categoria', verificaToken, (req, res) => {
+router.get('/category', verificaToken, (req, res) => {
   let desde = req.query.desde || 0;
   desde = Number(desde);
 
@@ -63,7 +63,7 @@ router.get('/categoria', verificaToken, (req, res) => {
 // ===========================//
 // Muestra la categoria por ID
 // ===========================//
-router.get('/categoria/:id', verificaToken, (req, res) => {
+router.get('/category/:id', verificaToken, (req, res) => {
   let id = req.params.id;
 
   Categoria.findById(id)
@@ -96,7 +96,7 @@ router.get('/categoria/:id', verificaToken, (req, res) => {
 // ===========================//
 // Buscar Categorias
 // ===========================//
-router.get('/categoria/buscar/:termino', verificaToken, (req, res) => {
+router.get('/category/buscar/:termino', verificaToken, (req, res) => {
   let termino = req.params.termino;
 
   let regex = new RegExp(termino, 'i');
@@ -122,7 +122,7 @@ router.get('/categoria/buscar/:termino', verificaToken, (req, res) => {
 // Crea una categoria
 // ===========================//
 
-router.post('/categoria', verificaToken, function(req, res) {
+router.post('/category', verificaToken, function(req, res) {
   let body = req.body;
 
   let categoria = new Categoria({
@@ -153,7 +153,7 @@ router.post('/categoria', verificaToken, function(req, res) {
 // Actualiza la categoria por id
 // ===========================//
 
-router.put('/categoria/:id', verificaToken, function(req, res) {
+router.put('/category/:id', verificaToken, function(req, res) {
   let id = req.params.id;
   let body = req.body;
 
@@ -200,7 +200,7 @@ router.put('/categoria/:id', verificaToken, function(req, res) {
 // elimina la categoria por id
 // ===========================//
 
-router.delete('/categoria/:id', verificaToken, function(req, res) {
+router.delete('/category/:id', verificaToken, function(req, res) {
   let id = req.params.id;
   // Presupuesto.findByIdAndRemove(id, (err, categoriaBorrado) => {
   Categoria.findByIdAndRemove(id, (err, categoriaBorrado) => {
@@ -229,4 +229,3 @@ router.delete('/categoria/:id', verificaToken, function(req, res) {
 });
 
 module.exports = router;
-I;

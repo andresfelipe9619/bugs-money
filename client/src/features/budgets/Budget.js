@@ -4,7 +4,7 @@ import DataTable from "./../dashboard/DataTable";
 import { toast } from "react-semantic-toasts";
 import BudgetRow from "./BudgetRow";
 import { connect } from "react-redux";
-import test from "./test";
+// import test from "./test";
 import CreateBudgetModal from "./modals/CreateBudget";
 import UpdateBudgetModal from "./modals/UpdateBudget";
 import API from "../../services/api";
@@ -23,9 +23,11 @@ class Budget extends Component {
 
   async componentDidMount() {
     const { alert } = this.props;
-    const res = await API.Budget.getAll();
-    console.log("res", res);
-    this.setState({ budgets: test.budgets });
+    let res = await API.Budget.getAll();
+    if (res.ok) {
+      this.setState({ budgets: res.presupuestos });
+    }
+    // this.setState({ budgets: test.budgets });
     if (alert && alert.message) {
       toast({
         type: alert.type,
@@ -37,14 +39,9 @@ class Budget extends Component {
     }
   }
 
-  createBudget = budget => {
-    let mBudget = {
-      ...budget,
-      spent: 0,
-      nature: "expense",
-      categoryId: `10634${Math.floor(Math.random() * 100)}`
-    };
-    let budgets = [...this.state.budgets, mBudget];
+  createBudget = async budget => {
+    let res = await API.Budget.create(budget);
+    let budgets = [...this.state.budgets, res.presupuesto];
     this.setState({ budgets });
   };
 

@@ -9,7 +9,7 @@ const {verificaToken} = require('../../middlewares/authentication');
 // ===========================//
 // Muestra tods las cuentas
 // ===========================//
-router.get('/cuenta', verificaToken, (req, res) => {
+router.get('/account', verificaToken, (req, res) => {
   let desde = req.query.desde || 0;
   desde = Number(desde);
 
@@ -39,7 +39,7 @@ router.get('/cuenta', verificaToken, (req, res) => {
 // ===========================//
 // Muestra la cuenta por ID
 // ===========================//
-router.get('/cuenta/:id', verificaToken, (req, res) => {
+router.get('/account/:id', verificaToken, (req, res) => {
   let id = req.params.id;
 
   Cuenta.findById(id)
@@ -73,7 +73,7 @@ router.get('/cuenta/:id', verificaToken, (req, res) => {
 // Crea una cuenta
 // ===========================//
 
-router.post('/cuenta', verificaToken, function(req, res) {
+router.post('/account', verificaToken, function(req, res) {
   let body = req.body;
 
   let cuenta = new Cuenta({
@@ -104,7 +104,7 @@ router.post('/cuenta', verificaToken, function(req, res) {
 // Actualiza cuenta por id
 // ===========================//
 
-router.put('/cuenta/:id', verificaToken, function(req, res) {
+router.put('/account/:id', verificaToken, function(req, res) {
   let id = req.params.id;
 
   let body = _.pick(req.body, [
@@ -181,7 +181,7 @@ router.put('/cuenta/:id', verificaToken, function(req, res) {
 // elimina cuenta por id
 // ===========================//
 
-router.delete('/cuenta/:id', verificaToken, function(req, res) {
+router.delete('/account/:id', verificaToken, function(req, res) {
   let id = req.params.id;
   // Presupuesto.findByIdAndRemove(id, (err, categoriaBorrado) => {
   Cuenta.findByIdAndRemove(id, (err, cuentaBorrada) => {
