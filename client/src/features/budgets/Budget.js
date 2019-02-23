@@ -4,7 +4,6 @@ import DataTable from "./../dashboard/DataTable";
 import { toast } from "react-semantic-toasts";
 import BudgetRow from "./BudgetRow";
 import { connect } from "react-redux";
-// import test from "./test";
 import CreateBudgetModal from "./modals/CreateBudget";
 import UpdateBudgetModal from "./modals/UpdateBudget";
 import API from "../../services/api";
@@ -24,13 +23,14 @@ class Budget extends Component {
   async componentDidMount() {
     const { alert } = this.props;
     let res = await API.Budget.getAll();
+    console.log("did", res);
     if (res.ok) {
       this.setState({ budgets: res.presupuestos });
     }
     // this.setState({ budgets: test.budgets });
     if (alert && alert.message) {
       toast({
-        type: alert.type,
+        type: alert.typresolve,
         icon: alert.icon,
         title: alert.type + "Toast",
         description: alert.message,
@@ -40,7 +40,12 @@ class Budget extends Component {
   }
 
   createBudget = async budget => {
-    let res = await API.Budget.create(budget);
+    console.log("screating budget", budget);
+    let mBudget = { ...budget };
+    console.log("screating mmbudget", mBudget);
+
+    let res = await API.Budget.create(mBudget);
+    console.log("create", res);
     let budgets = [...this.state.budgets, res.presupuesto];
     this.setState({ budgets });
   };
@@ -101,8 +106,8 @@ class Budget extends Component {
 
   render() {
     const { budgets, isModalOpen, currentBudget } = this.state;
+    console.log("props", this.props);
     if (!budgets) return null;
-    console.log("state", this.state);
     const handlers = {
       handleOnView: this.handleOnView,
       handleOnCreate: this.handleOnCreate,
@@ -189,7 +194,8 @@ class Budget extends Component {
 
 function mapStateToProps(state) {
   return {
-    alert: state.alert
+    alert: state.alert,
+    user: state.authService.loginSuccess
   };
 }
 

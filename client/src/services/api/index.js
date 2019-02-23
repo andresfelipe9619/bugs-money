@@ -1,19 +1,29 @@
 import axios from "axios";
 const API_ROOT = "/api";
 
-const responseBody = response => response.data;
-
 const server = axios.create({
   baseURL: API_ROOT
 });
-const token =
-  "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c3VhcmlvIjp7InJvbGUiOiJVU0VSX1JPTEUiLCJlc3RhZG8iOnRydWUsImdvb2dsZSI6ZmFsc2UsIl9pZCI6IjVjNGJkNGMzOTBkNjQxMTkxMzc1Y2Q3YyIsIm5vbWJyZSI6ImFuZHJlcyBmZWxpcGUiLCJlbWFpbCI6ImFuZHJlc0BnbWFpbC5jb20iLCJfX3YiOjB9LCJpYXQiOjE1NTA0OTA3MzksImV4cCI6MTU1MDY2MzUzOX0.XCB9Tuyczz7FQ4oeaKNTgWxjo2gcv0CPxwF_8QX6rIc";
-const headers = { token };
+
+let token = null;
+
+const tokenPlugin = config => {
+  if (token) {
+    console.log("set that token", token);
+    config.headers["token"] = token;
+  }
+  console.log("set that token after");
+  return config;
+};
+
+const responseBody = response => response.data;
+
+server.interceptors.request.use(tokenPlugin, e => Promise.reject(e));
+
 const serverRequests = {
-  del: url => server.del(`${url}`, { headers }).then(responseBody),
-  get: url => server.get(`${url}`, { headers }).then(responseBody),
-  put: (url, body) =>
-    server.put(`${url}`, body, { headers }).then(responseBody),
+  del: url => server.del(`${url}`).then(responseBody),
+  get: url => server.get(`${url}`).then(responseBody),
+  put: (url, body) => server.put(`${url}`, body).then(responseBody),
   post: (url, body) => server.post(`${url}`, body).then(responseBody)
 };
 
@@ -63,5 +73,8 @@ export default {
   User,
   Budget,
   Account,
-  Transaction
+  Transaction,
+  setToken: _token => {
+    token = _token;
+  }
 };

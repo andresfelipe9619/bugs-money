@@ -154,9 +154,6 @@ router.post('/login/google', async (req, res) => {
       });
     }
   });
-  res.json({
-    usuario: googleUser,
-  });
 });
 
 module.exports = router;

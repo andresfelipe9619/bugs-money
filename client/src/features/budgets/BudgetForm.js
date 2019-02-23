@@ -11,7 +11,7 @@ const MyInnerForm = props => {
     handleChange,
     handleSubmit,
     handleOnCancel,
-    values: { name, account, startDate, limit }
+    values: { nombre, estado, fechaInicioPresupuesto, fechaFinPresupuesto }
   } = props;
   return (
     <Grid
@@ -36,25 +36,25 @@ const MyInnerForm = props => {
                 <Form.Input
                   label="Nombre presupuesto"
                   labelPosition="left"
-                  value={name}
+                  value={nombre}
                   fluid
                   icon="money"
                   type="text"
-                  name="name"
+                  name="nombre"
                   iconPosition="left"
                   placeholder="Nombre presupuesto..."
                   onChange={handleChange}
                 />
                 <Form.Input
-                  label="Cuenta"
+                  label="Estado"
                   labelPosition="left"
                   type="text"
                   fluid
                   icon="lock"
                   iconPosition="left"
-                  name="account"
-                  value={account}
-                  placeholder="Cuenta..."
+                  name="estado"
+                  value={estado}
+                  placeholder="Estado..."
                   onChange={handleChange}
                 />
               </Form.Group>
@@ -66,47 +66,22 @@ const MyInnerForm = props => {
                   fluid
                   icon="calendar"
                   iconPosition="left"
-                  name="startDate"
-                  value={startDate}
+                  name="fechaInicioPresupuesto"
+                  value={fechaInicioPresupuesto}
                   onChange={handleChange}
                 />
                 <Form.Input
-                  label="Cantidad"
+                  label="Fecha Final"
                   labelPosition="left"
-                  type="number"
+                  type="date"
                   fluid
-                  icon="dollar"
+                  icon="calendar"
                   iconPosition="left"
-                  name="limit"
-                  value={limit}
-                  placeholder="Cantidad..."
+                  name="fechaFinPresupuesto"
+                  value={fechaFinPresupuesto}
                   onChange={handleChange}
                 />
               </Form.Group>
-              {/* <Form.Group widths="equal">
-                <Form.Input
-                  label="Categoria"
-                  placeholder="Categoria"
-                  labelPosition="left"
-                  type="text"
-                  fluid
-                  icon="cube"
-                  iconPosition="left"
-                  name="category"
-                  onChange={handleChange}
-                />
-                <Form.Input
-                  label="Periodo"
-                  labelPosition="left"
-                  type="text"
-                  fluid
-                  icon="clock"
-                  iconPosition="left"
-                  name="period"
-                  placeholder="Periodo"
-                  onChange={handleChange}
-                />
-              </Form.Group> */}
               <Button type="button" color="red" onClick={handleOnCancel}>
                 <Icon name="remove" /> Cancelar
               </Button>
@@ -124,21 +99,17 @@ const MyInnerForm = props => {
 
 const BudgetForm = withSemanticUIFormik({
   mapPropsToValues: ({ budget }) => ({
-    name: (budget && budget.name) || "",
-    categoryId: (budget && budget.categoryId) || "",
-    limit: (budget && budget.limit) || 0,
-    account: (budget && budget.account) || "",
+    nombre: (budget && budget.nombre) || "",
+    fechaInicioPresupuesto: (budget && budget.fechaInicioPresupuesto) || 0,
+    fechaFinPresupuesto: (budget && budget.fechaFinPresupuesto) || 0,
+    estado: (budget && budget.estado) || "",
     nature: (budget && budget.nature) || ""
-    // startDate: budget.startDate || "",
-    // period: budget.period || ""
   }),
   validationSchema: Yup.object().shape({
-    name: Yup.string().required("Nombre es requerido!"),
-    account: Yup.string().required("cuenta requerida!"),
-    limit: Yup.number().required("cantidad requerida!"),
-    // period: Yup.string().required("Periodo requerida!"),
-    // category: Yup.string().required("categoria requerida!"),
-    startDate: Yup.date().required("Fecha de inicio requerida!")
+    nombre: Yup.string().required("Nombre es requerido!"),
+    estado: Yup.string().required("cuenta requerida!"),
+    fechaFinPresupuesto: Yup.date().required("cantidad requerida!"),
+    fechaInicioPresupuesto: Yup.date().required("Fecha de inicio requerida!")
   }),
   handleSubmit: (values, { setSubmitting, props }) => {
     setTimeout(() => {

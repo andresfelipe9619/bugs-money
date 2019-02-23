@@ -35,12 +35,14 @@ export default class DataTable extends React.PureComponent {
     const { handlers, actions } = this.props;
     Object.keys(sample).forEach(key => {
       if (key !== "_id" && key !== "id") {
-        let column = {
-          accessor: key,
-          Header: key,
-          className: "center"
-        };
-        columns.push(column);
+        if (sample[key] && typeof sample[key] !== "object") {
+          let column = {
+            accessor: key,
+            Header: key,
+            className: "center"
+          };
+          columns.push(column);
+        }
       }
     });
     if (actions) {

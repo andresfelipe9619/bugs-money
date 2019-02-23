@@ -37,7 +37,7 @@ router.get('/user', verificaToken, (req, res) => {
       });
 });
 
-router.post('/user', [verificaToken, verificaAdminRole], function(req, res) {
+router.post('/user', [verificaToken], function(req, res) {
   let body = req.body;
 
   let usuario = new Usuario({
@@ -62,7 +62,7 @@ router.post('/user', [verificaToken, verificaAdminRole], function(req, res) {
   });
 });
 
-router.put('/user/:id', [verificaToken, verificaAdminRole], function(req, res) {
+router.put('/user/:id', [verificaToken], function(req, res) {
   let id = req.params.id;
   let body = _.pick(req.body, ['nombre', 'email', 'img', 'role', 'estado']);
 
@@ -86,10 +86,7 @@ router.put('/user/:id', [verificaToken, verificaAdminRole], function(req, res) {
   );
 });
 
-router.delete('/user/:id', [verificaToken, verificaAdminRole], function(
-    req,
-    res
-) {
+router.delete('/user/:id', [verificaToken], function(req, res) {
   let id = req.params.id;
 
   // Usuario.findByIdAndRemove(id, (err, usuarioBorrado) => {

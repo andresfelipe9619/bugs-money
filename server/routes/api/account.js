@@ -75,7 +75,8 @@ router.get('/account/:id', verificaToken, (req, res) => {
 
 router.post('/account', verificaToken, function(req, res) {
   let body = req.body;
-
+  console.log('body', body);
+  console.log('user', req.usuario);
   let cuenta = new Cuenta({
     usuario: req.usuario._id,
     nombre: body.nombre,

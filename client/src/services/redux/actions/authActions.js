@@ -12,7 +12,6 @@ import {
 } from "./constants";
 import { successAlert } from "./alertActions";
 import API from "../../api";
-
 const loginRequest = user => ({ type: LOGIN_REQUEST, user });
 const loginSuccess = user => ({ type: LOGIN_SUCCESS, user });
 const loginFailure = error => ({ type: LOGIN_FAILURE, error });
@@ -47,16 +46,17 @@ export const loginGoogle = user => {
   return dispatch => {
     dispatch(loginGoogleRequest(user));
 
-    // return API.Auth.loginGoogle(user)
-    //   .then(response => {
-    //     console.log("response", response);
-    //     if (!response.ok) dispatch(loginFailure(response));
-    //     dispatch(loginSuccess(response.usuario));
-    //     dispatch(loginGoogleRequest(null));
-    //   })
-    //   .catch(error => {
-    //     dispatch(loginFailure(error));
-    //   });
+    return API.Auth.loginGoogle(user)
+      .then(response => {
+        console.log("response", response);
+        if (!response.ok) dispatch(loginFailure(response));
+        dispatch(loginSuccess(response.usuario));
+        API.setToken(response.token);
+        dispatch(loginGoogleRequest(null));
+      })
+      .catch(error => {
+        dispatch(loginFailure(error));
+      });
   };
 };
 
@@ -68,6 +68,7 @@ export const login = user => {
       .then(response => {
         if (!response.ok) dispatch(loginFailure(response));
         dispatch(loginSuccess(response.usuario));
+        API.setToken(response.token);
         dispatch(successAlert("Que Hay de Nuevo Viejo?"));
         dispatch(loginRequest(null));
       })
