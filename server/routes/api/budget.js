@@ -2,17 +2,14 @@ const router = require('express').Router();
 
 const _ = require('underscore');
 
-const Presupuesto = require('../../models/budget');
+const Budget = require('../../models/budget');
 const {verificaToken} = require('../../middlewares/authentication');
 
-// ===========================//
-// Muestra todos los prsupuestos
-// ===========================//
 router.get('/budget', verificaToken, (req, res) => {
-  Presupuesto.find({})
-      .sort('descripcion')
-      .populate('usuario', 'nombre email')
-      .exec((err, presupuestos) => {
+  Budget.find({user: req.user._id})
+      .sort('description')
+      .populate('user', 'name email')
+      .exec((err, budgets) => {
         if (err) {
           return res.status(500).json({
             ok: false,
@@ -22,17 +19,15 @@ router.get('/budget', verificaToken, (req, res) => {
 
         res.json({
           ok: true,
-          presupuestos,
+          budgets,
         });
       });
 });
-// ===========================//
-// Muestra el presupuesto por ID
-// ===========================//
+
 router.get('/budget/:id', verificaToken, (req, res) => {
   let id = req.params.id;
 
-  Presupuesto.findById(id, (err, presupuestoDB) => {
+  Budget.findById(id, (err, budgetDB) => {
     if (err) {
       return res.status(500).json({
         ok: false,
@@ -40,7 +35,7 @@ router.get('/budget/:id', verificaToken, (req, res) => {
       });
     }
 
-    if (!presupuestoDB) {
+    if (!budgetDB) {
       return res.status(400).json({
         ok: false,
         err: {
@@ -51,28 +46,23 @@ router.get('/budget/:id', verificaToken, (req, res) => {
 
     res.json({
       ok: true,
-      presupuesto: presupuestoDB,
+      budget: budgetDB,
     });
   });
 });
 
-// ===========================//
-// Crea un pesupusto
-// ===========================//
-
 router.post('/budget', verificaToken, (req, res) => {
-  let body = req.body.budget;
-  console.log('req', req.body);
-  let presupuesto = new Presupuesto({
-    nombre: body.nombre,
-    valorPresupuesto: 0,
-    fechaInicioPresupuesto: body.fechaInicioPresupuesto,
-    fechaFinPresupuesto: body.fechaFinPresupuesto,
-    estado: true,
-    usuario: req.usuario._id,
+  let body = req.body;
+  let budget = new Budget({
+    name: body.name,
+    limit: 0,
+    startDate: body.startDate,
+    endDate: body.endDate,
+    state: true,
+    user: req.user._id,
   });
 
-  presupuesto.save((err, presupuestoDB) => {
+  budget.save((err, budgetDB) => {
     console.log('err', err);
     if (err) {
       return res.status(500).json({
@@ -83,29 +73,20 @@ router.post('/budget', verificaToken, (req, res) => {
 
     res.json({
       ok: true,
-      presupuesto: presupuestoDB,
+      budget: budgetDB,
     });
   });
 });
 
-// ===========================//
-// Actualiza el presupuesto por id
-// ===========================//
-
 router.put('/budget/:id', verificaToken, (req, res) => {
   let id = req.params.id;
-  let body = _.pick(req.body, [
-    'nombre',
-    'valorPresupuesto',
-    'fechaInicioPresupuesto',
-    'fechaFinPresupuesto',
-  ]);
+  let body = _.pick(req.body, ['name', 'limit', 'startData', 'endDate']);
 
-  Presupuesto.findByIdAndUpdate(
+  Budget.findByIdAndUpdate(
       id,
       body,
       {new: true, runValidators: true},
-      (err, presupuestoDB) => {
+      (err, budgetDB) => {
         if (err) {
           return res.status(500).json({
             ok: false,
@@ -113,31 +94,26 @@ router.put('/budget/:id', verificaToken, (req, res) => {
           });
         }
 
-        if (!presupuestoDB) {
+        if (!budgetDB) {
           return res.status(400).json({
             ok: false,
             err: {
-              message: 'El Presupuesto no existe',
+              message: 'El Budget no existe',
             },
           });
         }
 
         res.json({
           ok: true,
-          presupuesto: presupuestoDB,
+          budget: budgetDB,
         });
       }
   );
 });
 
-// ===========================//
-// elimina el presupuesto por id
-// ===========================//
-
 router.delete('/budget/:id', verificaToken, (req, res) => {
   let id = req.params.id;
-  // Presupuesto.findByIdAndRemove(id, (err, usuarioBorrado) => {
-  Presupuesto.findByIdAndRemove(id, (err, presupuestoBorrado) => {
+  Budget.findByIdAndRemove(id, (err, deletedBudget) => {
     if (err) {
       return res.status(500).json({
         ok: false,
@@ -145,18 +121,18 @@ router.delete('/budget/:id', verificaToken, (req, res) => {
       });
     }
 
-    if (!presupuestoBorrado) {
+    if (!deletedBudget) {
       return res.status(400).json({
         ok: false,
         err: {
-          message: 'Presupuesto no encontrado',
+          message: 'Budget no encontrado',
         },
       });
     }
 
     res.json({
       ok: true,
-      message: 'Se elimino el presupuesto de manera correcta',
+      message: 'Se elimino el budget de manera correcta',
     });
   });
 });

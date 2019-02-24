@@ -2,27 +2,24 @@ const router = require('express').Router();
 
 const _ = require('underscore');
 
-const Transaccion = require('../../models/transaction');
+const Transaction = require('../../models/transaction');
 
 const {verificaToken} = require('../../middlewares/authentication');
 
-// ===========================//
-// Muestra todas las transacciones
-// ===========================//
 router.get('/transaction', verificaToken, (req, res) => {
-  let desde = req.query.desde || 0;
-  desde = Number(desde);
+  let offset = req.query.offset || 0;
+  offset = Number(offset);
 
-  let limite = req.query.limite || 5;
-  limite = Number(limite);
+  let limit = req.query.limit || 5;
+  limit = Number(limit);
 
-  Transaccion.find({})
+  Transaction.find({})
       .sort('descripcion')
-      .skip(desde)
-      .limit(limite)
-      .populate('usuario', 'nombre email')
-      .populate('cuenta', 'nombre numeroCuenta')
-      .exec((err, transacciones) => {
+      .skip(offset)
+      .limit(limit)
+      .populate('user', 'name email')
+      .populate('account', 'name accountNumber')
+      .exec((err, transactions) => {
         if (err) {
           return res.status(500).json({
             ok: false,
@@ -32,20 +29,18 @@ router.get('/transaction', verificaToken, (req, res) => {
 
         res.json({
           ok: true,
-          transacciones,
+          transactions,
         });
       });
 });
-// ===========================//
-// Muestra la transaccion por ID
-// ===========================//
+
 router.get('/transaction/:id', verificaToken, (req, res) => {
   let id = req.params.id;
 
-  Transaccion.findById(id)
-      .populate('usuario', 'nombre email')
-      .populate('cuenta', 'nombre numeroCuenta')
-      .exec((err, transaccionDB) => {
+  Transaction.findById(id)
+      .populate('user', 'name email')
+      .populate('account', 'name accountNumber')
+      .exec((err, transactionDB) => {
         if (err) {
           return res.status(500).json({
             ok: false,
@@ -53,39 +48,35 @@ router.get('/transaction/:id', verificaToken, (req, res) => {
           });
         }
 
-        if (!transaccionDB) {
+        if (!transactionDB) {
           return res.status(400).json({
             ok: false,
             err: {
-              message: 'El id de la transaccion no es valido',
+              message: 'El id de la transaction no es valido',
             },
           });
         }
 
         res.json({
           ok: true,
-          transaccion: transaccionDB,
+          transaction: transactionDB,
         });
       });
 });
 
-// ===========================//
-// Crea una transaccion
-// ===========================//
-
 router.post('/transaction', verificaToken, function(req, res) {
   let body = req.body;
 
-  let transaccion = new Transaccion({
-    usuario: req.usuario._id,
-    nombre: body.nombre,
-    tipoTransaccion: body.tipoTransaccion,
-    valorTransaccion: body.valorTransaccion,
-    estado: body.estado,
-    cuenta: body.cuenta,
+  let transaction = new Transaction({
+    user: req.user._id,
+    name: body.name,
+    type: body.type,
+    value: body.value,
+    state: body.state,
+    account: body.account,
   });
 
-  transaccion.save((err, transaccionDB) => {
+  transaction.save((err, transactionDB) => {
     if (err) {
       return res.status(500).json({
         ok: false,
@@ -95,7 +86,7 @@ router.post('/transaction', verificaToken, function(req, res) {
 
     res.status(201).json({
       ok: true,
-      transaccion: transaccionDB,
+      transaction: transactionDB,
     });
   });
 });

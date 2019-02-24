@@ -11,7 +11,7 @@ const MyInnerForm = props => {
     handleChange,
     handleSubmit,
     handleOnCancel,
-    values: { nombre, estado, fechaInicioPresupuesto, fechaFinPresupuesto }
+    values: { name, state, startDate, endDate }
   } = props;
   return (
     <Grid
@@ -34,27 +34,27 @@ const MyInnerForm = props => {
             <Form size="large" onSubmit={handleSubmit} loading={isSubmitting}>
               <Form.Group widths="equal">
                 <Form.Input
-                  label="Nombre presupuesto"
+                  label="name presupuesto"
                   labelPosition="left"
-                  value={nombre}
+                  value={name}
                   fluid
                   icon="money"
                   type="text"
-                  name="nombre"
+                  name="name"
                   iconPosition="left"
-                  placeholder="Nombre presupuesto..."
+                  placeholder="name presupuesto..."
                   onChange={handleChange}
                 />
                 <Form.Input
-                  label="Estado"
+                  label="state"
                   labelPosition="left"
                   type="text"
                   fluid
                   icon="lock"
                   iconPosition="left"
-                  name="estado"
-                  value={estado}
-                  placeholder="Estado..."
+                  name="state"
+                  value={state}
+                  placeholder="state..."
                   onChange={handleChange}
                 />
               </Form.Group>
@@ -66,8 +66,8 @@ const MyInnerForm = props => {
                   fluid
                   icon="calendar"
                   iconPosition="left"
-                  name="fechaInicioPresupuesto"
-                  value={fechaInicioPresupuesto}
+                  name="startDate"
+                  value={startDate}
                   onChange={handleChange}
                 />
                 <Form.Input
@@ -77,8 +77,8 @@ const MyInnerForm = props => {
                   fluid
                   icon="calendar"
                   iconPosition="left"
-                  name="fechaFinPresupuesto"
-                  value={fechaFinPresupuesto}
+                  name="endDate"
+                  value={endDate}
                   onChange={handleChange}
                 />
               </Form.Group>
@@ -99,17 +99,16 @@ const MyInnerForm = props => {
 
 const BudgetForm = withSemanticUIFormik({
   mapPropsToValues: ({ budget }) => ({
-    nombre: (budget && budget.nombre) || "",
-    fechaInicioPresupuesto: (budget && budget.fechaInicioPresupuesto) || 0,
-    fechaFinPresupuesto: (budget && budget.fechaFinPresupuesto) || 0,
-    estado: (budget && budget.estado) || "",
-    nature: (budget && budget.nature) || ""
+    name: (budget && budget.name) || "",
+    startDate: (budget && budget.startDate) || 0,
+    endDate: (budget && budget.endDate) || 0,
+    state: (budget && budget.state) || ""
   }),
   validationSchema: Yup.object().shape({
-    nombre: Yup.string().required("Nombre es requerido!"),
-    estado: Yup.string().required("cuenta requerida!"),
-    fechaFinPresupuesto: Yup.date().required("cantidad requerida!"),
-    fechaInicioPresupuesto: Yup.date().required("Fecha de inicio requerida!")
+    name: Yup.string().required("name es requerido!"),
+    state: Yup.string().required("cuenta requerida!"),
+    endDate: Yup.date().required("cantidad requerida!"),
+    startDate: Yup.date().required("Fecha de inicio requerida!")
   }),
   handleSubmit: (values, { setSubmitting, props }) => {
     setTimeout(() => {

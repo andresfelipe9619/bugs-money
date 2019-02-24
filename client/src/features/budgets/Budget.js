@@ -22,12 +22,7 @@ class Budget extends Component {
 
   async componentDidMount() {
     const { alert } = this.props;
-    let res = await API.Budget.getAll();
-    console.log("did", res);
-    if (res.ok) {
-      this.setState({ budgets: res.presupuestos });
-    }
-    // this.setState({ budgets: test.budgets });
+    this.getBudgets();
     if (alert && alert.message) {
       toast({
         type: alert.typresolve,
@@ -39,15 +34,19 @@ class Budget extends Component {
     }
   }
 
-  createBudget = async budget => {
-    console.log("screating budget", budget);
-    let mBudget = { ...budget };
-    console.log("screating mmbudget", mBudget);
+  getBudgets() {
+    let res = API.Budget.getAll();
+    if (res.ok) {
+      let { budgets } = res;
+      this.setState({ budgets });
+    }
+  }
 
-    let res = await API.Budget.create(mBudget);
-    console.log("create", res);
-    let budgets = [...this.state.budgets, res.presupuesto];
-    this.setState({ budgets });
+  createBudget = async budget => {
+    let res = await API.Budget.create(budget);
+    if (res.ok) {
+      this.getBudgets();
+    }
   };
 
   viewBudget = budget => {
@@ -56,17 +55,17 @@ class Budget extends Component {
   };
 
   updateBudget = budget => {
-    console.log("budget", budget);
-    let budgets = [...this.state.budgets];
-    let i = budgets.findIndex(b => b.categoryId === budget.categoryId);
-    if (i === -1) return;
-    budgets[i] = budget;
-    this.setState({ budgets });
+    let res = API.Budget.update(budget);
+    if (res.ok) {
+      this.getBudgets();
+    }
   };
 
   deleteBudget = budget => {
-    let budgets = this.state.budgets.filter(b => b["name"] !== budget["name"]);
-    this.setState({ budgets });
+    let res = API.Budget.delete(budget._id);
+    if (res.ok) {
+      this.getBudgets();
+    }
   };
 
   setCurrentBudget = budget => {
@@ -83,6 +82,7 @@ class Budget extends Component {
   };
 
   handleOnCreate = budget => {
+    console.log("budget", budget);
     if (!budget) return;
     this.createBudget(budget);
   };
@@ -95,18 +95,19 @@ class Budget extends Component {
   };
 
   handleOnView = budget => e => {
+    console.log("budget", budget);
     if (!budget) return;
     this.viewBudget(budget);
   };
 
   handleOnDelete = budget => e => {
+    console.log("budget", budget);
     if (!budget) return;
     this.deleteBudget(budget);
   };
 
   render() {
     const { budgets, isModalOpen, currentBudget } = this.state;
-    console.log("props", this.props);
     if (!budgets) return null;
     const handlers = {
       handleOnView: this.handleOnView,
@@ -146,9 +147,7 @@ class Budget extends Component {
               {budgets && budgets.length > 0 ? (
                 <DataTable actions handlers={handlers} data={budgets} />
               ) : (
-                <p>
-                  No hay nada presupuestado viejo, que tal si te creas algo?
-                </p>
+                <p>There's nothing budgted yet, try to create something?</p>
               )}
             </Grid.Column>
           </Grid.Row>
@@ -168,10 +167,7 @@ class Budget extends Component {
               {currentBudget && budgets.length > 0 ? (
                 <DataTable actions handlers={handlers} data={budgets} />
               ) : (
-                <p>
-                  No hay nada de transacciones viejo, que tal si te mueves un
-                  poco?
-                </p>
+                <p>There are no transactions</p>
               )}
             </Grid.Column>
           </Grid.Row>

@@ -72,14 +72,14 @@ const MyInnerForm = props => {
               ) : null}
               <Form size="large" onSubmit={handleSubmit} loading={isSubmitting}>
                 <Form.Input
-                  label="Correo electrónico"
+                  label="Email electrónico"
                   labelPosition="left"
                   fluid
                   icon="user"
                   type="email"
                   name="email"
                   iconPosition="left"
-                  placeholder="Correo electrónico..."
+                  placeholder="Email electrónico..."
                   onChange={handleChange}
                 />
                 <Form.Input
@@ -143,8 +143,8 @@ export default connect(
     mapPropsToValues: () => ({ email: "", password: "" }),
     validationSchema: Yup.object().shape({
       email: Yup.string()
-        .email("Correo invalido")
-        .required("Correo es requerido!"),
+        .email("Email invalido")
+        .required("Email es requerido!"),
       password: Yup.string().required("Constraseña requerida!")
     }),
     handleSubmit: (values, { setSubmitting, props }) => {

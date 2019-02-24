@@ -5,14 +5,14 @@ const jwt = require('jsonwebtoken');
 const {OAuth2Client} = require('google-auth-library');
 const client = new OAuth2Client(process.env.CLIENT_ID);
 
-const Usuario = require('../../models/user');
+const User = require('../../models/user');
 
 let router = express.Router();
 
 router.post('/login', (req, res) => {
   let body = req.body;
   console.log(req.body);
-  Usuario.findOne({email: body.email}, (err, usuarioDB) => {
+  User.findOne({email: body.email}, (err, userDB) => {
     if (err) {
       return res.status(500).json({
         ok: false,
@@ -20,28 +20,28 @@ router.post('/login', (req, res) => {
       });
     }
 
-    if (!usuarioDB) {
+    if (!userDB) {
       return res.status(400).json({
         ok: false,
         err: {
-          message: '(Usuario) o contraseña incorrectos',
+          message: '(User) or password incorrectos',
         },
       });
     }
-    console.log(usuarioDB);
+    console.log(userDB);
 
-    if (!bcrypt.compareSync(body.password, usuarioDB.password)) {
+    if (!bcrypt.compareSync(body.password, userDB.password)) {
       return res.status(400).json({
         ok: false,
         err: {
-          message: 'Usuario o (contraseña) incorrectos',
+          message: 'User or (password) incorrectos',
         },
       });
     }
 
     let token = jwt.sign(
         {
-          usuario: usuarioDB,
+          user: userDB,
         },
         process.env.SEED,
         {expiresIn: process.env.CADUCIDAD_TOKEN}
@@ -49,7 +49,7 @@ router.post('/login', (req, res) => {
 
     return res.json({
       ok: true,
-      usuario: usuarioDB,
+      user: userDB,
       token,
     });
   });
@@ -67,11 +67,8 @@ async function verify(token) {
   });
   const payload = ticket.getPayload();
 
-  // console.log(payload.name);
-  // console.log(payload.email);
-  // console.log(payload.picture);
   return {
-    nombre: payload.name,
+    name: payload.name,
     email: payload.email,
     img: payload.picture,
     google: true,
@@ -88,7 +85,7 @@ router.post('/login/google', async (req, res) => {
     });
   });
 
-  Usuario.findOne({email: googleUser.email}, (err, usuarioDB) => {
+  User.findOne({email: googleUser.email}, (err, userDB) => {
     if (err) {
       return res.status(500).json({
         ok: false,
@@ -96,8 +93,8 @@ router.post('/login/google', async (req, res) => {
       });
     }
 
-    if (usuarioDB) {
-      if (usuarioDB.google === false) {
+    if (userDB) {
+      if (userDB.google === false) {
         return res.status(400).json({
           ok: false,
           err: {
@@ -107,7 +104,7 @@ router.post('/login/google', async (req, res) => {
       } else {
         let token = jwt.sign(
             {
-              usuario: usuarioDB,
+              user: userDB,
             },
             process.env.SEED,
             {expiresIn: process.env.CADUCIDAD_TOKEN}
@@ -115,22 +112,22 @@ router.post('/login/google', async (req, res) => {
 
         return res.json({
           ok: true,
-          usuario: usuarioDB,
+          user: userDB,
           token,
         });
       }
     } else {
-      // Si el usuario no existe en nuestra BD
+      // Si el user no existe en nuestra BD
 
-      let usuario = new Usuario();
+      let user = new User();
 
-      usuario.nombre = googleUser.nombre;
-      usuario.email = googleUser.email;
-      usuario.img = googleUser.img;
-      usuario.google = true;
-      usuario.password = ':)';
+      user.name = googleUser.name;
+      user.email = googleUser.email;
+      user.img = googleUser.img;
+      user.google = true;
+      user.password = ':)';
 
-      usuario.save((err, usuarioDB) => {
+      user.save((err, userDB) => {
         if (err) {
           return res.status(500).json({
             ok: false,
@@ -140,7 +137,7 @@ router.post('/login/google', async (req, res) => {
 
         let token = jwt.sign(
             {
-              usuario: usuarioDB,
+              user: userDB,
             },
             process.env.SEED,
             {expiresIn: process.env.CADUCIDAD_TOKEN}
@@ -148,7 +145,7 @@ router.post('/login/google', async (req, res) => {
 
         return res.json({
           ok: true,
-          usuario: usuarioDB,
+          user: userDB,
           token,
         });
       });

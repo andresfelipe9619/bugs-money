@@ -50,7 +50,7 @@ export const loginGoogle = user => {
       .then(response => {
         console.log("response", response);
         if (!response.ok) dispatch(loginFailure(response));
-        dispatch(loginSuccess(response.usuario));
+        dispatch(loginSuccess(response.user));
         API.setToken(response.token);
         dispatch(loginGoogleRequest(null));
       })
@@ -67,9 +67,9 @@ export const login = user => {
     return API.Auth.login(user)
       .then(response => {
         if (!response.ok) dispatch(loginFailure(response));
-        dispatch(loginSuccess(response.usuario));
+        dispatch(loginSuccess(response.user));
         API.setToken(response.token);
-        dispatch(successAlert("Que Hay de Nuevo Viejo?"));
+        dispatch(successAlert("Welcome back my lord"));
         dispatch(loginRequest(null));
       })
       .catch(error => {

@@ -2,29 +2,29 @@ const router = require('express').Router();
 
 const _ = require('underscore');
 
-const Categoria = require('../models/category');
+const Category = require('../models/category');
 
 const {verificaToken} = require('../../middlewares/authentication');
 
 // ===========================//
-// Muestra todas las categorias*
+// Muestra todas las categories*
 // ===========================//
 router.get('/category', verificaToken, (req, res) => {
-  let desde = req.query.desde || 0;
-  desde = Number(desde);
+  let offset = req.query.offset || 0;
+  offset = Number(offset);
 
-  let limite = req.query.limite || 5;
-  limite = Number(limite);
+  let limit = req.query.limit || 5;
+  limit = Number(limit);
 
-  let usuario = req.usuario._id;
+  let user = req.user._id;
 
-  Categoria.find({})
-      .sort('descripcion')
-      .skip(desde)
-      .limit(limite)
-      .populate('usuario', 'nombre email')
-      .populate('presupuesto', 'nombre')
-      .exec((err, categorias) => {
+  Category.find({})
+      .sort('description')
+      .skip(offset)
+      .limit(limit)
+      .populate('user', 'name email')
+      .populate('budget', 'name')
+      .exec((err, categories) => {
         if (err) {
           return res.status(500).json({
             ok: false,
@@ -32,23 +32,23 @@ router.get('/category', verificaToken, (req, res) => {
           });
         }
 
-        Categoria.aggregate(
+        Category.aggregate(
             [
               {
                 $group: {
-                  _id: usuario,
-                  balance: {$sum: '$precioCat'},
+                  _id: user,
+                  balance: {$sum: '$value'},
                 },
               },
             ],
-            function(err, result) {
+            (err, result) => {
               if (err) {
                 console.log(err);
                 return;
               }
               res.json({
                 ok: true,
-                categorias,
+                categories,
                 result,
               });
             }
@@ -56,20 +56,20 @@ router.get('/category', verificaToken, (req, res) => {
 
       // res.json({
       //     ok: true,
-      //     categorias
+      //     categories
       // });
       });
 });
 // ===========================//
-// Muestra la categoria por ID
+// Muestra la category por ID
 // ===========================//
 router.get('/category/:id', verificaToken, (req, res) => {
   let id = req.params.id;
 
-  Categoria.findById(id)
-      .populate('usuario', 'nombre email')
-      .populate('presupuesto', 'nombre')
-      .exec((err, categoriaDB) => {
+  Category.findById(id)
+      .populate('user', 'name email')
+      .populate('budget', 'name')
+      .exec((err, categoryDB) => {
         if (err) {
           return res.status(500).json({
             ok: false,
@@ -77,7 +77,7 @@ router.get('/category/:id', verificaToken, (req, res) => {
           });
         }
 
-        if (!categoriaDB) {
+        if (!categoryDB) {
           return res.status(400).json({
             ok: false,
             err: {
@@ -88,7 +88,7 @@ router.get('/category/:id', verificaToken, (req, res) => {
 
         res.json({
           ok: true,
-          categoria: categoriaDB,
+          category: categoryDB,
         });
       });
 });
@@ -101,10 +101,10 @@ router.get('/category/buscar/:termino', verificaToken, (req, res) => {
 
   let regex = new RegExp(termino, 'i');
 
-  Categoria.find({nombre: regex})
-      .populate('usuario', 'nombre email')
-      .populate('presupuesto', 'nombre')
-      .exec((err, categoriaDB) => {
+  Category.find({name: regex})
+      .populate('user', 'name email')
+      .populate('budget', 'name')
+      .exec((err, categoryDB) => {
         if (err) {
           return res.status(500).json({
             ok: false,
@@ -114,27 +114,27 @@ router.get('/category/buscar/:termino', verificaToken, (req, res) => {
 
         res.json({
           ok: true,
-          categoria: categoriaDB,
+          category: categoryDB,
         });
       });
 });
 // ===========================//
-// Crea una categoria
+// Crea una category
 // ===========================//
 
-router.post('/category', verificaToken, function(req, res) {
+router.post('/category', verificaToken, (req, res) => {
   let body = req.body;
 
-  let categoria = new Categoria({
-    usuario: req.usuario._id,
-    nombre: body.nombre,
-    precioCat: body.precioCat,
-    precioGstdo: body.precioGstdo,
-    descripcion: body.descripcion,
-    presupuesto: body.presupuesto,
+  let category = new Category({
+    user: req.user._id,
+    name: body.name,
+    value: body.value,
+    expended: body.expended,
+    description: body.description,
+    budget: body.budget,
   });
 
-  categoria.save((err, categoriaDB) => {
+  category.save((err, categoryDB) => {
     if (err) {
       return res.status(500).json({
         ok: false,
@@ -144,20 +144,20 @@ router.post('/category', verificaToken, function(req, res) {
 
     res.status(201).json({
       ok: true,
-      categoria: categoriaDB,
+      category: categoryDB,
     });
   });
 });
 
 // ===========================//
-// Actualiza la categoria por id
+// Actualiza la category por id
 // ===========================//
 
-router.put('/category/:id', verificaToken, function(req, res) {
+router.put('/category/:id', verificaToken, (req, res) => {
   let id = req.params.id;
   let body = req.body;
 
-  Categoria.findById(id, (err, categoriaDB) => {
+  Category.findById(id, (err, categoryDB) => {
     if (err) {
       return res.status(500).json({
         ok: false,
@@ -165,22 +165,22 @@ router.put('/category/:id', verificaToken, function(req, res) {
       });
     }
 
-    if (!categoriaDB) {
+    if (!categoryDB) {
       return res.status(400).json({
         ok: false,
         err: {
-          message: 'No se encontro el id categoria',
+          message: 'No se encontro el id category',
         },
       });
     }
 
-    categoriaDB.nombre = body.nombre;
-    categoriaDB.precioCat = body.precioCat;
-    categoriaDB.precioGstdo = body.precioGstdo;
-    categoriaDB.descripcion = body.descripcion;
-    categoriaDB.presupuesto = body.presupuesto;
+    categoryDB.name = body.name;
+    categoryDB.value = body.value;
+    categoryDB.expended = body.expended;
+    categoryDB.description = body.description;
+    categoryDB.budget = body.budget;
 
-    categoriaDB.save((err, categoriaGuardada) => {
+    categoryDB.save((err, categoriaGuardada) => {
       if (err) {
         return res.status(500).json({
           ok: false,
@@ -190,20 +190,20 @@ router.put('/category/:id', verificaToken, function(req, res) {
 
       res.json({
         ok: true,
-        categoria: categoriaGuardada,
+        category: categoriaGuardada,
       });
     });
   });
 });
 
 // ===========================//
-// elimina la categoria por id
+// elimina la category por id
 // ===========================//
 
-router.delete('/category/:id', verificaToken, function(req, res) {
+router.delete('/category/:id', verificaToken, (req, res) => {
   let id = req.params.id;
   // Presupuesto.findByIdAndRemove(id, (err, categoriaBorrado) => {
-  Categoria.findByIdAndRemove(id, (err, categoriaBorrado) => {
+  Category.findByIdAndRemove(id, (err, categoriaBorrado) => {
     if (err) {
       return res.status(500).json({
         ok: false,
@@ -215,15 +215,15 @@ router.delete('/category/:id', verificaToken, function(req, res) {
       return res.status(400).json({
         ok: false,
         err: {
-          message: 'categoria no encontrado',
+          message: 'category no encontrado',
         },
       });
     }
 
     res.json({
       ok: true,
-      categoria: categoriaBorrado,
-      message: 'Se elimino la categoria de manera correcta',
+      category: categoriaBorrado,
+      message: 'Se elimino la category de manera correcta',
     });
   });
 });

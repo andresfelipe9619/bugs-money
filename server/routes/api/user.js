@@ -1,25 +1,22 @@
 const router = require('express').Router();
-const Usuario = require('../../models/user');
+const User = require('../../models/user');
 
 const bcrypt = require('bcryptjs');
 const _ = require('underscore');
 
-const {
-  verificaToken,
-  verificaAdminRole,
-} = require('../../middlewares/authentication');
+const {verificaToken} = require('../../middlewares/authentication');
 
 router.get('/user', verificaToken, (req, res) => {
-  let desde = req.query.desde || 0;
-  desde = Number(desde);
+  let offset = req.query.offset || 0;
+  offset = Number(offset);
 
-  let limite = req.query.limite || 5;
-  limite = Number(limite);
+  let limit = req.query.limit || 5;
+  limit = Number(limit);
 
-  Usuario.find({estado: true}, 'nombre email role estado google img')
-      .skip(desde)
-      .limit(limite)
-      .exec((err, usuarios) => {
+  User.find({state: true}, 'name email state google img')
+      .skip(offset)
+      .limit(limit)
+      .exec((err, users) => {
         if (err) {
           return res.status(400).json({
             ok: false,
@@ -27,27 +24,26 @@ router.get('/user', verificaToken, (req, res) => {
           });
         }
 
-        Usuario.count({estado: true}, (err, conteo) => {
+        User.count({state: true}, (err, count) => {
           res.json({
             ok: true,
-            usuarios,
-            cuantos: conteo,
+            users,
+            count,
           });
         });
       });
 });
 
-router.post('/user', [verificaToken], function(req, res) {
+router.post('/user', (req, res) => {
   let body = req.body;
 
-  let usuario = new Usuario({
-    nombre: body.nombre,
+  let user = new User({
+    name: body.name,
     email: body.email,
     password: bcrypt.hashSync(body.password, 10),
-    role: body.role,
   });
 
-  usuario.save((err, usuarioDB) => {
+  user.save((err, userDB) => {
     if (err) {
       return res.status(400).json({
         ok: false,
@@ -57,20 +53,20 @@ router.post('/user', [verificaToken], function(req, res) {
 
     res.json({
       ok: true,
-      usuario: usuarioDB,
+      user: userDB,
     });
   });
 });
 
-router.put('/user/:id', [verificaToken], function(req, res) {
+router.put('/user/:id', [verificaToken], (req, res) => {
   let id = req.params.id;
-  let body = _.pick(req.body, ['nombre', 'email', 'img', 'role', 'estado']);
+  let body = _.pick(req.body, ['name', 'email', 'img', 'state']);
 
-  Usuario.findByIdAndUpdate(
+  User.findByIdAndUpdate(
       id,
       body,
       {new: true, runValidators: true},
-      (err, usuarioDB) => {
+      (err, userDB) => {
         if (err) {
           return res.status(400).json({
             ok: false,
@@ -80,22 +76,22 @@ router.put('/user/:id', [verificaToken], function(req, res) {
 
         res.json({
           ok: true,
-          usuario: usuarioDB,
+          user: userDB,
         });
       }
   );
 });
 
-router.delete('/user/:id', [verificaToken], function(req, res) {
+router.delete('/user/:id', [verificaToken], (req, res) => {
   let id = req.params.id;
 
-  // Usuario.findByIdAndRemove(id, (err, usuarioBorrado) => {
+  // User.findByIdAndRemove(id, (err, usuarioBorrado) => {
 
   let cambiaEstado = {
-    estado: false,
+    state: false,
   };
 
-  Usuario.findByIdAndUpdate(
+  User.findByIdAndUpdate(
       id,
       cambiaEstado,
       {new: true},
@@ -111,14 +107,14 @@ router.delete('/user/:id', [verificaToken], function(req, res) {
           return res.status(400).json({
             ok: false,
             err: {
-              message: 'Usuario no encontrado',
+              message: 'User no encontrado',
             },
           });
         }
 
         res.json({
           ok: true,
-          usuario: usuarioBorrado,
+          user: usuarioBorrado,
         });
       }
   );

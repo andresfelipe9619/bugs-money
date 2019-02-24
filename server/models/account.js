@@ -1,57 +1,47 @@
 const mongoose = require('mongoose');
 const uniqueValidator = require('mongoose-unique-validator');
 
-let naturalezasValidas = {
+let validNatures = {
   values: ['DEBITO', 'CREDITO'],
   message: '{VALUE} No es una naturaleza de cuenta valida',
 };
 
 let Schema = mongoose.Schema;
 
-let cuentaSchema = new Schema({
-  nombre: {
+let accountSchema = new Schema({
+  name: {
     type: String,
-    required: [true, 'El nombre de la cuenta es necesario'],
+    required: [true, 'El name de la cuenta es necesario'],
   },
-  numeroCuenta: {
+  accountNumber: {
     type: Number,
     unique: true,
     required: [true, 'El numero de la cuenta es necesario'],
   },
-  naturalezaCuenta: {
+  nature: {
     type: String,
     required: [true, 'La naturaleza de la cuenta es necesario'],
-    enum: naturalezasValidas,
+    enum: validNatures,
   },
-  estado: {
+  state: {
     type: Boolean,
     default: true,
   },
-  fechaCreacion: {
+  createdDate: {
     type: Date,
     default: Date.now,
   },
-  presupuesto: {
+  budget: {
     type: Schema.Types.ObjectId,
-    ref: 'Presupuesto',
-    required: [true, 'El presupuesto es necesario'],
+    ref: 'Budget',
+    required: [true, 'El budget es necesario'],
   },
   usuario: {
     type: Schema.Types.ObjectId,
-    ref: 'Usuario',
+    ref: 'User',
     required: [true, 'El usuario es necesario'],
   },
 });
 
-// cuentaSchema.methods.toJSON = function () {
-
-//     let user = this;
-//     let userObject = user.toObject();
-//     delete userObject.password;
-
-//     return userObject;
-
-// }
-
-cuentaSchema.plugin(uniqueValidator, {message: '{PATH} debe de ser unico'});
-module.exports = mongoose.model('Cuenta', cuentaSchema);
+accountSchema.plugin(uniqueValidator, {message: '{PATH} debe de ser unico'});
+module.exports = mongoose.model('Account', accountSchema);

@@ -8,21 +8,21 @@ let tipoValido = {
 
 let Schema = mongoose.Schema;
 
-let transaccionSchema = new Schema({
-  nombre: {
+let transactionSchema = new Schema({
+  name: {
     type: String,
-    required: [true, 'El nombre del transaccion es necesario'],
+    required: [true, 'El name del transaccion es necesario'],
   },
-  tipoTransaccion: {
+  type: {
     type: String,
     required: [true, 'El tipo de la transaccion es necesario'],
     enum: tipoValido,
   },
-  valorTransaccion: {
+  value: {
     type: Number,
     required: true,
   },
-  fechaTransaccion: {
+  date: {
     type: Date,
     default: Date.now,
   },
@@ -30,29 +30,19 @@ let transaccionSchema = new Schema({
     type: Boolean,
     default: true,
   },
-  cuenta: {
+  account: {
     type: Schema.Types.ObjectId,
     ref: 'Cuenta',
-    required: [true, 'La cuenta es requerida para realizar transaccion'],
+    required: [true, 'La account es requerida para realizar transaccion'],
   },
-  usuario: {
+  user: {
     type: Schema.Types.ObjectId,
-    ref: 'Usuario',
-    required: [true, 'El usuario es requerido'],
+    ref: 'User',
+    required: [true, 'El user es requerido'],
   },
 });
 
-// transaccionSchema.methods.toJSON = function () {
-
-//     let user = this;
-//     let userObject = user.toObject();
-//     delete userObject.valortransaccion;
-
-//      return userObject;
-
-//  }
-
-transaccionSchema.plugin(uniqueValidator, {
+transactionSchema.plugin(uniqueValidator, {
   message: '{PATH} debe de ser unico',
 });
-module.exports = mongoose.model('Transaccion', transaccionSchema);
+module.exports = mongoose.model('Transaction', transactionSchema);

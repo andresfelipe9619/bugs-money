@@ -2,26 +2,23 @@ const router = require('express').Router();
 
 const _ = require('underscore');
 
-const Cuenta = require('../../models/account');
+const Account = require('../../models/account');
 
 const {verificaToken} = require('../../middlewares/authentication');
 
-// ===========================//
-// Muestra tods las cuentas
-// ===========================//
 router.get('/account', verificaToken, (req, res) => {
-  let desde = req.query.desde || 0;
-  desde = Number(desde);
+  let offset = req.query.offset || 0;
+  offset = Number(offset);
 
-  let limite = req.query.limite || 5;
-  limite = Number(limite);
+  let limit = req.query.limit || 5;
+  limit = Number(limit);
 
-  Cuenta.find({})
-      .sort('descripcion')
-      .skip(desde)
-      .limit(limite)
-      .populate('usuario', 'nombre email')
-      .populate('presupuesto', 'nombre')
+  Account.find({})
+      .sort('description')
+      .skip(offset)
+      .limit(limit)
+      .populate('user', 'name email')
+      .populate('budget', 'name')
       .exec((err, cuentas) => {
         if (err) {
           return res.status(500).json({
@@ -36,15 +33,13 @@ router.get('/account', verificaToken, (req, res) => {
         });
       });
 });
-// ===========================//
-// Muestra la cuenta por ID
-// ===========================//
+
 router.get('/account/:id', verificaToken, (req, res) => {
   let id = req.params.id;
 
-  Cuenta.findById(id)
-      .populate('usuario', 'nombre email')
-      .populate('presupuesto', 'nombre')
+  Account.findById(id)
+      .populate('user', 'name email')
+      .populate('budget', 'name')
       .exec((err, CuentaDB) => {
         if (err) {
           return res.status(500).json({
@@ -64,29 +59,23 @@ router.get('/account/:id', verificaToken, (req, res) => {
 
         res.json({
           ok: true,
-          cuenta: CuentaDB,
+          account: CuentaDB,
         });
       });
 });
 
-// ===========================//
-// Crea una cuenta
-// ===========================//
-
-router.post('/account', verificaToken, function(req, res) {
+router.post('/account', verificaToken, (req, res) => {
   let body = req.body;
-  console.log('body', body);
-  console.log('user', req.usuario);
-  let cuenta = new Cuenta({
-    usuario: req.usuario._id,
-    nombre: body.nombre,
-    numeroCuenta: body.numeroCuenta,
-    naturalezaCuenta: body.naturalezaCuenta,
-    estado: body.estado,
-    presupuesto: body.presupuesto,
+  let account = new Account({
+    user: req.user._id,
+    name: body.name,
+    accountNumber: body.accountNumber,
+    nature: body.nature,
+    state: body.state,
+    budget: body.budget,
   });
 
-  cuenta.save((err, cuentaDB) => {
+  account.save((err, cuentaDB) => {
     if (err) {
       return res.status(500).json({
         ok: false,
@@ -96,69 +85,23 @@ router.post('/account', verificaToken, function(req, res) {
 
     res.status(201).json({
       ok: true,
-      cuenta: cuentaDB,
+      account: cuentaDB,
     });
   });
 });
 
-// ===========================//
-// Actualiza cuenta por id
-// ===========================//
-
-router.put('/account/:id', verificaToken, function(req, res) {
+router.put('/account/:id', verificaToken, (req, res) => {
   let id = req.params.id;
 
   let body = _.pick(req.body, [
-    'nombre',
-    'numeroCuenta',
-    'naturalezaCuenta',
-    'estado',
-    'presupuesto',
+    'name',
+    'accountNumber',
+    'nature',
+    'state',
+    'budget',
   ]);
-  // let body = req.body;
 
-  // Cuenta.findById(id, (err, cuentaDB) => {
-
-  //     if (err) {
-  //         return res.status(500).json({
-  //             ok: false,
-  //             err
-  //         });
-  //     }
-
-  //     if (!cuentaDB) {
-  //         return res.status(400).json({
-  //             ok: false,
-  //             err: {
-  //                 message: 'No se encontro el id de la cuenta'
-  //             }
-  //         });
-  //     }
-
-  //     cuentaDB.nombre = body.nombre;
-  //     cuentaDB.numeroCuenta = body.numeroCuenta;
-  //     cuentaDB.naturalezaCuenta = body.naturalezaCuenta;
-  //     cuentaDB.estado = body.estado;
-  //     cuentaDB.presupuesto = body.presupuesto;
-
-  //     cuentaDB.save((err, cuentaGuardada) => {
-
-  //         if (err) {
-  //             return res.status(500).json({
-  //                 ok: false,
-  //                 err
-  //             });
-  //         }
-
-  //         res.json({
-  //             ok: true,
-  //             cuenta: cuentaGuardada
-  //         });
-
-  //     });
-
-  // })
-  Cuenta.findByIdAndUpdate(
+  Account.findByIdAndUpdate(
       id,
       body,
       {new: true, runValidators: true},
@@ -172,20 +115,15 @@ router.put('/account/:id', verificaToken, function(req, res) {
 
         res.json({
           ok: true,
-          cuenta: cuentaDB,
+          account: cuentaDB,
         });
       }
   );
 });
 
-// ===========================//
-// elimina cuenta por id
-// ===========================//
-
-router.delete('/account/:id', verificaToken, function(req, res) {
+router.delete('/account/:id', verificaToken, (req, res) => {
   let id = req.params.id;
-  // Presupuesto.findByIdAndRemove(id, (err, categoriaBorrado) => {
-  Cuenta.findByIdAndRemove(id, (err, cuentaBorrada) => {
+  Account.findByIdAndRemove(id, (err, deletedAccount) => {
     if (err) {
       return res.status(500).json({
         ok: false,
@@ -193,19 +131,19 @@ router.delete('/account/:id', verificaToken, function(req, res) {
       });
     }
 
-    if (!cuentaBorrada) {
+    if (!deletedAccount) {
       return res.status(400).json({
         ok: false,
         err: {
-          message: 'cuenta no encontrado',
+          message: 'account no encontrado',
         },
       });
     }
 
     res.json({
       ok: true,
-      cuenta: cuentaBorrada,
-      message: 'Se elimino la cuenta de manera correcta',
+      account: deletedAccount,
+      message: 'Se elimino la account de manera correcta',
     });
   });
 });

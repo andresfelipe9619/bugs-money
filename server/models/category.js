@@ -1,32 +1,32 @@
 let mongoose = require('mongoose');
 let Schema = mongoose.Schema;
 
-let categoriaSchema = new Schema({
-  nombre: {
+let categorySchema = new Schema({
+  name: {
     type: String,
-    required: [true, 'El nombre de la categoria es necesario'],
+    required: [true, 'El name de la categoria es necesario'],
   },
-  precioCat: {
+  value: {
     type: Number,
     required: [true, 'El precio de la categoria es necesario'],
   },
-  precioGstdo: {
+  expended: {
     type: Number,
     default: 0,
   },
-  descripcion: {
+  description: {
     type: String,
     required: false,
   },
-  presupuesto: {
+  budget: {
     type: Schema.Types.ObjectId,
-    ref: 'Presupuesto',
-    required: [true, 'El presupuesto es necesario'],
+    ref: 'Budget',
+    required: [true, 'El budget es necesario'],
   },
-  usuario: {
+  user: {
     type: Schema.Types.ObjectId,
-    ref: 'Usuario',
+    ref: 'User',
   },
 });
 
-module.exports = mongoose.model('Categoria', categoriaSchema);
+module.exports = mongoose.model('Category', categorySchema);

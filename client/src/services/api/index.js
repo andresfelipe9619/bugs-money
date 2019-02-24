@@ -7,21 +7,21 @@ const server = axios.create({
 
 let token = null;
 
-const tokenPlugin = config => {
+const tokenInterceptor = config => {
   if (token) {
-    console.log("set that token", token);
     config.headers["token"] = token;
   }
-  console.log("set that token after");
   return config;
 };
 
 const responseBody = response => response.data;
 
-server.interceptors.request.use(tokenPlugin, e => Promise.reject(e));
+server.interceptors.request.use(tokenInterceptor, error =>
+  Promise.reject(error)
+);
 
 const serverRequests = {
-  del: url => server.del(`${url}`).then(responseBody),
+  del: url => server.delete(`${url}`).then(responseBody),
   get: url => server.get(`${url}`).then(responseBody),
   put: (url, body) => server.put(`${url}`, body).then(responseBody),
   post: (url, body) => server.post(`${url}`, body).then(responseBody)
@@ -42,24 +42,19 @@ const Account = {
 
 const Transaction = {
   getAll: () => serverRequests.get(`/transaction`),
-  del: id => serverRequests.del(`/transaction/${id}`),
+  delete: id => serverRequests.del(`/transaction/${id}`),
   get: id => serverRequests.get(`/transaction/${id}`),
   update: transaction =>
-    serverRequests.put(`/transaction/${transaction.id}`, {
-      transaction
-    }),
-  create: transaction => serverRequests.post("/transaction", { transaction })
+    serverRequests.put(`/transaction/${transaction.id}`, transaction),
+  create: transaction => serverRequests.post("/transaction", transaction)
 };
 
 const Budget = {
   getAll: () => serverRequests.get(`/budget`),
-  del: id => serverRequests.del(`/budget/${id}`),
+  delete: id => serverRequests.del(`/budget/${id}`),
   get: id => serverRequests.get(`/budget/${id}`),
-  update: budget =>
-    serverRequests.put(`/budget/${budget.id}`, {
-      budget
-    }),
-  create: budget => serverRequests.post("/budget", { budget })
+  update: budget => serverRequests.put(`/budget/${budget.id}`, budget),
+  create: budget => serverRequests.post("/budget", budget)
 };
 
 const User = {
