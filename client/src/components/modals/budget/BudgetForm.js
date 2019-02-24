@@ -1,6 +1,6 @@
 import React from "react";
 import { Form, Button, Message, Grid, Icon, Segment } from "semantic-ui-react";
-import withSemanticUIFormik from "../../components/hoc/FormikSUI";
+import withSemanticUIFormik from "../../hoc/FormikSUI";
 import * as Yup from "yup";
 
 const MyInnerForm = props => {
@@ -11,7 +11,7 @@ const MyInnerForm = props => {
     handleChange,
     handleSubmit,
     handleOnCancel,
-    values: { name, state, startDate, endDate }
+    values: { name, limit, startDate, endDate }
   } = props;
   return (
     <Grid
@@ -46,15 +46,15 @@ const MyInnerForm = props => {
                   onChange={handleChange}
                 />
                 <Form.Input
-                  label="state"
+                  label="limit"
                   labelPosition="left"
                   type="text"
                   fluid
                   icon="lock"
                   iconPosition="left"
-                  name="state"
-                  value={state}
-                  placeholder="state..."
+                  name="limit"
+                  value={limit}
+                  placeholder="limit..."
                   onChange={handleChange}
                 />
               </Form.Group>
@@ -102,13 +102,13 @@ const BudgetForm = withSemanticUIFormik({
     name: (budget && budget.name) || "",
     startDate: (budget && budget.startDate) || 0,
     endDate: (budget && budget.endDate) || 0,
-    state: (budget && budget.state) || ""
+    limit: (budget && budget.limit) || ""
   }),
   validationSchema: Yup.object().shape({
-    name: Yup.string().required("name es requerido!"),
-    state: Yup.string().required("cuenta requerida!"),
-    endDate: Yup.date().required("cantidad requerida!"),
-    startDate: Yup.date().required("Fecha de inicio requerida!")
+    name: Yup.string().required("name is requerid!"),
+    limit: Yup.number().required("limit is required!"),
+    endDate: Yup.date().required("End date is required!"),
+    startDate: Yup.date().required("Start date is required!")
   }),
   handleSubmit: (values, { setSubmitting, props }) => {
     setTimeout(() => {

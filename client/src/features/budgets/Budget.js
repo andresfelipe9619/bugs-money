@@ -4,8 +4,8 @@ import DataTable from "../../components/tables/DataTable";
 import { toast } from "react-semantic-toasts";
 import BudgetRow from "./BudgetRow";
 import { connect } from "react-redux";
-import CreateBudgetModal from "./modals/CreateBudget";
-import UpdateBudgetModal from "./modals/UpdateBudget";
+import CreateBudgetModal from "../../components/modals/budget/CreateBudget";
+import UpdateBudgetModal from "../../components/modals/budget/UpdateBudget";
 import API from "../../services/api";
 class Budget extends Component {
   state = {
