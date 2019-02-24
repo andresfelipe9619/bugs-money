@@ -1,13 +1,12 @@
 import React, { Component } from "react";
 import { Grid, Header, Container } from "semantic-ui-react";
-import DataTable from "./../dashboard/DataTable";
+import DataTable from "../../components/tables/DataTable";
 import { toast } from "react-semantic-toasts";
 import BudgetRow from "./BudgetRow";
 import { connect } from "react-redux";
-import test from "./test";
-import CreateBudgetModal from "./modals/CreateBudget";
-import UpdateBudgetModal from "./modals/UpdateBudget";
-
+import CreateBudgetModal from "../../components/modals/budget/CreateBudget";
+import UpdateBudgetModal from "../../components/modals/budget/UpdateBudget";
+import API from "../../services/api";
 class Budget extends Component {
   state = {
     income: 0,
@@ -21,13 +20,12 @@ class Budget extends Component {
     currentBudget: null
   };
 
-  componentDidMount() {
+  async componentDidMount() {
     const { alert } = this.props;
-
-    this.setState({ budgets: test.budgets });
+    this.getBudgets();
     if (alert && alert.message) {
       toast({
-        type: alert.type,
+        type: alert.typresolve,
         icon: alert.icon,
         title: alert.type + "Toast",
         description: alert.message,
@@ -36,15 +34,19 @@ class Budget extends Component {
     }
   }
 
-  createBudget = budget => {
-    let mBudget = {
-      ...budget,
-      spent: 0,
-      nature: "expense",
-      categoryId: `10634${Math.floor(Math.random() * 100)}`
-    };
-    let budgets = [...this.state.budgets, mBudget];
-    this.setState({ budgets });
+  async getBudgets() {
+    let res = await API.Budget.getAll();
+    if (res.ok) {
+      let { budgets } = res;
+      this.setState({ budgets });
+    }
+  }
+
+  createBudget = async budget => {
+    let res = await API.Budget.create(budget);
+    if (res.ok) {
+      this.getBudgets();
+    }
   };
 
   viewBudget = budget => {
@@ -52,18 +54,18 @@ class Budget extends Component {
     window.scrollTo({ top: 800, behavior: "smooth" });
   };
 
-  updateBudget = budget => {
-    console.log("budget", budget);
-    let budgets = [...this.state.budgets];
-    let i = budgets.findIndex(b => b.categoryId === budget.categoryId);
-    if (i === -1) return;
-    budgets[i] = budget;
-    this.setState({ budgets });
+  updateBudget = async budget => {
+    let res = await API.Budget.update(budget);
+    if (res.ok) {
+      this.getBudgets();
+    }
   };
 
-  deleteBudget = budget => {
-    let budgets = this.state.budgets.filter(b => b["name"] !== budget["name"]);
-    this.setState({ budgets });
+  deleteBudget = async budget => {
+    let res = await API.Budget.delete(budget._id);
+    if (res.ok) {
+      this.getBudgets();
+    }
   };
 
   setCurrentBudget = budget => {
@@ -80,6 +82,7 @@ class Budget extends Component {
   };
 
   handleOnCreate = budget => {
+    console.log("budget", budget);
     if (!budget) return;
     this.createBudget(budget);
   };
@@ -92,11 +95,13 @@ class Budget extends Component {
   };
 
   handleOnView = budget => e => {
+    console.log("budget", budget);
     if (!budget) return;
     this.viewBudget(budget);
   };
 
   handleOnDelete = budget => e => {
+    console.log("budget", budget);
     if (!budget) return;
     this.deleteBudget(budget);
   };
@@ -104,7 +109,6 @@ class Budget extends Component {
   render() {
     const { budgets, isModalOpen, currentBudget } = this.state;
     if (!budgets) return null;
-    console.log("state", this.state);
     const handlers = {
       handleOnView: this.handleOnView,
       handleOnCreate: this.handleOnCreate,
@@ -143,9 +147,7 @@ class Budget extends Component {
               {budgets && budgets.length > 0 ? (
                 <DataTable actions handlers={handlers} data={budgets} />
               ) : (
-                <p>
-                  No hay nada presupuestado viejo, que tal si te creas algo?
-                </p>
+                <p>There's nothing budgted yet, try to create something?</p>
               )}
             </Grid.Column>
           </Grid.Row>
@@ -165,10 +167,7 @@ class Budget extends Component {
               {currentBudget && budgets.length > 0 ? (
                 <DataTable actions handlers={handlers} data={budgets} />
               ) : (
-                <p>
-                  No hay nada de transacciones viejo, que tal si te mueves un
-                  poco?
-                </p>
+                <p>There are no transactions</p>
               )}
             </Grid.Column>
           </Grid.Row>
@@ -191,7 +190,8 @@ class Budget extends Component {
 
 function mapStateToProps(state) {
   return {
-    alert: state.alert
+    alert: state.alert,
+    user: state.authService.loginSuccess
   };
 }
 

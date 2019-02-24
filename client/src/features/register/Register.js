@@ -10,7 +10,7 @@ import {
   // Checkbox
 } from "semantic-ui-react";
 import { connect } from "react-redux";
-import withSemanticUIFormik from "../login/hoc/FormikSUI";
+import withSemanticUIFormik from "../../components/hoc/FormikSUI";
 import * as Yup from "yup";
 import { Redirect } from "react-router-dom";
 // import { success } from "../../services/redux/actions/alertActions";
@@ -97,14 +97,14 @@ const MyInnerForm = props => {
                   onChange={handleChange}
                 />
                 <Form.Input
-                  label="Contraseña"
+                  label="password"
                   labelPosition="left"
                   type="password"
                   fluid
                   icon="lock"
                   iconPosition="left"
                   name="password"
-                  placeholder="Contraseña..."
+                  placeholder="password..."
                   onChange={handleChange}
                 />
                 <Form.Input
@@ -115,7 +115,7 @@ const MyInnerForm = props => {
                   icon="lock"
                   iconPosition="left"
                   name="passwordConfirm"
-                  placeholder="Contraseña..."
+                  placeholder="password..."
                   onChange={handleChange}
                 />
                 <Button
@@ -161,7 +161,7 @@ export default connect(
         .required("Correo es requerido!"),
       password: Yup.string()
         .min(6)
-        .required("Contraseña es requerido!"),
+        .required("password es requerido!"),
       passwordConfirm: Yup.string()
         .oneOf([Yup.ref("password"), null])
         .required("Confirmacion de contaseña es requerido!")
@@ -172,10 +172,9 @@ export default connect(
         props.registerRequest({
           email,
           password,
-          nombre: name,
+          name,
           estado: true,
-          google: false,
-          role: "USER_ROLE"
+          google: false
         });
         setSubmitting(false);
       }, 1000);

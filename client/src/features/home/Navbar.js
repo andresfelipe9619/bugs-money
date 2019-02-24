@@ -21,35 +21,41 @@ const Avatar = ({ name, img }) => {
 };
 
 const leftItems = [
-  { as: Link, to: "/", content: "Inicio", key: "inicio", name: "home" },
-  { as: Link, to: "/perfil", content: "Perfil", key: "perfil", name: "user" },
+  { as: Link, to: "/", content: "Home", key: "home", name: "home" },
   {
     as: Link,
-    to: "/dashboard/presupuesto",
-    content: "Presupuesto",
-    key: "presupuesto",
+    to: "/profile",
+    content: "Profile",
+    key: "profile",
+    name: "user"
+  },
+  {
+    as: Link,
+    to: "/dashboard/budgets",
+    content: "Budgets",
+    key: "budgets",
     name: "money bill alternate outline"
   },
   {
     as: Link,
-    to: "/dashboard/cuentas",
-    content: "Cuentas",
-    key: "cuentas",
+    to: "/dashboard/accounts",
+    content: "Accounts",
+    key: "accounts",
     name: "credit card outline"
   },
   {
     as: Link,
-    to: "/dashboard/reportes",
-    content: "Reportes",
-    key: "reportes",
+    to: "/dashboard/reports",
+    content: "Reports",
+    key: "reports",
     name: "line graph"
   }
 ];
 
 const rightItems = (user, logout) => {
   let normal = [
-    { as: Link, to: "/ingreso", content: "Ingreso", key: "ingreso" },
-    { as: Link, to: "/registro", content: "Registro", key: "registro" }
+    { as: Link, to: "/login", content: "Login", key: "login" },
+    { as: Link, to: "/register", content: "Register", key: "register" }
   ];
   let loggedin = [];
 
@@ -57,11 +63,11 @@ const rightItems = (user, logout) => {
     loggedin = [
       {
         as: Link,
-        to: "/perfil",
+        to: "/profile",
         key: "avatar",
-        children: <Avatar name={user.nombre} img={user.img} />
+        children: <Avatar name={user.name} img={user.img} />
       },
-      { content: "Salir", key: "salir", onClick: logout }
+      { content: "Logout", key: "logout", onClick: logout }
     ];
   }
 

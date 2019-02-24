@@ -1,16 +1,13 @@
-FROM node:8
+FROM node:8.11.4-alpine
 
-RUN mkdir -p /usr/src/app/client
-WORKDIR /usr/src/app/client
+WORKDIR /client
 
-ADD package*.json ./
-ENV NODE_PATH=/node_modules
-ENV PATH=$PATH:/node_modules/.bin
+COPY package*.json /client/
 RUN npm install
-ADD . /usr/src/app/client
+
+COPY . /client/
 
 EXPOSE 3000
 EXPOSE 35729
 
-ENTRYPOINT ["/bin/bash", "/client/run.sh"]
-CMD [ "npm", "run", "start" ]
+CMD ["npm", "start"]

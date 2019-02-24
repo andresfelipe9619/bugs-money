@@ -1,6 +1,6 @@
 import React from "react";
 import { Form, Button, Message, Grid, Icon, Segment } from "semantic-ui-react";
-import withSemanticUIFormik from "../../features/login/hoc/FormikSUI";
+import withSemanticUIFormik from "../../hoc/FormikSUI";
 import * as Yup from "yup";
 
 const MyInnerForm = props => {
@@ -11,7 +11,7 @@ const MyInnerForm = props => {
     handleChange,
     handleSubmit,
     handleOnCancel,
-    values: { name, account, startDate, limit }
+    values: { name, limit, startDate, endDate }
   } = props;
   return (
     <Grid
@@ -34,7 +34,7 @@ const MyInnerForm = props => {
             <Form size="large" onSubmit={handleSubmit} loading={isSubmitting}>
               <Form.Group widths="equal">
                 <Form.Input
-                  label="Nombre presupuesto"
+                  label="budget name"
                   labelPosition="left"
                   value={name}
                   fluid
@@ -42,19 +42,19 @@ const MyInnerForm = props => {
                   type="text"
                   name="name"
                   iconPosition="left"
-                  placeholder="Nombre presupuesto..."
+                  placeholder="name presupuesto..."
                   onChange={handleChange}
                 />
                 <Form.Input
-                  label="Cuenta"
+                  label="limit"
                   labelPosition="left"
                   type="text"
                   fluid
-                  icon="lock"
+                  icon="money"
                   iconPosition="left"
-                  name="account"
-                  value={account}
-                  placeholder="Cuenta..."
+                  name="limit"
+                  value={limit}
+                  placeholder="limit..."
                   onChange={handleChange}
                 />
               </Form.Group>
@@ -71,44 +71,19 @@ const MyInnerForm = props => {
                   onChange={handleChange}
                 />
                 <Form.Input
-                  label="Cantidad"
+                  label="Fecha Final"
                   labelPosition="left"
-                  type="number"
+                  type="date"
                   fluid
-                  icon="dollar"
+                  icon="calendar"
                   iconPosition="left"
-                  name="limit"
-                  value={limit}
-                  placeholder="Cantidad..."
+                  name="endDate"
+                  value={endDate}
                   onChange={handleChange}
                 />
               </Form.Group>
-              {/* <Form.Group widths="equal">
-                <Form.Input
-                  label="Categoria"
-                  placeholder="Categoria"
-                  labelPosition="left"
-                  type="text"
-                  fluid
-                  icon="cube"
-                  iconPosition="left"
-                  name="category"
-                  onChange={handleChange}
-                />
-                <Form.Input
-                  label="Periodo"
-                  labelPosition="left"
-                  type="text"
-                  fluid
-                  icon="clock"
-                  iconPosition="left"
-                  name="period"
-                  placeholder="Periodo"
-                  onChange={handleChange}
-                />
-              </Form.Group> */}
               <Button type="button" color="red" onClick={handleOnCancel}>
-                <Icon name="remove" /> Cancelar
+                <Icon name="remove" /> Cancel
               </Button>
 
               <Button type="submit" color="green">
@@ -124,26 +99,25 @@ const MyInnerForm = props => {
 
 const BudgetForm = withSemanticUIFormik({
   mapPropsToValues: ({ budget }) => ({
-    name: (budget && budget.name) || "",
-    categoryId: (budget && budget.categoryId) || "",
-    limit: (budget && budget.limit) || 0,
-    account: (budget && budget.account) || "",
-    nature: (budget && budget.nature) || ""
-    // startDate: budget.startDate || "",
-    // period: budget.period || ""
+    name: (budget && budget.name) || "weed",
+    startDate: (budget && budget.startDate) || "2019-01-01",
+    endDate: (budget && budget.endDate) || "2020-01-01",
+    limit: (budget && budget.limit) || 0
   }),
   validationSchema: Yup.object().shape({
-    name: Yup.string().required("Nombre es requerido!"),
-    account: Yup.string().required("cuenta requerida!"),
-    limit: Yup.number().required("cantidad requerida!"),
-    // period: Yup.string().required("Periodo requerida!"),
-    // category: Yup.string().required("categoria requerida!"),
-    startDate: Yup.date().required("Fecha de inicio requerida!")
+    name: Yup.string().required("name is requerid!"),
+    limit: Yup.number().required("limit is required!"),
+    endDate: Yup.date().required("End date is required!"),
+    startDate: Yup.date().required("Start date is required!")
   }),
   handleSubmit: (values, { setSubmitting, props }) => {
     setTimeout(() => {
       console.log("values", values);
-      props.handleOnConfirm(values);
+      if (!props.budget) {
+        props.handleOnConfirm(values);
+      } else {
+        props.handleOnConfirm({ ...values, _id: props.budget._id });
+      }
       props.handleOnCancel();
       setSubmitting(false);
     }, 1000);

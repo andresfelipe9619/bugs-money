@@ -2,7 +2,7 @@ import React from "react";
 import { Header, Modal } from "semantic-ui-react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
-import BudgetForm from "../BudgetForm";
+import BudgetForm from "./BudgetForm";
 
 const CreateBudgetModal = ({ open, closeModal, handleOnConfirm }) => (
   <Modal
@@ -13,7 +13,7 @@ const CreateBudgetModal = ({ open, closeModal, handleOnConfirm }) => (
     onClose={closeModal}
   >
     <Header>
-      <FontAwesomeIcon size="2x" icon="piggy-bank" /> Crea tú Presupuesto
+      <FontAwesomeIcon size="2x" icon="piggy-bank" /> Create your Budget
     </Header>
     <Modal.Content>
       <BudgetForm

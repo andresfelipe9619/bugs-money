@@ -2,7 +2,7 @@ import React from "react";
 import { Header, Modal } from "semantic-ui-react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
-import BudgetForm from "../BudgetForm";
+import BudgetForm from "./BudgetForm";
 
 const UpdateBudgetModal = ({ open, closeModal, handleOnConfirm, budget }) => (
   <Modal

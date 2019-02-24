@@ -8,14 +8,12 @@ import {
   Header,
   Segment
 } from "semantic-ui-react";
-import { login } from "../../services/redux/actions/authActions";
-import withSemanticUIFormik from "./hoc/FormikSUI";
+import { login, loginGoogle } from "../../services/redux/actions/authActions";
+import withSemanticUIFormik from "../../components/hoc/FormikSUI";
 import * as Yup from "yup";
 import { Redirect } from "react-router-dom";
-import Facebook from "./social/Facebook";
 import Google from "./social/Google";
 
-// Our inner form component. Will be wrapped with Formik({..})
 const MyInnerForm = props => {
   const {
     errors,
@@ -23,14 +21,15 @@ const MyInnerForm = props => {
     handleChange,
     handleSubmit,
     userHasLoggedin,
-    loginHasFailed
+    loginHasFailed,
+    loginGoogleRequest
   } = props;
 
   if (userHasLoggedin) {
     return (
       <Redirect
         to={{
-          pathname: "/dashboard/presupuesto",
+          pathname: "/dashboard/budgets",
           state: {
             from: props.location
           }
@@ -52,6 +51,7 @@ const MyInnerForm = props => {
               Ingresa con tu cuenta
             </Header>
             <Segment stacked>
+              {console.log(errors)}
               {Object.keys(errors).length > 0 ? (
                 <Message
                   error
@@ -63,7 +63,9 @@ const MyInnerForm = props => {
                   error
                   header="Hay problemas con el inicio de sesion"
                   content={
-                    "err" in loginHasFailed || "errors" in loginHasFailed ? (
+                    "err" in loginHasFailed ? (
+                      <p>{loginHasFailed.err.message}</p>
+                    ) : "errors" in loginHasFailed ? (
                       <p>{JSON.stringify(loginHasFailed, null, 4)}</p>
                     ) : null
                   }
@@ -71,14 +73,14 @@ const MyInnerForm = props => {
               ) : null}
               <Form size="large" onSubmit={handleSubmit} loading={isSubmitting}>
                 <Form.Input
-                  label="Correo electrónico"
+                  label="Email electrónico"
                   labelPosition="left"
                   fluid
                   icon="user"
                   type="email"
                   name="email"
                   iconPosition="left"
-                  placeholder="Correo electrónico..."
+                  placeholder="Email electrónico..."
                   onChange={handleChange}
                 />
                 <Form.Input
@@ -105,11 +107,7 @@ const MyInnerForm = props => {
               </Header>
               <Grid.Row>
                 <Grid.Column width={3}>
-                  <Facebook />
-                </Grid.Column>
-
-                <Grid.Column width={3}>
-                  <Google />
+                  <Google onLoginSuccess={loginGoogleRequest} />
                 </Grid.Column>
               </Grid.Row>
             </Segment>
@@ -131,6 +129,9 @@ const mapDispatch = dispatch => {
   return {
     loginRequest: user => {
       dispatch(login(user));
+    },
+    loginGoogleRequest: user => {
+      dispatch(loginGoogle(user));
     }
   };
 };
@@ -143,8 +144,8 @@ export default connect(
     mapPropsToValues: () => ({ email: "", password: "" }),
     validationSchema: Yup.object().shape({
       email: Yup.string()
-        .email("Correo invalido")
-        .required("Correo es requerido!"),
+        .email("Email invalido")
+        .required("Email es requerido!"),
       password: Yup.string().required("Constraseña requerida!")
     }),
     handleSubmit: (values, { setSubmitting, props }) => {
