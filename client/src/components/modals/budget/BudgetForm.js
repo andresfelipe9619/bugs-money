@@ -34,7 +34,7 @@ const MyInnerForm = props => {
             <Form size="large" onSubmit={handleSubmit} loading={isSubmitting}>
               <Form.Group widths="equal">
                 <Form.Input
-                  label="name presupuesto"
+                  label="budget name"
                   labelPosition="left"
                   value={name}
                   fluid
@@ -50,7 +50,7 @@ const MyInnerForm = props => {
                   labelPosition="left"
                   type="text"
                   fluid
-                  icon="lock"
+                  icon="money"
                   iconPosition="left"
                   name="limit"
                   value={limit}
@@ -83,7 +83,7 @@ const MyInnerForm = props => {
                 />
               </Form.Group>
               <Button type="button" color="red" onClick={handleOnCancel}>
-                <Icon name="remove" /> Cancelar
+                <Icon name="remove" /> Cancel
               </Button>
 
               <Button type="submit" color="green">
@@ -99,10 +99,10 @@ const MyInnerForm = props => {
 
 const BudgetForm = withSemanticUIFormik({
   mapPropsToValues: ({ budget }) => ({
-    name: (budget && budget.name) || "",
-    startDate: (budget && budget.startDate) || 0,
-    endDate: (budget && budget.endDate) || 0,
-    limit: (budget && budget.limit) || ""
+    name: (budget && budget.name) || "weed",
+    startDate: (budget && budget.startDate) || "2019-01-01",
+    endDate: (budget && budget.endDate) || "2020-01-01",
+    limit: (budget && budget.limit) || 0
   }),
   validationSchema: Yup.object().shape({
     name: Yup.string().required("name is requerid!"),
@@ -113,7 +113,11 @@ const BudgetForm = withSemanticUIFormik({
   handleSubmit: (values, { setSubmitting, props }) => {
     setTimeout(() => {
       console.log("values", values);
-      props.handleOnConfirm(values);
+      if (!props.budget) {
+        props.handleOnConfirm(values);
+      } else {
+        props.handleOnConfirm({ ...values, _id: props.budget._id });
+      }
       props.handleOnCancel();
       setSubmitting(false);
     }, 1000);

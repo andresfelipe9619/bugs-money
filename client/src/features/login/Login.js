@@ -63,7 +63,9 @@ const MyInnerForm = props => {
                   error
                   header="Hay problemas con el inicio de sesion"
                   content={
-                    "err" in loginHasFailed || "errors" in loginHasFailed ? (
+                    "err" in loginHasFailed ? (
+                      <p>{loginHasFailed.err.message}</p>
+                    ) : "errors" in loginHasFailed ? (
                       <p>{JSON.stringify(loginHasFailed, null, 4)}</p>
                     ) : null
                   }

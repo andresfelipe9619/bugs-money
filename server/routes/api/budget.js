@@ -55,7 +55,7 @@ router.post('/budget', verificaToken, (req, res) => {
   let body = req.body;
   let budget = new Budget({
     name: body.name,
-    limit: 0,
+    limit: body.limit,
     startDate: body.startDate,
     endDate: body.endDate,
     state: true,
@@ -80,7 +80,7 @@ router.post('/budget', verificaToken, (req, res) => {
 
 router.put('/budget/:id', verificaToken, (req, res) => {
   let id = req.params.id;
-  let body = _.pick(req.body, ['name', 'limit', 'startData', 'endDate']);
+  let body = _.pick(req.body, ['name', 'limit', 'startDate', 'endDate']);
 
   Budget.findByIdAndUpdate(
       id,

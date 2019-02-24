@@ -34,8 +34,8 @@ class Budget extends Component {
     }
   }
 
-  getBudgets() {
-    let res = API.Budget.getAll();
+  async getBudgets() {
+    let res = await API.Budget.getAll();
     if (res.ok) {
       let { budgets } = res;
       this.setState({ budgets });
@@ -54,15 +54,15 @@ class Budget extends Component {
     window.scrollTo({ top: 800, behavior: "smooth" });
   };
 
-  updateBudget = budget => {
-    let res = API.Budget.update(budget);
+  updateBudget = async budget => {
+    let res = await API.Budget.update(budget);
     if (res.ok) {
       this.getBudgets();
     }
   };
 
-  deleteBudget = budget => {
-    let res = API.Budget.delete(budget._id);
+  deleteBudget = async budget => {
+    let res = await API.Budget.delete(budget._id);
     if (res.ok) {
       this.getBudgets();
     }

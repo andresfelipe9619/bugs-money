@@ -11,7 +11,6 @@ let router = express.Router();
 
 router.post('/login', (req, res) => {
   let body = req.body;
-  console.log(req.body);
   User.findOne({email: body.email}, (err, userDB) => {
     if (err) {
       return res.status(500).json({
@@ -28,7 +27,6 @@ router.post('/login', (req, res) => {
         },
       });
     }
-    console.log(userDB);
 
     if (!bcrypt.compareSync(body.password, userDB.password)) {
       return res.status(400).json({
@@ -55,15 +53,10 @@ router.post('/login', (req, res) => {
   });
 });
 
-// Configuraciones de Google
-
 async function verify(token) {
   const ticket = await client.verifyIdToken({
     idToken: token,
     audience: process.env.CLIENT_ID,
-    // Specify the CLIENT_ID of the app that accesses the backend
-    // Or, if multiple clients access the backend:
-    // [CLIENT_ID_1, CLIENT_ID_2, CLIENT_ID_3]
   });
   const payload = ticket.getPayload();
 
@@ -117,8 +110,6 @@ router.post('/login/google', async (req, res) => {
         });
       }
     } else {
-      // Si el user no existe en nuestra BD
-
       let user = new User();
 
       user.name = googleUser.name;

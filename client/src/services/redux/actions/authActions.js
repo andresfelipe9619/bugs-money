@@ -74,7 +74,7 @@ export const login = user => {
       })
       .catch(error => {
         "response" in error
-          ? dispatch(loginFailure(error.response))
+          ? dispatch(loginFailure(error.response.data))
           : dispatch(loginFailure(error));
       });
   };
