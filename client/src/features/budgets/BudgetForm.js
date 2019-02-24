@@ -1,6 +1,6 @@
 import React from "react";
 import { Form, Button, Message, Grid, Icon, Segment } from "semantic-ui-react";
-import withSemanticUIFormik from "../../features/login/hoc/FormikSUI";
+import withSemanticUIFormik from "../../components/hoc/FormikSUI";
 import * as Yup from "yup";
 
 const MyInnerForm = props => {

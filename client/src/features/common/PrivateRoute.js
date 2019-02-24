@@ -11,7 +11,7 @@ const PrivateRouteComponent = ({ component: Compo, isLoggedin, ...rest }) => (
       ) : (
         <Redirect
           to={{
-            pathname: "/ingreso",
+            pathname: "/login",
             state: {
               from: props.location
             }
@@ -23,7 +23,6 @@ const PrivateRouteComponent = ({ component: Compo, isLoggedin, ...rest }) => (
 );
 
 const mapEstateToProps = (state, ownProps) => {
-  // const cached = localStorage.getItem("user");
   return { isLoggedin: state.authService.loginSuccess };
 };
 const PrivateRoute = connect(mapEstateToProps)(PrivateRouteComponent);

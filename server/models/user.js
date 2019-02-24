@@ -3,7 +3,7 @@ const uniqueValidator = require('mongoose-unique-validator');
 
 let Schema = mongoose.Schema;
 
-let usuarioSchema = new Schema({
+let userSchema = new Schema({
   name: {
     type: String,
     required: [true, 'El name es necesario'],
@@ -31,7 +31,7 @@ let usuarioSchema = new Schema({
   },
 });
 
-usuarioSchema.methods.toJSON = function() {
+userSchema.methods.toJSON = function() {
   let user = this;
   let userObject = user.toObject();
   delete userObject.password;
@@ -39,5 +39,5 @@ usuarioSchema.methods.toJSON = function() {
   return userObject;
 };
 
-usuarioSchema.plugin(uniqueValidator, {message: '{PATH} debe de ser unico'});
-module.exports = mongoose.model('User', usuarioSchema);
+userSchema.plugin(uniqueValidator, {message: '{PATH} debe de ser unico'});
+module.exports = mongoose.model('User', userSchema);

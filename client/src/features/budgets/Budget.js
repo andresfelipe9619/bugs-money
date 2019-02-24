@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import { Grid, Header, Container } from "semantic-ui-react";
-import DataTable from "./../dashboard/DataTable";
+import DataTable from "../../components/tables/DataTable";
 import { toast } from "react-semantic-toasts";
 import BudgetRow from "./BudgetRow";
 import { connect } from "react-redux";

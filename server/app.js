@@ -42,23 +42,20 @@ app.use((req, res, next) => {
 });
 
 if (isProduction) {
-  // Serve any static files
   app.use(express.static(path.join(__dirname, '../client/build')));
-  // Handle React routing, return all requests to React app
-  app.get('*', function(req, res) {
+  app.get('*', (req, res) => {
     res.sendFile(path.join(__dirname, '../client/build', 'index.html'));
   });
 }
 
-// Catch 404 and forward to error handler
-app.use(function(req, res, next) {
+app.use((req, res, next) => {
   let err = new Error('Not Found');
   err.status = 404;
   next(err);
 });
-// Eror handlers
+
 if (!isProduction) {
-  app.use(function(err, req, res, next) {
+  app.use((err, req, res, next) => {
     console.log(err.stack);
     res.status(err.status || 500);
     res.json({
@@ -69,7 +66,7 @@ if (!isProduction) {
     });
   });
 } else {
-  app.use(function(err, req, res, next) {
+  app.use((err, req, res, next) => {
     res.status(err.status || 500);
     res.json({
       errors: {

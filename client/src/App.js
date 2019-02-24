@@ -23,10 +23,10 @@ class App extends Component {
         <Navbar>
           <Switch>
             <Route exact path="/" component={LoadableHome} />
-            <Route path="/dashboard" component={LoadableDashboard} />
-            <Route exact path="/registro" component={LoadableRegister} />
-            <Route exact path="/ingreso" component={LoadableLogin} />
-            <Route exact path="/perfil" component={LoadableProfile} />
+            <PrivateRoute path="/dashboard" component={LoadableDashboard} />
+            <Route exact path="/register" component={LoadableRegister} />
+            <Route exact path="/login" component={LoadableLogin} />
+            <PrivateRoute exact path="/profile" component={LoadableProfile} />
             <Route component={PageNotFound} />
           </Switch>
           <SemanticToastContainer position="bottom-right" />

@@ -9,12 +9,11 @@ import {
   Segment
 } from "semantic-ui-react";
 import { login, loginGoogle } from "../../services/redux/actions/authActions";
-import withSemanticUIFormik from "./hoc/FormikSUI";
+import withSemanticUIFormik from "../../components/hoc/FormikSUI";
 import * as Yup from "yup";
 import { Redirect } from "react-router-dom";
 import Google from "./social/Google";
 
-// Our inner form component. Will be wrapped with Formik({..})
 const MyInnerForm = props => {
   const {
     errors,
@@ -30,7 +29,7 @@ const MyInnerForm = props => {
     return (
       <Redirect
         to={{
-          pathname: "/dashboard/presupuesto",
+          pathname: "/dashboard/budgets",
           state: {
             from: props.location
           }

@@ -85,8 +85,6 @@ router.put('/user/:id', [verificaToken], (req, res) => {
 router.delete('/user/:id', [verificaToken], (req, res) => {
   let id = req.params.id;
 
-  // User.findByIdAndRemove(id, (err, usuarioBorrado) => {
-
   let cambiaEstado = {
     state: false,
   };
