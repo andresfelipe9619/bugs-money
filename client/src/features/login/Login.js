@@ -103,7 +103,7 @@ const MyInnerForm = props => {
                 </Button>
               </Form>
               <Header as="h2" color="black" textAlign="center">
-                O{" "}
+                O CON{" "}
               </Header>
               <Grid.Row>
                 <Grid.Column width={3}>

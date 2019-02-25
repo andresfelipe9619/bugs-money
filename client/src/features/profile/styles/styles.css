@@ -2,15 +2,8 @@
   position: fixed;
   top: 50%;
   left: 50%;
-  width: 80%;
-  max-width: 910px;
-  min-width: 550px;
+  width: auto;
   height: auto;
-  z-index: 2000;
-  visibility: hidden;
-  -webkit-backface-visibility: hidden;
-  -moz-backface-visibility: hidden;
-  backface-visibility: hidden;
   -webkit-transform: translateX(-50%) translateY(-50%);
   -moz-transform: translateX(-50%) translateY(-50%);
   -ms-transform: translateX(-50%) translateY(-50%);
@@ -19,19 +12,6 @@
 
 .show {
   visibility: visible;
-}
-
-.overlay {
-  visibility: hidden;
-  position: absolute;
-  z-index: 1000;
-  bottom: 0;
-  right: 0;
-  left: 0;
-  top: 0;
-  opacity: 0.85;
-  transform: translateZ(0px);
-  background-color: rgb(0, 0, 0);
 }
 
 .md-modal .settings-pane {
