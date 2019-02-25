@@ -52,7 +52,7 @@ const leftItems = [
   }
 ];
 
-const rightItems = (user, logout) => {
+const rightItems = (user, _logout) => {
   let normal = [
     { as: Link, to: "/login", content: "Login", key: "login" },
     { as: Link, to: "/register", content: "Register", key: "register" }
@@ -67,7 +67,7 @@ const rightItems = (user, logout) => {
         key: "avatar",
         children: <Avatar name={user.name} img={user.img} />
       },
-      { content: "Logout", key: "logout", onClick: logout }
+      { content: "Logout", key: "logout", onClick: _logout }
     ];
   }
 
@@ -91,7 +91,7 @@ class NavBar extends Component {
   handleToggle = () => this.setState({ visible: !this.state.visible });
 
   render() {
-    const { children, user, logout } = this.props;
+    const { children, user, logoutRequest } = this.props;
     const { visible } = this.state;
 
     return (
@@ -101,7 +101,7 @@ class NavBar extends Component {
             leftItems={leftItems}
             onPusherClick={this.handlePusher}
             onToggle={this.handleToggle}
-            rightItems={rightItems(user, logout)}
+            rightItems={rightItems(user, logoutRequest)}
             visible={visible}
             isLoggedin={user}
           >
