@@ -7,6 +7,7 @@ import { connect } from "react-redux";
 import CreateBudgetModal from "../../components/modals/budget/CreateBudget";
 import UpdateBudgetModal from "../../components/modals/budget/UpdateBudget";
 import API from "../../services/api";
+import { log } from "util";
 class Budget extends Component {
   state = {
     income: 0,

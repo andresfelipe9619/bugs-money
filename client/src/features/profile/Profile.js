@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
-import { Redirect } from "react-router-dom";
+import { logout } from "../../services/redux/actions/authActions";
+
 import { Divider, Message, Segment, Modal } from "semantic-ui-react";
 import {
   SettingsPane,
@@ -92,13 +93,7 @@ export class Profile extends Component {
     if (this.props.userHasLoggedin) {
       let userID = this.props.userHasLoggedin._id;
       await API.User.delete(userID);
-      return (
-        <Redirect
-          to={{
-            pathname: "/login"
-          }}
-        />
-      );
+      this.props.logoutRequest(this.props.userHasLoggedin);
     }
   };
 
@@ -319,7 +314,13 @@ const mapStateToProps = state => ({
   userHasLoggedin: state.authService.loginSuccess
 });
 
+const mapDispatchToProps = dispatch => ({
+  logoutRequest: user => {
+    user ? dispatch(logout(user)) : console.log("No user to logout");
+  }
+});
+
 export default connect(
   mapStateToProps,
-  null
+  mapDispatchToProps
 )(Profile);

@@ -32,7 +32,7 @@ const MyInnerForm = props => {
     return (
       <Redirect
         to={{
-          pathname: "/ingreso ",
+          pathname: "/login",
           state: {
             from: props.location
           }
