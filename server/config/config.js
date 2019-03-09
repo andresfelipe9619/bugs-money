@@ -34,10 +34,7 @@ let urlDB;
 
 if (process.env.NODE_ENV === 'dev') {
   urlDB = 'mongodb://localhost:27017/bugs_money';
-  // urlDB = 'mongodb://cafe-user:azahella333@ds045507.mlab.com:45507/cafe-test';
-  // urlDB = 'mongodb://admin:superadmin1@ds159273.mlab.com:59273/bugsmoney';
 } else {
-  // urlDB = 'mongodb://cafe-user:azahella333@ds045507.mlab.com:45507/cafe-test';
   urlDB = 'mongodb://admin:superadmin1@ds159273.mlab.com:59273/bugsmoney';
 }
 

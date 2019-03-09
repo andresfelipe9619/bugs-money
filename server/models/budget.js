@@ -30,6 +30,7 @@ let budgetSchema = new Schema({
     ref: 'User',
     required: [true, 'El usuario es requerido'],
   },
+  categories: [{type: Schema.Types.ObjectId, ref: 'Category'}],
 });
 
 budgetSchema.plugin(fakegoose);

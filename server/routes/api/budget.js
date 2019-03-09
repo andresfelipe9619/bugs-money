@@ -3,13 +3,16 @@ const router = require('express').Router();
 const _ = require('underscore');
 
 const Budget = require('../../models/budget');
+
 const {verificaToken} = require('../../middlewares/authentication');
 
 router.get('/budget', verificaToken, (req, res) => {
   Budget.find({user: req.user._id})
       .sort('description')
       .populate('user', 'name email')
+      .populate('categories', 'name value description')
       .exec((err, budgets) => {
+        console.log('budgets', budgets);
         if (err) {
           return res.status(500).json({
             ok: false,
@@ -17,9 +20,9 @@ router.get('/budget', verificaToken, (req, res) => {
           });
         }
 
-        res.json({
+        return res.json({
           ok: true,
-          budgets,
+          budgets: budgets,
         });
       });
 });
@@ -60,6 +63,7 @@ router.post('/budget', verificaToken, (req, res) => {
     endDate: body.endDate,
     state: true,
     user: req.user._id,
+    categories: [],
   });
 
   budget.save((err, budgetDB) => {
