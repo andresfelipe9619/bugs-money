@@ -8,6 +8,7 @@ import CreateBudgetModal from "../../components/modals/budget/CreateBudget";
 import UpdateBudgetModal from "../../components/modals/budget/UpdateBudget";
 import API from "../../services/api";
 import { Accordion, Icon } from "semantic-ui-react";
+import CategoryRow from "./categories/CategoryRow";
 import moment from "moment";
 class Budget extends Component {
   state = {
@@ -207,7 +208,7 @@ class Budget extends Component {
                         </Grid>
                       </Accordion.Title>
                       <Accordion.Content active={activeIndex === index}>
-                        <Header as="h3">Categories</Header>
+                        <CategoryRow />
                         {categories && categories.length > 0 ? (
                           <DataTable
                             actions
