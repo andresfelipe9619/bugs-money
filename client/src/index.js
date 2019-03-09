@@ -7,7 +7,7 @@ import { Router } from "react-router-dom";
 import registerServiceWorker from "./registerServiceWorker";
 import { history } from "./store/history";
 import configStore from "./store/configStore";
-import "normalize.css";
+// import "normalize.css";
 
 const store = configStore();
 // const history = syncHistoryWithStore(browserHistory, store);

@@ -2,7 +2,7 @@ import React from "react";
 import ReactTable from "react-table";
 import "react-table/react-table.css";
 import { Button, Icon } from "semantic-ui-react";
-import "./styles/data.table.css";
+// import "./styles/data.table.css";
 const ActionsCell = ({
   handleOnUpdate,
   handleOnDelete,
@@ -29,28 +29,47 @@ const ActionsCell = ({
 );
 
 export default class DataTable extends React.PureComponent {
+  decamelize = (str, separator) => {
+    separator = typeof separator === "undefined" ? " " : separator;
+
+    return str
+      .replace(/([a-z\d])([A-Z])/g, "$1" + separator + "$2")
+      .replace(/([A-Z]+)([A-Z][a-z\d]+)/g, "$1" + separator + "$2")
+      .toLowerCase();
+  };
+
+  isNotVisibleKey = key => {
+    let notVisibleKeys = ["_id", "id", "user", "budget"];
+    return notVisibleKeys.includes(key);
+  };
+
+  canBeHeader = (sample, key) =>
+    sample[key] &&
+    typeof sample[key] !== "object" &&
+    !Array.isArray(sample[key]);
+
   getColumns = data => {
     const columns = [];
     const sample = data[0];
     const { handlers, actions } = this.props;
     Object.keys(sample).forEach(key => {
-      if (key !== "_id" && key !== "id") {
-        if (sample[key] && typeof sample[key] !== "object") {
-          let column = {
-            accessor: key,
-            Header: key,
-            className: "center"
-          };
-          columns.push(column);
-        }
+      if (!this.isNotVisibleKey(key) && this.canBeHeader(sample, key)) {
+        let decamel = this.decamelize(key);
+        let header = decamel.charAt(0).toUpperCase() + decamel.slice(1);
+        let column = {
+          accessor: key,
+          Header: header,
+          className: "center"
+        };
+        columns.push(column);
       }
     });
-    if (actions) {
-      columns.push({
-        Header: "",
-        Cell: cellInfo => <ActionsCell {...handlers} {...cellInfo} />
-      });
-    }
+    // if (actions) {
+    //   columns.push({
+    //     Header: "",
+    //     Cell: cellInfo => <ActionsCell {...handlers} {...cellInfo} />
+    //   });
+    // }
     return columns;
   };
 

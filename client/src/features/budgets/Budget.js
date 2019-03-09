@@ -7,7 +7,8 @@ import { connect } from "react-redux";
 import CreateBudgetModal from "../../components/modals/budget/CreateBudget";
 import UpdateBudgetModal from "../../components/modals/budget/UpdateBudget";
 import API from "../../services/api";
-import { log } from "util";
+import { Accordion, Icon } from "semantic-ui-react";
+import moment from "moment";
 class Budget extends Component {
   state = {
     income: 0,
@@ -18,7 +19,8 @@ class Budget extends Component {
       create: false,
       update: false
     },
-    currentBudget: null
+    currentBudget: null,
+    activeIndex: 0
   };
 
   async componentDidMount() {
@@ -82,6 +84,14 @@ class Budget extends Component {
     this.setState({ isModalOpen: { [modal]: false } });
   };
 
+  handleClick = (e, titleProps) => {
+    const { index } = titleProps;
+    const { activeIndex } = this.state;
+    const newIndex = activeIndex === index ? -1 : index;
+
+    this.setState({ activeIndex: newIndex });
+  };
+
   handleOnCreate = budget => {
     console.log("budget", budget);
     if (!budget) return;
@@ -108,7 +118,7 @@ class Budget extends Component {
   };
 
   render() {
-    const { budgets, isModalOpen, currentBudget } = this.state;
+    const { budgets, isModalOpen, currentBudget, activeIndex } = this.state;
     if (!budgets) return null;
     const handlers = {
       handleOnView: this.handleOnView,
@@ -143,13 +153,78 @@ class Budget extends Component {
               />
             </Grid.Column>
           </Grid.Row>
-          <Grid.Row centered style={{ marginTop: "100px" }}>
+          <Grid.Row style={{ marginTop: "100px" }}>
+            <Grid.Column width={4}>
+              <Header> {"Name"}</Header>
+            </Grid.Column>
+            <Grid.Column width={3}>
+              <Header> {"Limit"}</Header>
+            </Grid.Column>
+            <Grid.Column width={3}>
+              <Header> {"Balance"}</Header>
+            </Grid.Column>
+            <Grid.Column width={3}>
+              <Header> {"Start Date"}</Header>
+            </Grid.Column>
+            <Grid.Column width={3}>
+              <Header> {"End Date"}</Header>
+            </Grid.Column>
+          </Grid.Row>
+          <Grid.Row centered>
             <Grid.Column width={16}>
-              {budgets && budgets.length > 0 ? (
-                <DataTable actions handlers={handlers} data={budgets} />
-              ) : (
-                <p>There's nothing budgted yet, try to create something?</p>
-              )}
+              <Accordion fluid styled>
+                {budgets.map((budget, index) => {
+                  let {
+                    _id,
+                    name,
+                    limit,
+                    startDate,
+                    endDate,
+                    categories
+                  } = budget;
+                  return (
+                    <React.Fragment key={_id}>
+                      <Accordion.Title
+                        active={activeIndex === index}
+                        index={index}
+                        onClick={this.handleClick}
+                      >
+                        <Grid>
+                          <Grid.Row>
+                            <Grid.Column width={4}>
+                              <Icon name="dropdown" />
+                              {name}
+                            </Grid.Column>
+                            <Grid.Column width={3}>{limit}</Grid.Column>
+                            <Grid.Column width={3}>{limit}</Grid.Column>
+                            <Grid.Column width={3}>
+                              {moment(startDate).format("MMMM Do YYYY")}
+                            </Grid.Column>
+                            <Grid.Column width={3}>
+                              {moment(endDate).format("MMMM Do YYYY")}
+                            </Grid.Column>
+                          </Grid.Row>
+                        </Grid>
+                      </Accordion.Title>
+                      <Accordion.Content active={activeIndex === index}>
+                        <Header as="h3">Categories</Header>
+                        {categories && categories.length > 0 ? (
+                          <DataTable
+                            actions
+                            handlers={handlers}
+                            data={categories}
+                          />
+                        ) : (
+                          <p>
+                            There's nothing budgted yet, try to create
+                            something?
+                          </p>
+                        )}
+                      </Accordion.Content>
+                    </React.Fragment>
+                  );
+                })}
+              </Accordion>
             </Grid.Column>
           </Grid.Row>
           <Grid.Row
