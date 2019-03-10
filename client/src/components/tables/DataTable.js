@@ -1,33 +1,8 @@
 import React from "react";
 import ReactTable from "react-table";
 import "react-table/react-table.css";
-import { Button, Icon } from "semantic-ui-react";
 // import "./styles/data.table.css";
-const ActionsCell = ({
-  handleOnUpdate,
-  handleOnDelete,
-  handleOnView,
-  original
-}) => (
-  <Button.Group>
-    {handleOnView && (
-      <Button icon size="tiny" onClick={handleOnView(original)}>
-        <Icon name="eye" />
-      </Button>
-    )}
-    {handleOnUpdate && (
-      <Button icon size="tiny">
-        <Icon name="edit" onClick={handleOnUpdate(original)} />
-      </Button>
-    )}{" "}
-    {handleOnDelete && (
-      <Button icon size="tiny">
-        <Icon name="trash" onClick={handleOnDelete(original)} />
-      </Button>
-    )}
-  </Button.Group>
-);
-
+import ActionsCell from "./ActionsCell";
 export default class DataTable extends React.PureComponent {
   decamelize = (str, separator) => {
     separator = typeof separator === "undefined" ? " " : separator;
@@ -44,7 +19,8 @@ export default class DataTable extends React.PureComponent {
   };
 
   canBeHeader = (sample, key) =>
-    sample[key] &&
+    sample[key] !== undefined &&
+    sample[key] !== null &&
     typeof sample[key] !== "object" &&
     !Array.isArray(sample[key]);
 
@@ -59,17 +35,17 @@ export default class DataTable extends React.PureComponent {
         let column = {
           accessor: key,
           Header: header,
-          className: "center"
+          className: "left"
         };
         columns.push(column);
       }
     });
-    // if (actions) {
-    //   columns.push({
-    //     Header: "",
-    //     Cell: cellInfo => <ActionsCell {...handlers} {...cellInfo} />
-    //   });
-    // }
+    if (actions) {
+      columns.push({
+        Header: "",
+        Cell: cellInfo => <ActionsCell {...handlers} {...cellInfo} />
+      });
+    }
     return columns;
   };
 
@@ -82,7 +58,7 @@ export default class DataTable extends React.PureComponent {
         <ReactTable
           data={data}
           columns={columns}
-          defaultPageSize={10}
+          defaultPageSize={6}
           className="-striped -highlight"
         />
       </div>

@@ -1,9 +1,10 @@
 import React from "react";
 import { Header, Modal } from "semantic-ui-react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import BudgetForm from "./BudgetForm";
 
-const UpdateBudgetModal = ({ open, closeModal, handleOnConfirm, budget }) => (
+import CategoryForm from "./CategoryForm";
+
+const CreateCategoryModal = ({ open, closeModal, handleOnConfirm }) => (
   <Modal
     closeIcon
     open={open}
@@ -12,17 +13,16 @@ const UpdateBudgetModal = ({ open, closeModal, handleOnConfirm, budget }) => (
     onClose={closeModal}
   >
     <Header>
-      <FontAwesomeIcon size="2x" icon="piggy-bank" /> Update your budget
+      <FontAwesomeIcon size="2x" icon="piggy-bank" /> Create your Category
     </Header>
     <Modal.Content>
-      <BudgetForm
-        budget={budget}
-        submitText={"Update budget"}
-        handleOnCancel={closeModal}
+      <CategoryForm
+        submitText={"Create category"}
         handleOnConfirm={handleOnConfirm}
+        handleOnCancel={closeModal}
       />
     </Modal.Content>
   </Modal>
 );
 
-export default UpdateBudgetModal;
+export default CreateCategoryModal;

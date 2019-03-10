@@ -10,7 +10,7 @@ router.get('/budget', verificaToken, (req, res) => {
   Budget.find({user: req.user._id})
       .sort('description')
       .populate('user', 'name email')
-      .populate('categories', 'name value description')
+      .populate('categories', 'name value expended description')
       .exec((err, budgets) => {
         console.log('budgets', budgets);
         if (err) {

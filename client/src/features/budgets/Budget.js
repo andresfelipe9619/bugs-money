@@ -6,9 +6,10 @@ import BudgetRow from "./BudgetRow";
 import { connect } from "react-redux";
 import CreateBudgetModal from "../../components/modals/budget/CreateBudget";
 import UpdateBudgetModal from "../../components/modals/budget/UpdateBudget";
+import ActionsCell from "../../components/tables/ActionsCell";
 import API from "../../services/api";
 import { Accordion, Icon } from "semantic-ui-react";
-import CategoryRow from "./categories/CategoryRow";
+import Categories from "../categories/Categories";
 import moment from "moment";
 class Budget extends Component {
   state = {
@@ -38,13 +39,13 @@ class Budget extends Component {
     }
   }
 
-  async getBudgets() {
+  getBudgets = async () => {
     let res = await API.Budget.getAll();
     if (res.ok) {
       let { budgets } = res;
       this.setState({ budgets });
     }
-  }
+  };
 
   createBudget = async budget => {
     let res = await API.Budget.create(budget);
@@ -155,13 +156,13 @@ class Budget extends Component {
             </Grid.Column>
           </Grid.Row>
           <Grid.Row style={{ marginTop: "100px" }}>
-            <Grid.Column width={4}>
+            <Grid.Column width={3}>
               <Header> {"Name"}</Header>
             </Grid.Column>
-            <Grid.Column width={3}>
+            <Grid.Column width={2}>
               <Header> {"Limit"}</Header>
             </Grid.Column>
-            <Grid.Column width={3}>
+            <Grid.Column width={2}>
               <Header> {"Balance"}</Header>
             </Grid.Column>
             <Grid.Column width={3}>
@@ -169,6 +170,9 @@ class Budget extends Component {
             </Grid.Column>
             <Grid.Column width={3}>
               <Header> {"End Date"}</Header>
+            </Grid.Column>
+            <Grid.Column width={3}>
+              <Header> </Header>
             </Grid.Column>
           </Grid.Row>
           <Grid.Row centered>
@@ -192,35 +196,30 @@ class Budget extends Component {
                       >
                         <Grid>
                           <Grid.Row>
-                            <Grid.Column width={4}>
+                            <Grid.Column width={3}>
                               <Icon name="dropdown" />
                               {name}
                             </Grid.Column>
-                            <Grid.Column width={3}>{limit}</Grid.Column>
-                            <Grid.Column width={3}>{limit}</Grid.Column>
+                            <Grid.Column width={2}>{limit}</Grid.Column>
+                            <Grid.Column width={2}>{limit}</Grid.Column>
                             <Grid.Column width={3}>
                               {moment(startDate).format("MMMM Do YYYY")}
                             </Grid.Column>
                             <Grid.Column width={3}>
                               {moment(endDate).format("MMMM Do YYYY")}
                             </Grid.Column>
+                            <Grid.Column>
+                              <ActionsCell {...handlers} />{" "}
+                            </Grid.Column>
                           </Grid.Row>
                         </Grid>
                       </Accordion.Title>
                       <Accordion.Content active={activeIndex === index}>
-                        <CategoryRow />
-                        {categories && categories.length > 0 ? (
-                          <DataTable
-                            actions
-                            handlers={handlers}
-                            data={categories}
-                          />
-                        ) : (
-                          <p>
-                            There's nothing budgted yet, try to create
-                            something?
-                          </p>
-                        )}
+                        <Categories
+                          budget={_id}
+                          categories={categories}
+                          getBudgets={this.getBudgets}
+                        />
                       </Accordion.Content>
                     </React.Fragment>
                   );

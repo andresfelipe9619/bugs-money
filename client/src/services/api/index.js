@@ -55,6 +55,14 @@ const Budget = {
   create: budget => serverRequests.post("/budget", budget)
 };
 
+const Category = {
+  getAll: () => serverRequests.get(`/category`),
+  delete: id => serverRequests.del(`/category/${id}`),
+  get: id => serverRequests.get(`/category/${id}`),
+  update: category => serverRequests.put(`/category/${category._id}`, category),
+  create: category => serverRequests.post("/category", category)
+};
+
 const User = {
   getAll: () => serverRequests.get(`/user`),
   get: id => serverRequests.get(`/user/${id}`),
@@ -67,6 +75,7 @@ export default {
   Auth,
   User,
   Budget,
+  Category,
   Account,
   Transaction,
   setToken: _token => {
