@@ -4,11 +4,14 @@ import CategoryRow from "./CategoryRow";
 import API from "../../services/api";
 import CreateCategoryModal from "../../components/modals/category/CreateCategory";
 import UpdateCategoryModal from "../../components/modals/category/UpdateCategory";
+import { Confirm } from "semantic-ui-react";
+
 export default class Categories extends PureComponent {
   state = {
     isModalOpen: {
       create: false,
-      update: false
+      update: false,
+      confirm: false
     },
     currentCategory: null,
     activeIndex: -1
@@ -31,6 +34,7 @@ export default class Categories extends PureComponent {
     console.log("category", category);
     let res = await API.Category.update({ ...category, budget });
     if (res.ok) {
+      this.setCurrentCategory(null);
       this.props.getBudgets();
     }
   };
@@ -63,9 +67,14 @@ export default class Categories extends PureComponent {
   };
 
   handleOnDelete = category => e => {
-    console.log("category", category);
     if (!category) return;
-    this.deleteCategory(category);
+    this.setCurrentCategory(category);
+    this.openModal("confirm")();
+  };
+
+  confirmDeletingCategory = () => {
+    this.closeModal("confirm")();
+    this.deleteCategory(this.state.currentCategory);
   };
 
   setCurrentCategory = category => {
@@ -106,6 +115,13 @@ export default class Categories extends PureComponent {
         ) : (
           <p>There are not categories yet, try to create something</p>
         )}
+        <Confirm
+          open={isModalOpen.confirm}
+          onCancel={this.closeModal("confirm")}
+          onConfirm={this.confirmDeletingCategory}
+          content="Are you sure you want to delete this Category?"
+        />
+
         <CreateCategoryModal
           open={isModalOpen.create}
           closeModal={this.closeModal("create")}

@@ -1,5 +1,12 @@
 import React, { Component } from "react";
-import { Grid, Header, Container } from "semantic-ui-react";
+import {
+  Grid,
+  Header,
+  Container,
+  Confirm,
+  Accordion,
+  Icon
+} from "semantic-ui-react";
 import DataTable from "../../components/tables/DataTable";
 import { toast } from "react-semantic-toasts";
 import BudgetRow from "./BudgetRow";
@@ -8,7 +15,6 @@ import CreateBudgetModal from "../../components/modals/budget/CreateBudget";
 import UpdateBudgetModal from "../../components/modals/budget/UpdateBudget";
 import ActionsCell from "../../components/tables/ActionsCell";
 import API from "../../services/api";
-import { Accordion, Icon } from "semantic-ui-react";
 import Categories from "../categories/Categories";
 import moment from "moment";
 class Budget extends Component {
@@ -19,7 +25,8 @@ class Budget extends Component {
     budgets: [],
     isModalOpen: {
       create: false,
-      update: false
+      update: false,
+      confirm: false
     },
     currentBudget: null,
     activeIndex: 0
@@ -62,6 +69,7 @@ class Budget extends Component {
   updateBudget = async budget => {
     let res = await API.Budget.update(budget);
     if (res.ok) {
+      this.setCurrentBudget(null);
       this.getBudgets();
     }
   };
@@ -69,6 +77,7 @@ class Budget extends Component {
   deleteBudget = async budget => {
     let res = await API.Budget.delete(budget._id);
     if (res.ok) {
+      this.setCurrentBudget(null);
       this.getBudgets();
     }
   };
@@ -95,28 +104,30 @@ class Budget extends Component {
   };
 
   handleOnCreate = budget => {
-    console.log("budget", budget);
     if (!budget) return;
     this.createBudget(budget);
   };
 
   handleOnUpdate = budget => e => {
-    console.log("budget", budget);
     if (!budget) return;
     this.setCurrentBudget(budget);
     this.openModal("update")();
   };
 
   handleOnView = budget => e => {
-    console.log("budget", budget);
     if (!budget) return;
     this.viewBudget(budget);
   };
 
   handleOnDelete = budget => e => {
-    console.log("budget", budget);
     if (!budget) return;
-    this.deleteBudget(budget);
+    this.setCurrentBudget(budget);
+    this.openModal("confirm")();
+  };
+
+  confirmDeletingBudget = () => {
+    this.closeModal("confirm")();
+    this.deleteBudget(this.state.currentBudget);
   };
 
   render() {
@@ -209,7 +220,7 @@ class Budget extends Component {
                               {moment(endDate).format("MMMM Do YYYY")}
                             </Grid.Column>
                             <Grid.Column>
-                              <ActionsCell {...handlers} />{" "}
+                              <ActionsCell {...handlers} original={budget} />{" "}
                             </Grid.Column>
                           </Grid.Row>
                         </Grid>
@@ -247,6 +258,13 @@ class Budget extends Component {
               )}
             </Grid.Column>
           </Grid.Row>
+          <Confirm
+            open={isModalOpen.confirm}
+            onCancel={this.closeModal("confirm")}
+            onConfirm={this.confirmDeletingBudget}
+            content="Are you sure you want to delete this budget?"
+          />
+
           <CreateBudgetModal
             open={isModalOpen.create}
             closeModal={this.closeModal("create")}

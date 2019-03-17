@@ -100,7 +100,7 @@
       "git add"
     ]
   },
-  "proxy": "http://server:5000/",
+  "proxy": "http://localhost:5000/",
   "jest": {
     "collectCoverageFrom": [
       "src/**/*.{js,jsx,mjs}"
