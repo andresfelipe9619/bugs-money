@@ -16,13 +16,15 @@ import UpdateBudgetModal from "../../components/modals/budget/UpdateBudget";
 import ActionsCell from "../../components/tables/ActionsCell";
 import API from "../../services/api";
 import Categories from "../categories/Categories";
-import moment from "moment";
+import moment, { ISO_8601 } from "moment";
 class Budget extends Component {
   state = {
     income: 0,
     expense: 0,
     budgeted: 0,
     budgets: [],
+    isFiltering: false,
+    filteredBudgets: [],
     isModalOpen: {
       create: false,
       update: false,
@@ -103,6 +105,19 @@ class Budget extends Component {
     this.setState({ activeIndex: newIndex });
   };
 
+  handleOnFilter = (start, end) => {
+    const { budgets } = this.state;
+    console.log("{start, end}", { start, end });
+    const filteredBudgets = budgets.filter(
+      b => b.startDate >= start && b.endDate <= end
+    );
+    this.setState({ filteredBudgets, isFiltering: true });
+  };
+
+  handleOnCancelFilter = e => {
+    this.setState({ isFiltering: false });
+  };
+
   handleOnCreate = budget => {
     if (!budget) return;
     this.createBudget(budget);
@@ -131,16 +146,26 @@ class Budget extends Component {
   };
 
   render() {
-    const { budgets, isModalOpen, currentBudget, activeIndex } = this.state;
+    const {
+      budgets,
+      isModalOpen,
+      currentBudget,
+      activeIndex,
+      isFiltering,
+      filteredBudgets
+    } = this.state;
     if (!budgets) return null;
+    const budgetsToDisplay = isFiltering ? filteredBudgets : budgets;
     const handlers = {
       handleOnView: this.handleOnView,
       handleOnCreate: this.handleOnCreate,
       handleOnUpdate: this.handleOnUpdate,
-      handleOnDelete: this.handleOnDelete
+      handleOnDelete: this.handleOnDelete,
+      handleOnFilter: this.handleOnFilter,
+      handleOnCancelFilter: this.handleOnCancelFilter
     };
 
-    let { income, expense } = budgets.reduce(
+    let { income, expense } = budgetsToDisplay.reduce(
       (prev, b) =>
         b.nature === "income"
           ? { ...prev, income: prev.income + parseInt(b.limit, 10) }
@@ -189,7 +214,7 @@ class Budget extends Component {
           <Grid.Row centered>
             <Grid.Column width={16}>
               <Accordion fluid styled>
-                {budgets.map((budget, index) => {
+                {budgetsToDisplay.map((budget, index) => {
                   let {
                     _id,
                     name,
@@ -251,8 +276,12 @@ class Budget extends Component {
                   ? `Transacciones en ${currentBudget.name}`
                   : `Selecciona un presupuesto`}
               </Header>
-              {currentBudget && budgets.length > 0 ? (
-                <DataTable actions handlers={handlers} data={budgets} />
+              {currentBudget && budgetsToDisplay.length > 0 ? (
+                <DataTable
+                  actions
+                  handlers={handlers}
+                  data={budgetsToDisplay}
+                />
               ) : (
                 <p>There are no transactions</p>
               )}
