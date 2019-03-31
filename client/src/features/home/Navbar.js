@@ -20,37 +20,50 @@ const Avatar = ({ name, img }) => {
   );
 };
 
-const leftItems = [
-  { as: Link, to: "/", content: "Home", key: "home", name: "home" },
-  {
-    as: Link,
-    to: "/profile",
-    content: "Profile",
-    key: "profile",
-    name: "user"
-  },
-  {
-    as: Link,
-    to: "/dashboard/budgets",
-    content: "Budgets",
-    key: "budgets",
-    name: "money bill alternate outline"
-  },
-  {
-    as: Link,
-    to: "/dashboard/accounts",
-    content: "Accounts",
-    key: "accounts",
-    name: "credit card outline"
-  },
-  {
-    as: Link,
-    to: "/dashboard/reports",
-    content: "Reports",
-    key: "reports",
-    name: "line graph"
+const leftItems = user => {
+  let normal = [
+    { as: Link, to: "/", content: "Home", key: "home", name: "home" }
+  ];
+
+  let loggedin = [];
+  if (user) {
+    loggedin = [
+      {
+        as: Link,
+        to: "/profile",
+        content: "Profile",
+        key: "profile",
+        name: "user"
+      },
+      {
+        as: Link,
+        to: "/dashboard/budgets",
+        content: "Budgets",
+        key: "budgets",
+        name: "money bill alternate outline"
+      },
+      {
+        as: Link,
+        to: "/dashboard/accounts",
+        content: "Accounts",
+        key: "accounts",
+        name: "credit card outline"
+      },
+      {
+        as: Link,
+        to: "/dashboard/reports",
+        content: "Reports",
+        key: "reports",
+        name: "line graph"
+      }
+    ];
   }
-];
+
+  return {
+    normal,
+    loggedin
+  };
+};
 
 const rightItems = (user, _logout) => {
   let normal = [
@@ -98,7 +111,7 @@ class NavBar extends Component {
       <div>
         <Responsive>
           <Sidebar
-            leftItems={leftItems}
+            leftItems={leftItems(user)}
             onPusherClick={this.handlePusher}
             onToggle={this.handleToggle}
             rightItems={rightItems(user, logoutRequest)}

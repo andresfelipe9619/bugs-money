@@ -33,11 +33,10 @@ process.env.SEED = process.env.SEED || 'este-es-el-seed-desarrollo';
 let urlDB;
 
 if (process.env.NODE_ENV === 'dev') {
-  urlDB = 'mongodb://localhost:27017/bugs_money';
-} else {
   urlDB = 'mongodb://admin:superadmin1@ds159273.mlab.com:59273/bugsmoney';
+} else {
+  urlDB = 'mongodb://localhost:27017/bugs_money';
 }
-
 process.env.URLDB = urlDB;
 
 // ===================

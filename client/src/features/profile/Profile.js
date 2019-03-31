@@ -15,35 +15,30 @@ import API from "../../services/api";
 
 import { createBrowserHistory } from "history";
 
-const history = createBrowserHistory();
+const history = createBrowserHistory({
+  basename: "/"
+});
 
 const back = () => {
   history.goBack();
 };
 
-export class Profile extends Component {
+export class Profile extends React.Component {
   constructor(props) {
     super(props);
-    this.closeModal = this.closeModal.bind(this);
-
     // You will maybe receive your settings from this.props or do a fetch request in your componentWillMount
     this.state = {
-      modalIsOpen: false,
-      //Example of how fetch data should look
-      generalName: this.props.userHasLoggedin.name,
-      generalEmail: this.props.userHasLoggedin.email,
-      generalPicture: this.props.userHasLoggedin.img
+      modalIsOpen: false
     };
 
     // Save settings after close
     this._leavePaneHandler = async (wasSaved, newSettings, oldSettings) => {
-      let userId = this.props.userHasLoggedin._id;
       // "wasSaved" indicates wheather the pane was just closed or the save button was clicked.
       if (wasSaved && newSettings !== oldSettings) {
         // do something with the settings, e.g. save via ajax.
 
-        this.setState(newSettings);
-        let res = await API.User.update({ userId, ...newSettings });
+        //this.setState(newSettings);
+        let res = await API.User.update();
         if (res.ok) {
           console.log("success saving new settings");
         }
@@ -83,7 +78,7 @@ export class Profile extends Component {
 
   closeModal = () => {
     this.setState({ modalIsOpen: false });
-    //back to last page after closing modal
+    //back to last page
     back();
   };
 
@@ -98,12 +93,10 @@ export class Profile extends Component {
   };
 
   render() {
-    // Get settings
-    let settings = this.state;
-
     // Return your Settings Pane
     return (
       <Modal
+        className="profileModal"
         open={this.state.modalIsOpen}
         onOpen={this.openModal}
         onClose={this.closeModal}
@@ -123,7 +116,6 @@ export class Profile extends Component {
         <SettingsPane
           items={this._menu}
           index="/settings/general"
-          settings={settings}
           onChange={this._settingsChanged}
           onPaneLeave={this._leavePaneHandler}
         >
@@ -132,7 +124,7 @@ export class Profile extends Component {
             <SettingsPage handler="/settings/general">
               <div className="profile-image">
                 <img
-                  src={settings["generalPicture"]}
+                  src={this.props.userHasLoggedin.img}
                   alt="profilePicture"
                   width="100"
                   height="100"
@@ -154,19 +146,20 @@ export class Profile extends Component {
                   placeholder="Name"
                   id="generalName"
                   onChange={this._settingsChanged}
-                  defaultValue={settings["generalName"]}
+                  defaultValue={this.props.userHasLoggedin.name}
                 />
               </fieldset>
               <fieldset className="form-group">
                 <label htmlFor="generalMail">E-Mail address: </label>
                 <input
                   type="text"
+                  disabled
                   className="form-control"
                   name="mysettings.general.email"
                   placeholder="E-Mail Address"
                   id="generalMail"
                   onChange={this._settingsChanged}
-                  defaultValue={settings["generalEmail"]}
+                  defaultValue={this.props.userHasLoggedin.email}
                 />
               </fieldset>
               <fieldset className="form-group">
@@ -174,9 +167,7 @@ export class Profile extends Component {
                 <input
                   type="password"
                   className="form-control"
-                  name="mysettings.general.email"
                   placeholder="Enter Password"
-                  id="generalMail"
                   onChange={this._settingsChanged}
                 />
               </fieldset>
@@ -185,80 +176,11 @@ export class Profile extends Component {
                 <input
                   type="password"
                   className="form-control"
-                  name="mysettings.general.email"
                   placeholder="Verify Password"
-                  id="generalMail"
                   onChange={this._settingsChanged}
                 />
               </fieldset>
-              {/* <fieldset className="form-group">
-                <label htmlFor="generalPic">Picture: </label>
-                <input
-                  type="text"
-                  className="form-control"
-                  name="mysettings.general.picture"
-                  placeholder="Picture"
-                  id="generalPic"
-                  onChange={this._settingsChanged}
-                  defaultValue={settings["mysettings.general.picture"]}
-                />
-              </fieldset> */}
             </SettingsPage>
-
-            {/* <SettingsPage handler="/settings/profile">
-              <fieldset className="form-group">
-                <label htmlFor="profileFirstname">Firstname: </label>
-                <input
-                  type="text"
-                  className="form-control"
-                  name="mysettings.profile.firstname"
-                  placeholder="Firstname"
-                  id="profileFirstname"
-                  onChange={this._settingsChanged}
-                  defaultValue={settings["mysettings.profile.firstname"]}
-                />
-              </fieldset>
-              <fieldset className="form-group">
-                <label htmlFor="profileLastname">Lastname: </label>
-                <input
-                  type="text"
-                  className="form-control"
-                  name="mysettings.profile.lastname"
-                  placeholder="Lastname"
-                  id="profileLastname"
-                  onChange={this._settingsChanged}
-                  defaultValue={settings["mysettings.profile.lastname"]}
-                />
-              </fieldset>
-              <fieldset className="form-group">
-                <label htmlFor="profileUsername">Username: </label>
-                <div className="input-group">
-                  <span className="input-group-addon" id="basic-addon1">
-                    @
-                  </span>
-                  <input
-                    type="text"
-                    name="mysettings.profile.username"
-                    className="form-control"
-                    placeholder="Username"
-                    aria-describedby="basic-addon1"
-                    onChange={this._settingsChanged}
-                    defaultValue={settings["mysettings.profile.username"]}
-                  />
-                </div>
-              </fieldset>
-              <fieldset className="form-group">
-                <label htmlFor="profileBiography">Biography: </label>
-                <textarea
-                  className="form-control"
-                  name="mysettings.profile.biography"
-                  placeholder="Biography"
-                  id="profileBiography"
-                  onChange={this._settingsChanged}
-                  defaultValue={settings["mysettings.profile.biography"]}
-                />
-              </fieldset>
-            </SettingsPage> */}
             <SettingsPage handler="/settings/account">
               <div>
                 <Message>

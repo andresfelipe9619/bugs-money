@@ -11,7 +11,7 @@ let Schema = mongoose.Schema;
 let accountSchema = new Schema({
   name: {
     type: String,
-    required: [true, 'El name de la cuenta es necesario'],
+    required: [true, 'El nombre de la cuenta es necesario'],
   },
   accountNumber: {
     type: Number,
@@ -31,12 +31,16 @@ let accountSchema = new Schema({
     type: Date,
     default: Date.now,
   },
-  budget: {
-    type: Schema.Types.ObjectId,
-    ref: 'Budget',
-    required: [true, 'El budget es necesario'],
+  value: {
+    type: Number,
+    default: 0,
   },
-  usuario: {
+  // budget: {
+  //   type: Schema.Types.ObjectId,
+  //   ref: 'Budget',
+  //   // required: [true, 'El budget es necesario'],
+  // },
+  user: {
     type: Schema.Types.ObjectId,
     ref: 'User',
     required: [true, 'El usuario es necesario'],

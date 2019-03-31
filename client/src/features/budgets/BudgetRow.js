@@ -34,7 +34,14 @@ export default class BudgetRow extends PureComponent {
         <Grid.Row>
           <Grid.Column width={16}>
             {" "}
-            <Menu style={{ marginTop: "55px" }} inverted>
+            <Menu
+              style={{
+                marginTop: "15px",
+                paddingLeft: "10px",
+                paddingRight: "10px"
+              }}
+              inverted
+            >
               <Menu.Item header>BUDGETS</Menu.Item>
               <Menu.Item>
                 <Input

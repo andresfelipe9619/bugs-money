@@ -22,15 +22,21 @@ const MobileSidebar = ({
       vertical
       visible={visible}
     >
-      {_.map(leftItems, item => {
-        let { content, ...rest } = item;
-        return (
-          <Menu.Item {...rest}>
-            <Icon name={item.name} />
-            {content}
-          </Menu.Item>
-        );
-      })}
+      {isLoggedin
+        ? _.map(leftItems.loggedin, item => {
+            let { content, ...rest } = item;
+            return (
+              <Menu.Item {...rest}>
+                <Icon name={item.name} />
+                {content}
+              </Menu.Item>
+            );
+          })
+        : _.map(leftItems.normal, item => (
+            <Menu.Item {...item}>
+              <Icon name={item.name} />
+            </Menu.Item>
+          ))}
     </Sidebar>
     <Sidebar.Pusher
       dimmed={visible}

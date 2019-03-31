@@ -34,8 +34,9 @@ const Auth = {
 };
 
 const Account = {
-  getAll: () => serverRequests.get("/account"),
-  get: account => serverRequests.get(`/account/${account}`)
+  getAll: () => serverRequests.get(`/account`),
+  get: id => serverRequests.get(`/account/${id}`),
+  create: account => serverRequests.post("/account", account)
 };
 
 const Transaction = {

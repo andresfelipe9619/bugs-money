@@ -16,7 +16,7 @@ import UpdateBudgetModal from "../../components/modals/budget/UpdateBudget";
 import ActionsCell from "../../components/tables/ActionsCell";
 import API from "../../services/api";
 import Categories from "../categories/Categories";
-import moment, { ISO_8601 } from "moment";
+import moment from "moment";
 class Budget extends Component {
   state = {
     income: 0,
@@ -178,7 +178,7 @@ class Budget extends Component {
     let saved = income - expense;
 
     return (
-      <Container>
+      <Container style={{ width: "100%" }}>
         <Grid divided>
           <Grid.Row>
             <Grid.Column width={16}>
@@ -271,7 +271,7 @@ class Budget extends Component {
             }}
           >
             <Grid.Column width={16}>
-              <Header>
+              <Header style={{ paddingLeft: "20px", paddingRight: "20px" }}>
                 {currentBudget && currentBudget.name
                   ? `Transacciones en ${currentBudget.name}`
                   : `Selecciona un presupuesto`}
@@ -283,7 +283,9 @@ class Budget extends Component {
                   data={budgetsToDisplay}
                 />
               ) : (
-                <p>There are no transactions</p>
+                <p style={{ paddingLeft: "20px", paddingRight: "20px" }}>
+                  There are no transactions
+                </p>
               )}
             </Grid.Column>
           </Grid.Row>
