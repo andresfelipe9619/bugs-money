@@ -1,5 +1,7 @@
 # Bugs Money
 
+[![Codacy Badge](https://api.codacy.com/project/badge/Grade/9466d85ecda34baf88bf4172bba03640)](https://app.codacy.com/app/jseb2520/bugs-money?utm_source=github.com&utm_medium=referral&utm_content=andresfelipe9619/bugs-money&utm_campaign=Badge_Grade_Dashboard)
+
 > The System will manage the Financial processes that any person can take, having as base the management of accounts and budget. Can record the movement of your accounts and relate them to your budgets, to generate a consolidated view of your financial status.
 
 [![NPM Version][npm-image]][npm-url]
