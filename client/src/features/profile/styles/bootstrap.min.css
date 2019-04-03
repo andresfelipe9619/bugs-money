@@ -497,7 +497,7 @@ pre code {
   max-height: 340px;
   overflow-y: scroll;
 }
-.container {
+/* .container {
   width: 100%;
   padding-right: 15px;
   padding-left: 15px;
@@ -530,16 +530,8 @@ pre code {
   padding-left: 15px;
   margin-right: auto;
   margin-left: auto;
-}
-.row {
-  display: -webkit-box;
-  display: -ms-flexbox;
-  display: flex;
-  -ms-flex-wrap: wrap;
-  flex-wrap: wrap;
-  margin-right: -15px;
-  margin-left: -15px;
-}
+} */
+
 .no-gutters {
   margin-right: 0;
   margin-left: 0;
@@ -4997,10 +4989,10 @@ button.close {
   border: 0;
   -webkit-appearance: none;
 }
-.modal-open {
+.modal1-open {
   overflow: hidden;
 }
-.modal {
+.modal1 {
   position: fixed;
   top: 0;
   right: 0;
@@ -5011,28 +5003,28 @@ button.close {
   overflow: hidden;
   outline: 0;
 }
-.modal-open .modal {
+.modal1-open .modal1 {
   overflow-x: hidden;
   overflow-y: auto;
 }
-.modal-dialog {
+.modal1-dialog {
   position: relative;
   width: auto;
   margin: 0.5rem;
   pointer-events: none;
 }
-.modal.fade .modal-dialog {
+.modal1.fade .modal1-dialog {
   transition: -webkit-transform 0.3s ease-out;
   transition: transform 0.3s ease-out;
   transition: transform 0.3s ease-out, -webkit-transform 0.3s ease-out;
   -webkit-transform: translate(0, -25%);
   transform: translate(0, -25%);
 }
-.modal.show .modal-dialog {
+.modal1.show .modal1-dialog {
   -webkit-transform: translate(0, 0);
   transform: translate(0, 0);
 }
-.modal-dialog-centered {
+.modal1-dialog-centered {
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
@@ -5041,7 +5033,7 @@ button.close {
   align-items: center;
   min-height: calc(100% - (0.5rem * 2));
 }
-.modal-content {
+.modal1-content {
   position: relative;
   display: -webkit-box;
   display: -ms-flexbox;
@@ -5058,7 +5050,7 @@ button.close {
   border-radius: 0.3rem;
   outline: 0;
 }
-.modal-backdrop {
+.modal1-backdrop {
   position: fixed;
   top: 0;
   right: 0;
@@ -5067,13 +5059,13 @@ button.close {
   z-index: 1040;
   background-color: #000;
 }
-.modal-backdrop.fade {
+.modal1-backdrop.fade {
   opacity: 0;
 }
-.modal-backdrop.show {
+.modal1-backdrop.show {
   opacity: 0.5;
 }
-.modal-header {
+.modal1-header {
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
@@ -5088,22 +5080,22 @@ button.close {
   border-top-left-radius: 0.3rem;
   border-top-right-radius: 0.3rem;
 }
-.modal-header .close {
+.modal1-header .close {
   padding: 1rem;
   margin: -1rem -1rem -1rem auto;
 }
-.modal-title {
+.modal1-title {
   margin-bottom: 0;
   line-height: 1.5;
 }
-.modal-body {
+.modal1-body {
   position: relative;
   -webkit-box-flex: 1;
   -ms-flex: 1 1 auto;
   flex: 1 1 auto;
   padding: 1rem;
 }
-.modal-footer {
+.modal1-footer {
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
@@ -5116,13 +5108,13 @@ button.close {
   padding: 1rem;
   border-top: 1px solid #e9ecef;
 }
-.modal-footer > :not(:first-child) {
+.modal1-footer > :not(:first-child) {
   margin-left: 0.25rem;
 }
-.modal-footer > :not(:last-child) {
+.modal1-footer > :not(:last-child) {
   margin-right: 0.25rem;
 }
-.modal-scrollbar-measure {
+.modal1-scrollbar-measure {
   position: absolute;
   top: -9999px;
   width: 50px;
@@ -5130,19 +5122,19 @@ button.close {
   overflow: scroll;
 }
 @media (min-width: 576px) {
-  .modal-dialog {
+  .modal1-dialog {
     max-width: 500px;
     margin: 1.75rem auto;
   }
-  .modal-dialog-centered {
+  .modal1-dialog-centered {
     min-height: calc(100% - (1.75rem * 2));
   }
-  .modal-sm {
+  .modal1-sm {
     max-width: 300px;
   }
 }
 @media (min-width: 992px) {
-  .modal-lg {
+  .modal1-lg {
     max-width: 800px;
   }
 }
@@ -8292,9 +8284,9 @@ a.text-dark:hover {
   body {
     min-width: 992px !important;
   }
-  .container {
+  /* .container {
     min-width: 992px !important;
-  }
+  } */
   .navbar {
     display: none;
   }

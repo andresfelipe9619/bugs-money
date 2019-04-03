@@ -4,6 +4,7 @@ import CreateAccountModal from "../../components/modals/accounts/CreateAccount";
 import "./styles/index.css";
 import { Menu, Icon, Button, Grid, Container } from "semantic-ui-react";
 import DataTable from "../../components/tables/DataTable";
+import UpdateAccountModal from "../../components/modals/accounts/UpdateAccount";
 
 class Accounts extends Component {
   state = {
@@ -48,8 +49,9 @@ class Accounts extends Component {
   updateAccount = async account => {
     let res = await API.Account.update(account);
     if (res.ok) {
+      this.setCurrentAccount(null);
       this.getAccounts();
-    }
+    } else console.log("Error updating Account :", res);
   };
 
   deleteAccount = async account => {
@@ -57,6 +59,11 @@ class Accounts extends Component {
     if (res.ok) {
       this.getAccounts();
     }
+  };
+
+  setCurrentAccount = account => {
+    if (!account) return;
+    this.setState({ currentAccount: account });
   };
 
   handleOnCreate = account => {
@@ -85,7 +92,7 @@ class Accounts extends Component {
   };
 
   render() {
-    const { accounts, isModalOpen } = this.state;
+    const { accounts, isModalOpen, currentAccount } = this.state;
     if (!accounts) return null;
     const handlers = {
       handleOnView: this.handleOnView,
@@ -134,6 +141,12 @@ class Accounts extends Component {
           open={isModalOpen.create}
           closeModal={this.closeModal("create")}
           handleOnConfirm={handlers.handleOnCreate}
+        />
+        <UpdateAccountModal
+          account={currentAccount || null}
+          open={isModalOpen.update}
+          closeModal={this.closeModal("update")}
+          handleOnConfirm={this.updateAccount}
         />
       </Container>
     );

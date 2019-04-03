@@ -191,104 +191,112 @@ class Budget extends Component {
               />
             </Grid.Column>
           </Grid.Row>
-          <Grid.Row style={{ marginTop: "100px" }}>
-            <Grid.Column width={3}>
-              <Header> {"Name"}</Header>
-            </Grid.Column>
-            <Grid.Column width={2}>
-              <Header> {"Limit"}</Header>
-            </Grid.Column>
-            <Grid.Column width={2}>
-              <Header> {"Balance"}</Header>
-            </Grid.Column>
-            <Grid.Column width={3}>
-              <Header> {"Start Date"}</Header>
-            </Grid.Column>
-            <Grid.Column width={3}>
-              <Header> {"End Date"}</Header>
-            </Grid.Column>
-            <Grid.Column width={3}>
-              <Header> </Header>
-            </Grid.Column>
-          </Grid.Row>
-          <Grid.Row centered>
-            <Grid.Column width={16}>
-              <Accordion fluid styled>
-                {budgetsToDisplay.map((budget, index) => {
-                  let {
-                    _id,
-                    name,
-                    limit,
-                    startDate,
-                    endDate,
-                    categories
-                  } = budget;
-                  return (
-                    <React.Fragment key={_id}>
-                      <Accordion.Title
-                        active={activeIndex === index}
-                        index={index}
-                        onClick={this.handleClick}
-                      >
-                        <Grid>
-                          <Grid.Row>
-                            <Grid.Column width={3}>
-                              <Icon name="dropdown" />
-                              {name}
-                            </Grid.Column>
-                            <Grid.Column width={2}>{limit}</Grid.Column>
-                            <Grid.Column width={2}>{limit}</Grid.Column>
-                            <Grid.Column width={3}>
-                              {moment(startDate).format("MMMM Do YYYY")}
-                            </Grid.Column>
-                            <Grid.Column width={3}>
-                              {moment(endDate).format("MMMM Do YYYY")}
-                            </Grid.Column>
-                            <Grid.Column>
-                              <ActionsCell {...handlers} original={budget} />{" "}
-                            </Grid.Column>
-                          </Grid.Row>
-                        </Grid>
-                      </Accordion.Title>
-                      <Accordion.Content active={activeIndex === index}>
-                        <Categories
-                          budget={_id}
-                          categories={categories}
-                          getBudgets={this.getBudgets}
-                        />
-                      </Accordion.Content>
-                    </React.Fragment>
-                  );
-                })}
-              </Accordion>
-            </Grid.Column>
-          </Grid.Row>
-          <Grid.Row
-            centered
-            style={{
-              marginTop: "100px",
-              marginBottom: currentBudget ? "0px" : "300px"
-            }}
-          >
-            <Grid.Column width={16}>
-              <Header style={{ paddingLeft: "20px", paddingRight: "20px" }}>
-                {currentBudget && currentBudget.name
-                  ? `Transacciones en ${currentBudget.name}`
-                  : `Selecciona un presupuesto`}
-              </Header>
-              {currentBudget && budgetsToDisplay.length > 0 ? (
-                <DataTable
-                  actions
-                  handlers={handlers}
-                  data={budgetsToDisplay}
-                />
-              ) : (
-                <p style={{ paddingLeft: "20px", paddingRight: "20px" }}>
-                  There are no transactions
-                </p>
-              )}
-            </Grid.Column>
-          </Grid.Row>
+          <Container style={{ paddingBottom: "5em" }}>
+            <Grid>
+              <Grid.Row style={{ marginTop: "100px" }}>
+                <Grid.Column width={3}>
+                  <Header> {"Name"}</Header>
+                </Grid.Column>
+                <Grid.Column width={2}>
+                  <Header> {"Limit"}</Header>
+                </Grid.Column>
+                <Grid.Column width={2}>
+                  <Header> {"Balance"}</Header>
+                </Grid.Column>
+                <Grid.Column width={3}>
+                  <Header> {"Start Date"}</Header>
+                </Grid.Column>
+                <Grid.Column width={3}>
+                  <Header> {"End Date"}</Header>
+                </Grid.Column>
+                <Grid.Column width={3}>
+                  <Header> </Header>
+                </Grid.Column>
+              </Grid.Row>
+              <Grid.Row centered>
+                <Grid.Column width={16}>
+                  <Accordion fluid styled>
+                    {budgetsToDisplay.map((budget, index) => {
+                      let {
+                        _id,
+                        name,
+                        limit,
+                        startDate,
+                        endDate,
+                        categories
+                      } = budget;
+                      return (
+                        <React.Fragment key={_id}>
+                          <Accordion.Title
+                            active={activeIndex === index}
+                            index={index}
+                            onClick={this.handleClick}
+                          >
+                            <Grid>
+                              <Grid.Row>
+                                <Grid.Column width={3}>
+                                  <Icon name="dropdown" />
+                                  {name}
+                                </Grid.Column>
+                                <Grid.Column width={2}>{limit}</Grid.Column>
+                                <Grid.Column width={2}>{limit}</Grid.Column>
+                                <Grid.Column width={3}>
+                                  {moment(startDate).format("MMMM Do YYYY")}
+                                </Grid.Column>
+                                <Grid.Column width={3}>
+                                  {moment(endDate).format("MMMM Do YYYY")}
+                                </Grid.Column>
+                                <Grid.Column>
+                                  <ActionsCell
+                                    {...handlers}
+                                    original={budget}
+                                  />{" "}
+                                </Grid.Column>
+                              </Grid.Row>
+                            </Grid>
+                          </Accordion.Title>
+                          <Accordion.Content active={activeIndex === index}>
+                            <Categories
+                              budget={_id}
+                              categories={categories}
+                              getBudgets={this.getBudgets}
+                            />
+                          </Accordion.Content>
+                        </React.Fragment>
+                      );
+                    })}
+                  </Accordion>
+                </Grid.Column>
+              </Grid.Row>
+            </Grid>
+
+            <Grid.Row
+              centered
+              style={{
+                marginTop: "100px",
+                marginBottom: currentBudget ? "0px" : "300px"
+              }}
+            >
+              <Grid.Column width={16}>
+                <Header style={{ paddingLeft: "20px", paddingRight: "20px" }}>
+                  {currentBudget && currentBudget.name
+                    ? `Transacciones en ${currentBudget.name}`
+                    : `Selecciona un presupuesto`}
+                </Header>
+                {currentBudget && budgetsToDisplay.length > 0 ? (
+                  <DataTable
+                    actions
+                    handlers={handlers}
+                    data={budgetsToDisplay}
+                  />
+                ) : (
+                  <p style={{ paddingLeft: "20px", paddingRight: "20px" }}>
+                    There are no transactions
+                  </p>
+                )}
+              </Grid.Column>
+            </Grid.Row>
+          </Container>
           <Confirm
             open={isModalOpen.confirm}
             onCancel={this.closeModal("confirm")}
