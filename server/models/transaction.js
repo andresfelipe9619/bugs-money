@@ -1,8 +1,8 @@
 const mongoose = require('mongoose');
 const uniqueValidator = require('mongoose-unique-validator');
 
-let tipoValido = {
-  values: ['GASTO', 'INGRESO', 'TRANSFERENCIA', 'INVERSION'],
+let validType = {
+  values: ['EXPENSE', 'INCOME', 'TRANSFER', 'INVEST'],
   message: '{VALUE} No es un tipo de transaccion valida',
 };
 
@@ -16,7 +16,7 @@ let transactionSchema = new Schema({
   type: {
     type: String,
     required: [true, 'El tipo de la transaccion es necesario'],
-    enum: tipoValido,
+    enum: validType,
   },
   value: {
     type: Number,
@@ -26,14 +26,19 @@ let transactionSchema = new Schema({
     type: Date,
     default: Date.now,
   },
-  estado: {
+  state: {
     type: Boolean,
     default: true,
   },
   account: {
     type: Schema.Types.ObjectId,
-    ref: 'Cuenta',
+    ref: 'Account',
     required: [true, 'La account es requerida para realizar transaccion'],
+  },
+  budget: {
+    type: Schema.Types.ObjectId,
+    ref: 'Budget',
+    required: [true, 'La budget es requerida para realizar transaccion'],
   },
   user: {
     type: Schema.Types.ObjectId,

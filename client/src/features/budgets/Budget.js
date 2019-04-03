@@ -7,7 +7,6 @@ import {
   Accordion,
   Icon
 } from "semantic-ui-react";
-import DataTable from "../../components/tables/DataTable";
 import { toast } from "react-semantic-toasts";
 import BudgetRow from "./BudgetRow";
 import { connect } from "react-redux";
@@ -17,6 +16,7 @@ import ActionsCell from "../../components/tables/ActionsCell";
 import API from "../../services/api";
 import Categories from "../categories/Categories";
 import moment from "moment";
+import Transactions from "../transactions/Transactions";
 class Budget extends Component {
   state = {
     income: 0,
@@ -183,6 +183,7 @@ class Budget extends Component {
           <Grid.Row>
             <Grid.Column width={16}>
               <BudgetRow
+                header="Budgets"
                 saved={saved}
                 income={income}
                 expense={expense}
@@ -272,21 +273,9 @@ class Budget extends Component {
           >
             <Grid.Column width={16}>
               <Header style={{ paddingLeft: "20px", paddingRight: "20px" }}>
-                {currentBudget && currentBudget.name
-                  ? `Transacciones en ${currentBudget.name}`
-                  : `Selecciona un presupuesto`}
+                transactions
               </Header>
-              {currentBudget && budgetsToDisplay.length > 0 ? (
-                <DataTable
-                  actions
-                  handlers={handlers}
-                  data={budgetsToDisplay}
-                />
-              ) : (
-                <p style={{ paddingLeft: "20px", paddingRight: "20px" }}>
-                  There are no transactions
-                </p>
-              )}
+              <Transactions budgets={budgets} />
             </Grid.Column>
           </Grid.Row>
           <Confirm

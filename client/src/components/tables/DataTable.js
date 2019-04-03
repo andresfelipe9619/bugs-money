@@ -14,7 +14,7 @@ export default class DataTable extends React.PureComponent {
   };
 
   isNotVisibleKey = key => {
-    let notVisibleKeys = ["_id", "id", "user", "budget"];
+    let notVisibleKeys = ["_id", "id", "user", "budget", "__v"];
     return notVisibleKeys.includes(key);
   };
 
@@ -25,6 +25,7 @@ export default class DataTable extends React.PureComponent {
     !Array.isArray(sample[key]);
 
   getColumns = data => {
+    if (!data || (data && data.length === 0)) return;
     const columns = [];
     const sample = data[0];
     const { handlers, actions } = this.props;

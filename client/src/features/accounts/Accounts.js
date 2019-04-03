@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import API from "../../services/api";
-import CreateAccountModal from "../../components/modals/accounts/CreateAccount";
+import CreateAccountModal from "../../components/modals/account/CreateAccount";
 import "./styles/index.css";
 import { Menu, Icon, Button, Grid, Container } from "semantic-ui-react";
 import DataTable from "../../components/tables/DataTable";
@@ -31,9 +31,7 @@ class Accounts extends Component {
   async getAccounts() {
     let res = await API.Account.getAll();
     if (res.ok) {
-      console.log("res", res);
       let { accounts } = res;
-      console.log("accounts", accounts);
       this.setState({ accounts });
     }
   }

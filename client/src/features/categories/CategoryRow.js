@@ -1,5 +1,6 @@
 import React, { PureComponent } from "react";
-import { Grid, Menu, Button, Icon, Input } from "semantic-ui-react";
+import { Grid } from "semantic-ui-react";
+import ActionRow from "../../components/actionRow";
 
 export default class CategoryRow extends PureComponent {
   render() {
@@ -7,20 +8,7 @@ export default class CategoryRow extends PureComponent {
 
     return (
       <Grid>
-        <Grid.Row>
-          <Grid.Column width={16}>
-            {" "}
-            <Menu>
-              <Menu.Item header>Categories</Menu.Item>
-              <Menu.Item position="right">
-                {" "}
-                <Button onClick={openModal} icon>
-                  <Icon name="plus" />
-                </Button>
-              </Menu.Item>
-            </Menu>
-          </Grid.Column>
-        </Grid.Row>
+        <ActionRow openModal={openModal} inverted={false} header="Categories" />
       </Grid>
     );
   }
