@@ -1,14 +1,15 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
 import { Link } from "react-router-dom";
-import { Responsive, Image } from "semantic-ui-react";
+import { Responsive, Image, Container } from "semantic-ui-react";
 import { default as Sidebar } from "../dashboard/Sidebar";
 import king from "../../assets/images/king_icon.png";
 import { logout } from "../../services/redux/actions/authActions";
-import "./styles/navbar.css";
 
 const NavBarChildren = ({ children }) => (
-  <div style={{ marginTop: "4em" }}>{children}</div>
+  <Container fluid style={{ marginTop: "4em" }}>
+    {children}
+  </Container>
 );
 
 const Avatar = ({ name, img }) => {

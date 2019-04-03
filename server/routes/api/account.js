@@ -98,8 +98,8 @@ router.put('/account/:id', verificaToken, (req, res) => {
     'name',
     'accountNumber',
     'nature',
-    'state',
-    'budget',
+    // 'state',
+    // 'budget',
   ]);
 
   Account.findByIdAndUpdate(
@@ -111,6 +111,15 @@ router.put('/account/:id', verificaToken, (req, res) => {
           return res.status(400).json({
             ok: false,
             err,
+          });
+        }
+
+        if (!cuentaDB) {
+          return res.status(400).json({
+            ok: false,
+            err: {
+              message: 'El account no existe',
+            },
           });
         }
 
@@ -136,7 +145,7 @@ router.delete('/account/:id', verificaToken, (req, res) => {
       return res.status(400).json({
         ok: false,
         err: {
-          message: 'account no encontrado',
+          message: 'account no encontrada',
         },
       });
     }

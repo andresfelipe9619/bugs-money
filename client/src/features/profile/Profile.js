@@ -1,7 +1,6 @@
-import React, { Component } from "react";
+import React from "react";
 import { connect } from "react-redux";
 import { logout } from "../../services/redux/actions/authActions";
-
 import { Divider, Message, Segment, Modal } from "semantic-ui-react";
 import {
   SettingsPane,
@@ -96,7 +95,7 @@ export class Profile extends React.Component {
     // Return your Settings Pane
     return (
       <Modal
-        className="profileModal"
+        id="profileModal"
         open={this.state.modalIsOpen}
         onOpen={this.openModal}
         onClose={this.closeModal}
