@@ -1,10 +1,11 @@
 import React from "react";
 import { Header, Modal } from "semantic-ui-react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faMoneyCheckAlt } from "@fortawesome/free-solid-svg-icons";
 
-import BudgetForm from "./BudgetForm";
+import AccountForm from "./AccountForm";
 
-const UpdateBudgetModal = ({ open, closeModal, handleOnConfirm, budget }) => (
+const UpdateAccountModal = ({ open, closeModal, handleOnConfirm, account }) => (
   <Modal
     closeIcon
     open={open}
@@ -13,12 +14,12 @@ const UpdateBudgetModal = ({ open, closeModal, handleOnConfirm, budget }) => (
     onClose={closeModal}
   >
     <Header>
-      <FontAwesomeIcon size="2x" icon="piggy-bank" /> Actualiza tú Presupuesto
+      <FontAwesomeIcon size="2x" icon={faMoneyCheckAlt} /> Actualiza tu Cuenta
     </Header>
     <Modal.Content>
-      <BudgetForm
-        budget={budget}
-        submitText={"Actualizar presuspuesto"}
+      <AccountForm
+        account={account}
+        submitText={"Actualizar Cuenta"}
         handleOnCancel={closeModal}
         handleOnConfirm={handleOnConfirm}
       />
@@ -26,4 +27,4 @@ const UpdateBudgetModal = ({ open, closeModal, handleOnConfirm, budget }) => (
   </Modal>
 );
 
-export default UpdateBudgetModal;
+export default UpdateAccountModal;

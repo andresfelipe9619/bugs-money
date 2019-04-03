@@ -47,7 +47,6 @@ const FormControl = props => {
                 >
                   <Form.Input
                     label="Nombre de Cuenta"
-                    labelPosition="left"
                     fluid
                     icon="credit card alternative"
                     type="text"
@@ -59,7 +58,6 @@ const FormControl = props => {
                   />
                   <Form.Select
                     label="Naturaleza de cuenta"
-                    labelPosition="left"
                     fluid
                     placeholder="selecciona un tipo de cuenta"
                     name="nature"
@@ -69,7 +67,6 @@ const FormControl = props => {
                   />
                   <Form.Input
                     label="Numero de cuenta"
-                    labelPosition="left"
                     type="Number"
                     fluid
                     icon="numbered list"
@@ -81,7 +78,6 @@ const FormControl = props => {
                   />
                   <Form.Input
                     label="Valor que posee la cuenta"
-                    labelPosition="left"
                     type="Number"
                     fluid
                     icon="numbered list"
