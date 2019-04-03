@@ -1,6 +1,7 @@
 import React from "react";
 import { Header, Modal } from "semantic-ui-react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faMoneyCheckAlt } from "@fortawesome/free-solid-svg-icons";
 
 import TransactionForm from "./TransactionForm";
 
