@@ -20,7 +20,7 @@ router.get('/category', verificaToken, (req, res) => {
 
   let user = req.user._id;
 
-  Category.find({})
+  Category.find({user: req.user._id})
       .sort('description')
       .skip(offset)
       .limit(limit)

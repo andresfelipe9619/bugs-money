@@ -22,7 +22,7 @@ router.get('/budget', verificaToken, (req, res) => {
 
         return res.json({
           ok: true,
-          budgets: budgets,
+          budgets,
         });
       });
 });

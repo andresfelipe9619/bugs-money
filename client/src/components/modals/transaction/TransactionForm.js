@@ -7,13 +7,13 @@ const MyInnerForm = props => {
   const {
     errors,
     accounts,
-    budgets,
+    categories,
     submitText,
     isSubmitting,
     handleChange,
     handleSubmit,
     handleOnCancel,
-    values: { name, type, value, account, date, budget }
+    values: { name, type, value, account, date, category }
   } = props;
   const typeOptions = [
     { value: "EXPENSE", text: "Expense" },
@@ -79,14 +79,14 @@ const MyInnerForm = props => {
                   onChange={handleChange}
                 />{" "}
                 <Form.Select
-                  label="Budget"
+                  label="Category"
                   labelPosition="left"
                   type="text"
                   fluid
                   iconPosition="left"
-                  name="budget"
-                  value={budget}
-                  options={budgets}
+                  name="category"
+                  value={category}
+                  options={categories}
                   onChange={handleChange}
                 />{" "}
               </Form.Group>
@@ -134,7 +134,7 @@ const TransactionForm = withSemanticUIFormik({
     name: (transaction && transaction.name) || "weed",
     value: (transaction && transaction.value) || "10000",
     account: (transaction && transaction.account) || "BANCOLOMBIA",
-    budget: (transaction && transaction.budget) || "weed",
+    category: (transaction && transaction.category) || "weed",
     type: (transaction && transaction.type) || "credito",
     date: (transaction && transaction.date) || "01/01/2020"
   }),
@@ -142,7 +142,7 @@ const TransactionForm = withSemanticUIFormik({
     name: Yup.string().required("name is requerid!"),
     type: Yup.string().required("type is required!"),
     account: Yup.string().required("Account is required!"),
-    budget: Yup.string().required("Budget is required!"),
+    category: Yup.string().required("category is required!"),
     value: Yup.number().required("Value is required!"),
     date: Yup.date().required("Value is required!")
   }),

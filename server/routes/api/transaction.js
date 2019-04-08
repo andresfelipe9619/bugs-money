@@ -19,7 +19,7 @@ router.get('/transaction', verificaToken, (req, res) => {
       .limit(limit)
       .populate('user', 'name email')
       .populate('account', 'name accountNumber')
-      .populate('budget', 'name spent limit')
+      .populate('category', 'name spent limit')
       .exec((err, transactions) => {
         if (err) {
           return res.status(500).json({
@@ -76,7 +76,7 @@ router.post('/transaction', verificaToken, function(req, res) {
     value: body.value,
     state: body.state || false,
     account: body.account,
-    budget: body.budget,
+    category: body.category,
   });
 
   transaction.save((err, transactionDB) => {

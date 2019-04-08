@@ -283,7 +283,7 @@ class Budget extends Component {
               >
                 Transactions
               </Header>
-              <Transactions budgets={budgets} />
+              <Transactions updateParent={this.getBudgets} />
             </Grid.Column>
           </Grid.Row>
           <Confirm

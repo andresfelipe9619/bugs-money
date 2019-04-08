@@ -39,14 +39,6 @@ class Accounts extends Component {
     }
   }
 
-  async getBudgets() {
-    let res = await API.Budget.getAll();
-    if (res.ok) {
-      let { budgets } = res;
-      this.setState({ budgets });
-    }
-  }
-
   createAccount = async account => {
     let res = await API.Account.create(account);
     if (res.ok) {
@@ -100,7 +92,7 @@ class Accounts extends Component {
   };
 
   render() {
-    const { accounts, budgets, isModalOpen, currentAccount } = this.state;
+    const { accounts, isModalOpen, currentAccount } = this.state;
     if (!accounts) return null;
     const handlers = {
       handleOnView: this.handleOnView,
@@ -147,7 +139,7 @@ class Accounts extends Component {
             </Grid.Row>
           </Grid>
         </Grid>
-        <Transactions budgets={budgets} style={{ marginTop: "10px" }} />
+        <Transactions style={{ marginTop: "10px" }} />
         <CreateAccountModal
           open={isModalOpen.create}
           closeModal={this.closeModal("create")}

@@ -9,7 +9,7 @@ const CreateTransactionModal = ({
   closeModal,
   handleOnConfirm,
   accounts,
-  budgets
+  categories
 }) => (
   <Modal
     closeIcon
@@ -23,7 +23,7 @@ const CreateTransactionModal = ({
     </Header>
     <Modal.Content>
       <TransactionForm
-        budgets={budgets}
+        categories={categories}
         accounts={accounts}
         submitText={"Create Transaction"}
         handleOnConfirm={handleOnConfirm}

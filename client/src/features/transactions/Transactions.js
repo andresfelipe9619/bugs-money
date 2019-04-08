@@ -11,6 +11,7 @@ class Transaction extends Component {
   state = {
     transactions: [],
     accounts: [],
+    categories: [],
     isFiltering: false,
     filteredTransactions: [],
     isModalOpen: {
@@ -26,6 +27,7 @@ class Transaction extends Component {
     const { alert } = this.props;
     this.getTransactions();
     this.getAccounts();
+    this.getCategories();
     if (alert && alert.message) {
       toast({
         type: alert.typresolve,
@@ -45,6 +47,14 @@ class Transaction extends Component {
     }
   };
 
+  getCategories = async () => {
+    let res = await API.Category.getAll();
+    if (res.ok) {
+      let { categories } = res;
+      this.setState({ categories });
+    }
+  };
+
   getTransactions = async () => {
     let res = await API.Transaction.getAll();
     if (res.ok) {
@@ -57,6 +67,7 @@ class Transaction extends Component {
     let res = await API.Transaction.create(transaction);
     if (res.ok) {
       this.getTransactions();
+      this.props.updateParent();
     }
   };
 
@@ -70,6 +81,7 @@ class Transaction extends Component {
     if (res.ok) {
       this.setCurrentTransaction(null);
       this.getTransactions();
+      this.props.updateParent();
     }
   };
 
@@ -78,6 +90,7 @@ class Transaction extends Component {
     if (res.ok) {
       this.setCurrentTransaction(null);
       this.getTransactions();
+      this.props.updateParent();
     }
   };
 
@@ -144,14 +157,14 @@ class Transaction extends Component {
 
   render() {
     const {
-      transactions,
       accounts,
+      categories,
       isModalOpen,
-      currentTransaction,
       isFiltering,
+      transactions,
+      currentTransaction,
       filteredTransactions
     } = this.state;
-    const { budgets } = this.props;
     if (!transactions) return null;
     const transactionsToDisplay = isFiltering
       ? filteredTransactions
@@ -165,7 +178,10 @@ class Transaction extends Component {
       handleOnCancelFilter: this.handleOnCancelFilter
     };
     const accountsOptions = accounts.map(a => ({ value: a._id, text: a.name }));
-    const budgetsOptions = budgets.map(b => ({ value: b._id, text: b.name }));
+    const categoriesOptions = categories.map(b => ({
+      value: b._id,
+      text: b.name
+    }));
     return (
       <Container fluid>
         <Grid divided>
@@ -205,14 +221,14 @@ class Transaction extends Component {
           />
 
           <CreateTransactionModal
-            budgets={budgetsOptions}
+            categories={categoriesOptions}
             accounts={accountsOptions}
             open={isModalOpen.create}
             closeModal={this.closeModal("create")}
             handleOnConfirm={handlers.handleOnCreate}
           />
           <UpdateTransactionModal
-            budgets={budgetsOptions}
+            categories={categoriesOptions}
             accounts={accountsOptions}
             transaction={currentTransaction || null}
             open={isModalOpen.update}
