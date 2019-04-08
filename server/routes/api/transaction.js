@@ -13,7 +13,7 @@ router.get('/transaction', verificaToken, (req, res) => {
   let limit = req.query.limit || 5;
   limit = Number(limit);
 
-  Transaction.find({})
+  Transaction.find({user: req.user._id})
       .sort('descripcion')
       .skip(offset)
       .limit(limit)
@@ -86,6 +86,7 @@ router.post('/transaction', verificaToken, function(req, res) {
         err,
       });
     }
+
 
     res.status(201).json({
       ok: true,

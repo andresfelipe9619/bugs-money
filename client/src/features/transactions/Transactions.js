@@ -181,7 +181,11 @@ class Transaction extends Component {
           <Grid.Row centered>
             <Grid.Column width={16}>
               {transactionsToDisplay && transactionsToDisplay.length > 0 ? (
-                <DataTable data={transactionsToDisplay} handlers={handlers} />
+                <DataTable
+                  data={transactionsToDisplay}
+                  handlers={handlers}
+                  actions
+                />
               ) : (
                 <p>No data to display</p>
               )}

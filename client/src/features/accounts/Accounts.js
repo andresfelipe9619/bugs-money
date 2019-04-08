@@ -4,7 +4,7 @@ import CreateAccountModal from "../../components/modals/account/CreateAccount";
 import "./styles/index.css";
 import { Menu, Icon, Button, Grid, Container } from "semantic-ui-react";
 import DataTable from "../../components/tables/DataTable";
-import UpdateAccountModal from "../../components/modals/accounts/UpdateAccount";
+import UpdateAccountModal from "../../components/modals/account/UpdateAccount";
 
 class Accounts extends Component {
   state = {

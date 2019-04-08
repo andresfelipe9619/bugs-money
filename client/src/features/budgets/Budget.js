@@ -272,9 +272,6 @@ class Budget extends Component {
             }}
           >
             <Grid.Column width={16}>
-              <Header style={{ paddingLeft: "20px", paddingRight: "20px" }}>
-                transactions
-              </Header>
               <Transactions budgets={budgets} />
             </Grid.Column>
           </Grid.Row>
