@@ -19,13 +19,13 @@ const CreateTransactionModal = ({
     onClose={closeModal}
   >
     <Header>
-      <FontAwesomeIcon size="2x" icon="piggy-bank" /> Create your Transaction
+      <FontAwesomeIcon size="2x" icon="piggy-bank" /> Register a new transaction
     </Header>
     <Modal.Content>
       <TransactionForm
         budgets={budgets}
         accounts={accounts}
-        submitText={"Crear presupuesto"}
+        submitText={"Create Transaction"}
         handleOnConfirm={handleOnConfirm}
         handleOnCancel={closeModal}
       />

@@ -5,7 +5,8 @@ import {
   Container,
   Confirm,
   Accordion,
-  Icon
+  Icon,
+  Divider
 } from "semantic-ui-react";
 import { toast } from "react-semantic-toasts";
 import BudgetRow from "./BudgetRow";
@@ -178,7 +179,7 @@ class Budget extends Component {
     let saved = income - expense;
 
     return (
-      <Container style={{ width: "100%" }}>
+      <Container fluid>
         <Grid divided>
           <Grid.Row>
             <Grid.Column width={16}>
@@ -192,78 +193,81 @@ class Budget extends Component {
               />
             </Grid.Column>
           </Grid.Row>
-          <Grid.Row style={{ marginTop: "100px" }}>
-            <Grid.Column width={3}>
-              <Header> {"Name"}</Header>
-            </Grid.Column>
-            <Grid.Column width={2}>
-              <Header> {"Limit"}</Header>
-            </Grid.Column>
-            <Grid.Column width={2}>
-              <Header> {"Balance"}</Header>
-            </Grid.Column>
-            <Grid.Column width={3}>
-              <Header> {"Start Date"}</Header>
-            </Grid.Column>
-            <Grid.Column width={3}>
-              <Header> {"End Date"}</Header>
-            </Grid.Column>
-            <Grid.Column width={3}>
-              <Header> </Header>
-            </Grid.Column>
-          </Grid.Row>
-          <Grid.Row centered>
-            <Grid.Column width={16}>
-              <Accordion fluid styled>
-                {budgetsToDisplay.map((budget, index) => {
-                  let {
-                    _id,
-                    name,
-                    limit,
-                    startDate,
-                    endDate,
-                    categories
-                  } = budget;
-                  return (
-                    <React.Fragment key={_id}>
-                      <Accordion.Title
-                        active={activeIndex === index}
-                        index={index}
-                        onClick={this.handleClick}
-                      >
-                        <Grid>
-                          <Grid.Row>
-                            <Grid.Column width={3}>
-                              <Icon name="dropdown" />
-                              {name}
-                            </Grid.Column>
-                            <Grid.Column width={2}>{limit}</Grid.Column>
-                            <Grid.Column width={2}>{limit}</Grid.Column>
-                            <Grid.Column width={3}>
-                              {moment(startDate).format("MMMM Do YYYY")}
-                            </Grid.Column>
-                            <Grid.Column width={3}>
-                              {moment(endDate).format("MMMM Do YYYY")}
-                            </Grid.Column>
-                            <Grid.Column>
-                              <ActionsCell {...handlers} original={budget} />{" "}
-                            </Grid.Column>
-                          </Grid.Row>
-                        </Grid>
-                      </Accordion.Title>
-                      <Accordion.Content active={activeIndex === index}>
-                        <Categories
-                          budget={_id}
-                          categories={categories}
-                          getBudgets={this.getBudgets}
-                        />
-                      </Accordion.Content>
-                    </React.Fragment>
-                  );
-                })}
-              </Accordion>
-            </Grid.Column>
-          </Grid.Row>
+          <Grid as={Container} padded="vertically">
+            <Grid.Row>
+              <Grid.Column width={3} style={{ paddingLeft: "3em" }}>
+                <Header> {"Name"}</Header>
+              </Grid.Column>
+              <Grid.Column width={2} style={{ paddingLeft: "2em" }}>
+                <Header> {"Limit"}</Header>
+              </Grid.Column>
+              <Grid.Column width={2}>
+                <Header> {"Balance"}</Header>
+              </Grid.Column>
+              <Grid.Column width={3}>
+                <Header> {"Start Date"}</Header>
+              </Grid.Column>
+              <Grid.Column width={3}>
+                <Header> {"End Date"}</Header>
+              </Grid.Column>
+              <Grid.Column width={3}>
+                <Header> </Header>
+              </Grid.Column>
+            </Grid.Row>
+
+            <Grid.Row centered>
+              <Grid.Column width={16}>
+                <Accordion fluid styled>
+                  {budgetsToDisplay.map((budget, index) => {
+                    let {
+                      _id,
+                      name,
+                      limit,
+                      startDate,
+                      endDate,
+                      categories
+                    } = budget;
+                    return (
+                      <React.Fragment key={_id}>
+                        <Accordion.Title
+                          active={activeIndex === index}
+                          index={index}
+                          onClick={this.handleClick}
+                        >
+                          <Grid padded="vertically">
+                            <Grid.Row>
+                              <Grid.Column width={3}>
+                                <Icon name="dropdown" />
+                                {name}
+                              </Grid.Column>
+                              <Grid.Column width={2}>{limit}</Grid.Column>
+                              <Grid.Column width={2}>{limit}</Grid.Column>
+                              <Grid.Column width={3}>
+                                {moment(startDate).format("MMMM Do YYYY")}
+                              </Grid.Column>
+                              <Grid.Column width={3}>
+                                {moment(endDate).format("MMMM Do YYYY")}
+                              </Grid.Column>
+                              <Grid.Column>
+                                <ActionsCell {...handlers} original={budget} />{" "}
+                              </Grid.Column>
+                            </Grid.Row>
+                          </Grid>
+                        </Accordion.Title>
+                        <Accordion.Content active={activeIndex === index}>
+                          <Categories
+                            budget={_id}
+                            categories={categories}
+                            getBudgets={this.getBudgets}
+                          />
+                        </Accordion.Content>
+                      </React.Fragment>
+                    );
+                  })}
+                </Accordion>
+              </Grid.Column>
+            </Grid.Row>
+          </Grid>
           <Grid.Row
             centered
             style={{
@@ -272,6 +276,13 @@ class Budget extends Component {
             }}
           >
             <Grid.Column width={16}>
+              <Divider />
+              <Header
+                size="large"
+                style={{ paddingLeft: "20px", paddingRight: "20px" }}
+              >
+                Transactions
+              </Header>
               <Transactions budgets={budgets} />
             </Grid.Column>
           </Grid.Row>

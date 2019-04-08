@@ -16,7 +16,7 @@ let accountSchema = new Schema({
   accountNumber: {
     type: Number,
     unique: true,
-    required: [true, 'El numero de la cuenta es necesario'],
+    // required: [true, 'El numero de la cuenta es necesario'],
   },
   nature: {
     type: String,

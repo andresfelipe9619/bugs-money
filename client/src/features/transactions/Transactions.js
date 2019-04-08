@@ -167,7 +167,7 @@ class Transaction extends Component {
     const accountsOptions = accounts.map(a => ({ value: a._id, text: a.name }));
     const budgetsOptions = budgets.map(b => ({ value: b._id, text: b.name }));
     return (
-      <Container style={{ width: "100%" }}>
+      <Container fluid>
         <Grid divided>
           <Grid.Row>
             <Grid.Column width={16}>
@@ -178,19 +178,25 @@ class Transaction extends Component {
               />
             </Grid.Column>
           </Grid.Row>
-          <Grid.Row centered>
-            <Grid.Column width={16}>
-              {transactionsToDisplay && transactionsToDisplay.length > 0 ? (
-                <DataTable
-                  data={transactionsToDisplay}
-                  handlers={handlers}
-                  actions
-                />
-              ) : (
-                <p>No data to display</p>
-              )}
-            </Grid.Column>
-          </Grid.Row>
+          <Grid
+            as={Container}
+            padded="vertically"
+            style={{ paddingBottom: "3em" }}
+          >
+            <Grid.Row centered>
+              <Grid.Column className="transactions-datatable" width={16}>
+                {transactionsToDisplay && transactionsToDisplay.length > 0 ? (
+                  <DataTable
+                    data={transactionsToDisplay}
+                    handlers={handlers}
+                    actions
+                  />
+                ) : (
+                  <p>No data to display</p>
+                )}
+              </Grid.Column>
+            </Grid.Row>
+          </Grid>
           <Confirm
             open={isModalOpen.confirm}
             onCancel={this.closeModal("confirm")}

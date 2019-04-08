@@ -131,7 +131,7 @@ router.post('/category', verificaToken, (req, res) => {
     user: req.user._id,
     name: body.name,
     value: body.value,
-    expended: body.expended,
+    spent: body.spent,
     description: body.description,
     budget: body.budget,
   });
@@ -205,7 +205,7 @@ router.put('/category/:id', verificaToken, (req, res) => {
 
     categoryDB.name = body.name;
     categoryDB.value = body.value;
-    categoryDB.expended = body.expended;
+    categoryDB.spent = body.spent;
     categoryDB.description = body.description;
     categoryDB.budget = body.budget;
 

@@ -71,7 +71,7 @@ const User = {
   get: id => serverRequests.get(`/user/${id}`),
   profile: () => serverRequests.get("/profile"),
   delete: id => serverRequests.del(`/user/${id}`),
-  update: user => serverRequests.put("/user", user)
+  update: user => serverRequests.put(`/user/${user._id}`, user)
 };
 
 export default {

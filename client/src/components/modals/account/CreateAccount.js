@@ -14,7 +14,11 @@ const CreateAccountModal = ({ open, closeModal, handleOnConfirm }) => (
     onClose={closeModal}
   >
     <Header>
-      <FontAwesomeIcon size="2x" icon={faMoneyCheckAlt} />
+      <FontAwesomeIcon
+        size="2x"
+        icon={faMoneyCheckAlt}
+        style={{ marginRight: "5px" }}
+      />
       Create your Account
     </Header>
     <Modal.Content>

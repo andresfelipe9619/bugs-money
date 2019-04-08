@@ -115,8 +115,8 @@ const AccountForm = withSemanticUIFormik({
     value: Yup.number().required("Limit is required!"),
     nature: Yup.string().required("Account nature is required!"),
     accountNumber: Yup.number(16)
-      .required("account number is required!")
       .min(16, "account number must have 16 digits!")
+      .max(16, "account number can't exceed 16 digits")
   }),
   handleSubmit: (values, { setSubmitting, props }) => {
     setTimeout(() => {

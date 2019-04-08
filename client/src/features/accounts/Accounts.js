@@ -5,10 +5,12 @@ import "./styles/index.css";
 import { Menu, Icon, Button, Grid, Container } from "semantic-ui-react";
 import DataTable from "../../components/tables/DataTable";
 import UpdateAccountModal from "../../components/modals/account/UpdateAccount";
+import Transactions from "../transactions/Transactions";
 
 class Accounts extends Component {
   state = {
     accounts: [],
+    budgets: [],
     isModalOpen: {
       create: false,
       update: false,
@@ -34,6 +36,14 @@ class Accounts extends Component {
     if (res.ok) {
       let { accounts } = res;
       this.setState({ accounts });
+    }
+  }
+
+  async getBudgets() {
+    let res = await API.Budget.getAll();
+    if (res.ok) {
+      let { budgets } = res;
+      this.setState({ budgets });
     }
   }
 
@@ -90,7 +100,7 @@ class Accounts extends Component {
   };
 
   render() {
-    const { accounts, isModalOpen, currentAccount } = this.state;
+    const { accounts, budgets, isModalOpen, currentAccount } = this.state;
     if (!accounts) return null;
     const handlers = {
       handleOnView: this.handleOnView,
@@ -100,7 +110,7 @@ class Accounts extends Component {
     };
     console.log("this.state", this.state);
     return (
-      <Container style={{ width: "100%" }}>
+      <Container fluid>
         <Grid>
           <Grid.Row>
             <Grid.Column width={16}>
@@ -123,18 +133,21 @@ class Accounts extends Component {
               </Menu>
             </Grid.Column>
           </Grid.Row>
-          <Grid.Row centered style={{ marginTop: "25px" }}>
-            <Grid.Column>
-              {accounts && accounts.length > 0 ? (
-                <DataTable actions data={accounts} handlers={handlers} />
-              ) : (
-                <p style={{ paddingLeft: "20px", paddingRight: "20px" }}>
-                  There are no accounts yet
-                </p>
-              )}
-            </Grid.Column>
-          </Grid.Row>
+          <Grid as={Container} padded="vertically">
+            <Grid.Row centered style={{ marginTop: "25px" }}>
+              <Grid.Column className="accounts-datatable">
+                {accounts && accounts.length > 0 ? (
+                  <DataTable actions data={accounts} handlers={handlers} />
+                ) : (
+                  <p style={{ paddingLeft: "20px", paddingRight: "20px" }}>
+                    There are no accounts yet
+                  </p>
+                )}
+              </Grid.Column>
+            </Grid.Row>
+          </Grid>
         </Grid>
+        <Transactions budgets={budgets} style={{ marginTop: "10px" }} />
         <CreateAccountModal
           open={isModalOpen.create}
           closeModal={this.closeModal("create")}

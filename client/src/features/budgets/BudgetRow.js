@@ -21,16 +21,7 @@ export default class BudgetRow extends PureComponent {
     } = this.props;
     return (
       <Grid>
-        <ActionRow
-          {...{
-            header,
-            openModal,
-            handleOnFilter,
-            handleOnCancelFilter,
-            inverted: true
-          }}
-        />
-        <Grid.Row>
+        <Grid.Row style={{ paddingTop: "5em" }}>
           <Grid.Column width={1}>{""}</Grid.Column>
           <Grid.Column width={5}>
             <MoneyPlaceholder text={"Income"} color={"green"} money={income} />
@@ -42,6 +33,15 @@ export default class BudgetRow extends PureComponent {
             <MoneyPlaceholder color={"blue"} text={"Saved"} money={saved} />{" "}
           </Grid.Column>
         </Grid.Row>
+        <ActionRow
+          {...{
+            header,
+            openModal,
+            handleOnFilter,
+            handleOnCancelFilter,
+            inverted: true
+          }}
+        />
       </Grid>
     );
   }
