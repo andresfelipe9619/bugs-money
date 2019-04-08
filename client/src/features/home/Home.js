@@ -142,7 +142,7 @@ class Home extends Component {
           <Container
             fluid
             className="wow zoomIn"
-            data-wow-delay="0.7s"
+            data-wow-delay="0.3s"
             textAlign="center"
           >
             <a
@@ -151,7 +151,7 @@ class Home extends Component {
             >
               Tech Used to make this App
             </a>
-            <Container className="Tech-Icons wow flipInX" data-wow-delay="0.9s">
+            <Container className="Tech-Icons wow flipInX" data-wow-delay="0.5s">
               <br />
               <br />
               <Icon.Group size="huge">

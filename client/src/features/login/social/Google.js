@@ -5,7 +5,7 @@ export default class Google extends Component {
     return (
       <GoogleLogin
         clientId="27487158293-89imhaa5mf45o0o0jvje4lut3rk0lq1u.apps.googleusercontent.com"
-        buttonText="Login"
+        buttonText="Google"
         onSuccess={googleUser => {
           let user = {
             id: googleUser.getBasicProfile().getId(),

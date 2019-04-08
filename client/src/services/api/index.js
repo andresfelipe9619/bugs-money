@@ -34,8 +34,11 @@ const Auth = {
 };
 
 const Account = {
-  getAll: () => serverRequests.get("/account"),
-  get: account => serverRequests.get(`/account/${account}`)
+  getAll: () => serverRequests.get(`/account`),
+  get: id => serverRequests.get(`/account/${id}`),
+  create: account => serverRequests.post("/account", account),
+  update: account => serverRequests.put(`/account/${account._id}`, account),
+  delete: id => serverRequests.del(`/account/${id}`)
 };
 
 const Transaction = {
@@ -55,18 +58,27 @@ const Budget = {
   create: budget => serverRequests.post("/budget", budget)
 };
 
+const Category = {
+  getAll: () => serverRequests.get(`/category`),
+  delete: id => serverRequests.del(`/category/${id}`),
+  get: id => serverRequests.get(`/category/${id}`),
+  update: category => serverRequests.put(`/category/${category._id}`, category),
+  create: category => serverRequests.post("/category", category)
+};
+
 const User = {
   getAll: () => serverRequests.get(`/user`),
   get: id => serverRequests.get(`/user/${id}`),
   profile: () => serverRequests.get("/profile"),
   delete: id => serverRequests.del(`/user/${id}`),
-  update: user => serverRequests.put("/user", user)
+  update: user => serverRequests.put(`/user/${user._id}`, user)
 };
 
 export default {
   Auth,
   User,
   Budget,
+  Category,
   Account,
   Transaction,
   setToken: _token => {

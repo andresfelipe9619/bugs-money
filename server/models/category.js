@@ -10,7 +10,7 @@ let categorySchema = new Schema({
     type: Number,
     required: [true, 'El precio de la categoria es necesario'],
   },
-  expended: {
+  spent: {
     type: Number,
     default: 0,
   },

@@ -22,22 +22,32 @@ const MobileSidebar = ({
       vertical
       visible={visible}
     >
-      {_.map(leftItems, item => {
-        let { content, ...rest } = item;
-        return (
-          <Menu.Item {...rest}>
-            <Icon name={item.name} />
-            {content}
-          </Menu.Item>
-        );
-      })}
+      {isLoggedin
+        ? _.map(leftItems.loggedin, item => {
+            let { content, ...rest } = item;
+            return (
+              <Menu.Item {...rest}>
+                <Icon name={item.name} />
+                {content}
+              </Menu.Item>
+            );
+          })
+        : _.map(leftItems.normal, item => {
+            let { content, ...rest } = item;
+            return (
+              <Menu.Item {...rest}>
+                <Icon name={item.name} />
+                {content}
+              </Menu.Item>
+            );
+          })}
     </Sidebar>
     <Sidebar.Pusher
       dimmed={visible}
       onClick={onPusherClick}
       style={{ minHeight: "100vh" }}
     >
-      <Menu fixed="top" inverted>
+      <Menu inverted fixed="top">
         {isLoggedin ? (
           <Menu.Item onClick={onToggle}>
             <Icon name="sidebar" />

@@ -14,8 +14,8 @@ let verificaToken = (req, res, next) => {
     }
 
     req.user = decoded.user;
-    console.log('BODY=>', req.body);
-    console.log('USER=>', req.user);
+    console.log('\x1b[33m%s\x1b[0m', 'BODY ====>');
+    console.log(req.body);
     next();
   });
 };

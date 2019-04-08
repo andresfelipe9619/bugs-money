@@ -1,48 +1,44 @@
 import React from "react";
 import ReactTable from "react-table";
 import "react-table/react-table.css";
-import { Button, Icon } from "semantic-ui-react";
-import "./styles/data.table.css";
-const ActionsCell = ({
-  handleOnUpdate,
-  handleOnDelete,
-  handleOnView,
-  original
-}) => (
-  <Button.Group>
-    {handleOnView && (
-      <Button icon size="tiny" onClick={handleOnView(original)}>
-        <Icon name="eye" />
-      </Button>
-    )}
-    {handleOnUpdate && (
-      <Button icon size="tiny">
-        <Icon name="edit" onClick={handleOnUpdate(original)} />
-      </Button>
-    )}{" "}
-    {handleOnDelete && (
-      <Button icon size="tiny">
-        <Icon name="trash" onClick={handleOnDelete(original)} />
-      </Button>
-    )}
-  </Button.Group>
-);
-
+// import "./styles/data.table.css";
+import ActionsCell from "./ActionsCell";
 export default class DataTable extends React.PureComponent {
+  decamelize = (str, separator) => {
+    separator = typeof separator === "undefined" ? " " : separator;
+
+    return str
+      .replace(/([a-z\d])([A-Z])/g, "$1" + separator + "$2")
+      .replace(/([A-Z]+)([A-Z][a-z\d]+)/g, "$1" + separator + "$2")
+      .toLowerCase();
+  };
+
+  isNotVisibleKey = key => {
+    let notVisibleKeys = ["_id", "id", "user", "budget", "__v"];
+    return notVisibleKeys.includes(key);
+  };
+
+  canBeHeader = (sample, key) =>
+    sample[key] !== undefined &&
+    sample[key] !== null &&
+    typeof sample[key] !== "object" &&
+    !Array.isArray(sample[key]);
+
   getColumns = data => {
+    if (!data || (data && data.length === 0)) return;
     const columns = [];
     const sample = data[0];
     const { handlers, actions } = this.props;
     Object.keys(sample).forEach(key => {
-      if (key !== "_id" && key !== "id") {
-        if (sample[key] && typeof sample[key] !== "object") {
-          let column = {
-            accessor: key,
-            Header: key,
-            className: "center"
-          };
-          columns.push(column);
-        }
+      if (!this.isNotVisibleKey(key) && this.canBeHeader(sample, key)) {
+        let decamel = this.decamelize(key);
+        let header = decamel.charAt(0).toUpperCase() + decamel.slice(1);
+        let column = {
+          accessor: key,
+          Header: header,
+          className: "left"
+        };
+        columns.push(column);
       }
     });
     if (actions) {
@@ -63,7 +59,7 @@ export default class DataTable extends React.PureComponent {
         <ReactTable
           data={data}
           columns={columns}
-          defaultPageSize={10}
+          defaultPageSize={6}
           className="-striped -highlight"
         />
       </div>

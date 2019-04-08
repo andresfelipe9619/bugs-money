@@ -1,5 +1,6 @@
 import React, { PureComponent } from "react";
-import { Grid, Menu, Button, Icon, Input } from "semantic-ui-react";
+import { Grid, Menu } from "semantic-ui-react";
+import ActionRow from "../../components/actionRow";
 
 const MoneyPlaceholder = ({ text, money, color }) => (
   <Menu inverted color={color} vertical>
@@ -8,61 +9,39 @@ const MoneyPlaceholder = ({ text, money, color }) => (
   </Menu>
 );
 export default class BudgetRow extends PureComponent {
-  state = {
-    date: "",
-    time: "",
-    dateTime: "",
-    datesRange: ""
-  };
-
-  handleOnChange = event => {
-    if (this.state.hasOwnProperty(event.target.name)) {
-      this.setState({ [event.target.name]: event.target.value });
-    }
-  };
-
   render() {
-    const { openModal, saved, income, expense } = this.props;
+    const {
+      openModal,
+      header,
+      saved,
+      income,
+      expense,
+      handleOnFilter,
+      handleOnCancelFilter
+    } = this.props;
     return (
       <Grid>
-        <Grid.Row>
-          <Grid.Column width={16}>
-            {" "}
-            <Menu style={{ marginTop: "55px" }} inverted>
-              <Menu.Item header>BUDGETS</Menu.Item>
-              <Menu.Item>
-                <Input
-                  icon="calendar"
-                  type="date"
-                  name="name"
-                  iconPosition="left"
-                />
-              </Menu.Item>
-              <Menu.Item position="right">
-                {" "}
-                <Button onClick={openModal} icon>
-                  <Icon name="plus" />
-                </Button>
-              </Menu.Item>
-            </Menu>
-          </Grid.Column>
-        </Grid.Row>
-        <Grid.Row>
+        <Grid.Row style={{ paddingTop: "5em" }}>
           <Grid.Column width={1}>{""}</Grid.Column>
           <Grid.Column width={5}>
-            <MoneyPlaceholder
-              text={"Ingresos"}
-              color={"green"}
-              money={income}
-            />
+            <MoneyPlaceholder text={"Income"} color={"green"} money={income} />
           </Grid.Column>
           <Grid.Column width={5}>
-            <MoneyPlaceholder text={"Gastos"} color={"red"} money={expense} />{" "}
+            <MoneyPlaceholder text={"Expense"} color={"red"} money={expense} />{" "}
           </Grid.Column>
           <Grid.Column width={5}>
-            <MoneyPlaceholder color={"blue"} text={"Guardado"} money={saved} />{" "}
+            <MoneyPlaceholder color={"blue"} text={"Saved"} money={saved} />{" "}
           </Grid.Column>
         </Grid.Row>
+        <ActionRow
+          {...{
+            header,
+            openModal,
+            handleOnFilter,
+            handleOnCancelFilter,
+            inverted: true
+          }}
+        />
       </Grid>
     );
   }

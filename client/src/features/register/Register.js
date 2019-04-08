@@ -6,8 +6,6 @@ import {
   Grid,
   Header,
   Segment
-  // Image,
-  // Checkbox
 } from "semantic-ui-react";
 import { connect } from "react-redux";
 import withSemanticUIFormik from "../../components/hoc/FormikSUI";
@@ -34,7 +32,7 @@ const MyInnerForm = props => {
     return (
       <Redirect
         to={{
-          pathname: "/ingreso ",
+          pathname: "/login",
           state: {
             from: props.location
           }
@@ -53,13 +51,13 @@ const MyInnerForm = props => {
         <Grid.Row centered>
           <Grid.Column width={6} style={{ paddingTop: "2em", maxWidth: 450 }}>
             <Header as="h2" color="black" textAlign="center">
-              Crea tu cuenta
+              Start creating your budgets now!
             </Header>
             <Segment stacked>
               {Object.keys(errors).length > 0 ? (
                 <Message
                   error
-                  header="Hay porblemas el ingreso"
+                  header="There'are some problems"
                   list={Object.keys(errors).map(key => errors[key])}
                 />
               ) : registerHasFailed ? (
@@ -75,25 +73,25 @@ const MyInnerForm = props => {
               ) : null}
               <Form size="large" onSubmit={handleSubmit}>
                 <Form.Input
-                  label="Nombre completo"
+                  label="Full name"
                   labelPosition="left"
                   fluid
                   icon="user"
                   type="text"
                   name="name"
                   iconPosition="left"
-                  placeholder="Correo electrónico..."
+                  placeholder="bugs bunny"
                   onChange={handleChange}
                 />
                 <Form.Input
-                  label="Correo electrónico"
+                  label="Email address"
                   labelPosition="left"
                   fluid
                   icon="mail"
                   type="email"
                   name="email"
                   iconPosition="left"
-                  placeholder="Correo electrónico..."
+                  placeholder="bugsbunny@money.com"
                   onChange={handleChange}
                 />
                 <Form.Input
@@ -108,7 +106,7 @@ const MyInnerForm = props => {
                   onChange={handleChange}
                 />
                 <Form.Input
-                  label="Confirma tu contraseña"
+                  label="Confirm your password"
                   labelPosition="left"
                   type="password"
                   fluid
@@ -123,7 +121,7 @@ const MyInnerForm = props => {
                   type="submit"
                   style={{ width: "100%", height: "auto" }}
                 >
-                  Registrarse
+                  Sign up
                 </Button>
               </Form>
             </Segment>

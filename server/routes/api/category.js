@@ -2,9 +2,11 @@ const router = require('express').Router();
 
 const _ = require('underscore');
 
-const Category = require('../models/category');
+const Category = require('../../models/category');
 
 const {verificaToken} = require('../../middlewares/authentication');
+
+const Budget = require('../../models/budget');
 
 // ===========================//
 // Muestra todas las categories*
@@ -18,7 +20,7 @@ router.get('/category', verificaToken, (req, res) => {
 
   let user = req.user._id;
 
-  Category.find({})
+  Category.find({user: req.user._id})
       .sort('description')
       .skip(offset)
       .limit(limit)
@@ -129,7 +131,7 @@ router.post('/category', verificaToken, (req, res) => {
     user: req.user._id,
     name: body.name,
     value: body.value,
-    expended: body.expended,
+    spent: body.spent,
     description: body.description,
     budget: body.budget,
   });
@@ -142,9 +144,36 @@ router.post('/category', verificaToken, (req, res) => {
       });
     }
 
-    res.status(201).json({
-      ok: true,
-      category: categoryDB,
+    Budget.findById(category.budget, (err, budget) => {
+      if (err) {
+        return res.status(500).json({
+          ok: false,
+          err,
+        });
+      }
+
+      if (!budget) {
+        return res.status(400).json({
+          ok: false,
+          err: {
+            message: 'El id no es valido',
+          },
+        });
+      }
+
+      budget.categories.push(category);
+      budget.save((err) => {
+        if (err) {
+          return res.status(500).json({
+            ok: false,
+            err,
+          });
+        }
+        return res.status(201).json({
+          ok: true,
+          category: categoryDB,
+        });
+      });
     });
   });
 });
@@ -176,7 +205,7 @@ router.put('/category/:id', verificaToken, (req, res) => {
 
     categoryDB.name = body.name;
     categoryDB.value = body.value;
-    categoryDB.expended = body.expended;
+    categoryDB.spent = body.spent;
     categoryDB.description = body.description;
     categoryDB.budget = body.budget;
 

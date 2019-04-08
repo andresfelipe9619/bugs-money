@@ -9,6 +9,10 @@ let budgetSchema = new Schema({
     type: String,
     required: [true, 'El nombre del presupuesto es necesario'],
   },
+  spent: {
+    type: Number,
+    default: 0,
+  },
   limit: {
     type: Number,
     default: 0,
@@ -30,6 +34,7 @@ let budgetSchema = new Schema({
     ref: 'User',
     required: [true, 'El usuario es requerido'],
   },
+  categories: [{type: Schema.Types.ObjectId, ref: 'Category'}],
 });
 
 budgetSchema.plugin(fakegoose);

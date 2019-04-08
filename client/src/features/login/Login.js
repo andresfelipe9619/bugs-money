@@ -48,7 +48,7 @@ const MyInnerForm = props => {
         <Grid.Row centered>
           <Grid.Column width={6} style={{ paddingTop: "2em", maxWidth: 450 }}>
             <Header as="h2" color="black" textAlign="center">
-              Ingresa con tu cuenta
+              Login with your account
             </Header>
             <Segment stacked>
               {console.log(errors)}
@@ -61,7 +61,7 @@ const MyInnerForm = props => {
               ) : loginHasFailed ? (
                 <Message
                   error
-                  header="Hay problemas con el inicio de sesion"
+                  header="There are some problems"
                   content={
                     "err" in loginHasFailed ? (
                       <p>{loginHasFailed.err.message}</p>
@@ -103,7 +103,7 @@ const MyInnerForm = props => {
                 </Button>
               </Form>
               <Header as="h2" color="black" textAlign="center">
-                O{" "}
+                O CON{" "}
               </Header>
               <Grid.Row>
                 <Grid.Column width={3}>

@@ -13,13 +13,13 @@ router.get('/account', verificaToken, (req, res) => {
   let limit = req.query.limit || 5;
   limit = Number(limit);
 
-  Account.find({})
+  Account.find({user: req.user._id})
       .sort('description')
       .skip(offset)
       .limit(limit)
       .populate('user', 'name email')
       .populate('budget', 'name')
-      .exec((err, cuentas) => {
+      .exec((err, accounts) => {
         if (err) {
           return res.status(500).json({
             ok: false,
@@ -29,7 +29,7 @@ router.get('/account', verificaToken, (req, res) => {
 
         res.json({
           ok: true,
-          cuentas,
+          accounts,
         });
       });
 });
@@ -71,8 +71,9 @@ router.post('/account', verificaToken, (req, res) => {
     name: body.name,
     accountNumber: body.accountNumber,
     nature: body.nature,
-    state: body.state,
-    budget: body.budget,
+    value: body.value,
+    // state: body.state,
+    // budget: body.budget,
   });
 
   account.save((err, cuentaDB) => {
@@ -97,8 +98,8 @@ router.put('/account/:id', verificaToken, (req, res) => {
     'name',
     'accountNumber',
     'nature',
-    'state',
-    'budget',
+    // 'state',
+    // 'budget',
   ]);
 
   Account.findByIdAndUpdate(
@@ -110,6 +111,15 @@ router.put('/account/:id', verificaToken, (req, res) => {
           return res.status(400).json({
             ok: false,
             err,
+          });
+        }
+
+        if (!cuentaDB) {
+          return res.status(400).json({
+            ok: false,
+            err: {
+              message: 'El account no existe',
+            },
           });
         }
 
@@ -135,7 +145,7 @@ router.delete('/account/:id', verificaToken, (req, res) => {
       return res.status(400).json({
         ok: false,
         err: {
-          message: 'account no encontrado',
+          message: 'account no encontrada',
         },
       });
     }
