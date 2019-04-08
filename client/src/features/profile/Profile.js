@@ -25,19 +25,23 @@ const back = () => {
 export class Profile extends React.Component {
   constructor(props) {
     super(props);
-    // You will maybe receive your settings from this.props or do a fetch request in your componentWillMount
     this.state = {
       modalIsOpen: false
     };
 
     // Save settings after close
-    this._leavePaneHandler = async (wasSaved, newSettings, oldSettings) => {
+    this._leavePaneHandler = async (
+      wasSaved,
+      newSettings,
+      oldSettings,
+      user
+    ) => {
       // "wasSaved" indicates wheather the pane was just closed or the save button was clicked.
       if (wasSaved && newSettings !== oldSettings) {
         // do something with the settings, e.g. save via ajax.
-
+        user = newSettings;
         //this.setState(newSettings);
-        let res = await API.User.update();
+        let res = await API.User.update({ user });
         if (res.ok) {
           console.log("success saving new settings");
         }
@@ -48,7 +52,11 @@ export class Profile extends React.Component {
     };
 
     // React if a single setting changed
-    this._settingsChanged = ev => {};
+    this._settingsChanged = (e, data) => {
+      if (data) {
+        this.props.setFieldValue(data.name, data.value);
+      }
+    };
 
     // Define your menu
     this._menu = [
@@ -87,11 +95,14 @@ export class Profile extends React.Component {
     if (this.props.userHasLoggedin) {
       let userID = this.props.userHasLoggedin._id;
       await API.User.delete(userID);
-      this.props.logoutRequest(this.props.userHasLoggedin);
+      this.props.logoutRequest(userID);
     }
   };
 
   render() {
+    let name = this.props.userHasLoggedin.name;
+    let email = this.props.userHasLoggedin.email;
+    let password = "";
     // Return your Settings Pane
     return (
       <Modal
@@ -141,11 +152,12 @@ export class Profile extends React.Component {
                 <input
                   type="text"
                   className="form-control"
-                  name="mysettings.general.name"
+                  name="name"
+                  value={name}
                   placeholder="Name"
                   id="generalName"
                   onChange={this._settingsChanged}
-                  defaultValue={this.props.userHasLoggedin.name}
+                  // defaultValue={name}
                 />
               </fieldset>
               <fieldset className="form-group">
@@ -154,11 +166,12 @@ export class Profile extends React.Component {
                   type="text"
                   disabled
                   className="form-control"
-                  name="mysettings.general.email"
+                  name="email"
+                  value={email}
                   placeholder="E-Mail Address"
                   id="generalMail"
                   onChange={this._settingsChanged}
-                  defaultValue={this.props.userHasLoggedin.email}
+                  // defaultValue={email}
                 />
               </fieldset>
               <fieldset className="form-group">
@@ -166,6 +179,8 @@ export class Profile extends React.Component {
                 <input
                   type="password"
                   className="form-control"
+                  name="password"
+                  value={password}
                   placeholder="Enter Password"
                   onChange={this._settingsChanged}
                 />

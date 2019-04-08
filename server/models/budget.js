@@ -9,7 +9,7 @@ let budgetSchema = new Schema({
     type: String,
     required: [true, 'El nombre del presupuesto es necesario'],
   },
-  expended: {
+  spent: {
     type: Number,
     default: 0,
   },

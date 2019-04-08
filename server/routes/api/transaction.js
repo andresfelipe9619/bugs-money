@@ -13,13 +13,13 @@ router.get('/transaction', verificaToken, (req, res) => {
   let limit = req.query.limit || 5;
   limit = Number(limit);
 
-  Transaction.find({})
+  Transaction.find({user: req.user._id})
       .sort('descripcion')
       .skip(offset)
       .limit(limit)
       .populate('user', 'name email')
       .populate('account', 'name accountNumber')
-      .populate('budget', 'name expended limit')
+      .populate('budget', 'name spent limit')
       .exec((err, transactions) => {
         if (err) {
           return res.status(500).json({
@@ -41,7 +41,7 @@ router.get('/transaction/:id', verificaToken, (req, res) => {
   Transaction.findById(id)
       .populate('user', 'name email')
       .populate('account', 'name accountNumber')
-      .populate('budget', 'name expended limit')
+      .populate('budget', 'name spent limit')
       .exec((err, transactionDB) => {
         if (err) {
           return res.status(500).json({
