@@ -173,7 +173,7 @@ class Transaction extends Component {
       handleOnView: this.handleOnView,
       handleOnCreate: this.handleOnCreate,
       handleOnUpdate: this.handleOnUpdate,
-      handleOnDelete: this.handleOnDelete,
+      // handleOnDelete: this.handleOnDelete,
       handleOnFilter: this.handleOnFilter,
       handleOnCancelFilter: this.handleOnCancelFilter
     };

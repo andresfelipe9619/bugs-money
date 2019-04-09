@@ -3,6 +3,7 @@ const router = require('express').Router();
 const _ = require('underscore');
 
 const Budget = require('../../models/budget');
+const Category = require('../../models/category');
 
 const {verificaToken} = require('../../middlewares/authentication');
 
@@ -52,6 +53,31 @@ router.get('/budget/:id', verificaToken, (req, res) => {
       budget: budgetDB,
     });
   });
+});
+
+router.get('/how-am-i-going', verificaToken, (req, res) => {
+  // let user = req.params.id;
+  // Category.aggregate(
+  //     [
+  //       {
+  //         $group: {
+  //           _id: user,
+  //           balance: {$sum: '$value'},
+  //         },
+  //       },
+  //     ],
+  //     (err, result) => {
+  //       if (err) {
+  //         console.log(err);
+  //         return;
+  //       }
+  //       res.json({
+  //         ok: true,
+  //         categories,
+  //         result,
+  //       });
+  //     }
+  // );
 });
 
 router.post('/budget', verificaToken, (req, res) => {

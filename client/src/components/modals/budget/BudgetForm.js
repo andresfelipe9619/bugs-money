@@ -99,7 +99,7 @@ const MyInnerForm = props => {
 
 const BudgetForm = withSemanticUIFormik({
   mapPropsToValues: ({ budget }) => ({
-    name: (budget && budget.name) || "weed",
+    name: (budget && budget.name) || "Copies",
     startDate: (budget && budget.startDate) || "2019-01-01",
     endDate: (budget && budget.endDate) || "2020-01-01",
     limit: (budget && budget.limit) || 0

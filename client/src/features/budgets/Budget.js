@@ -20,9 +20,9 @@ import moment from "moment";
 import Transactions from "../transactions/Transactions";
 class Budget extends Component {
   state = {
-    income: 0,
-    expense: 0,
-    budgeted: 0,
+    income: 320000,
+    spent: 123000,
+    saved: 108000,
     budgets: [],
     isFiltering: false,
     filteredBudgets: [],
@@ -153,7 +153,10 @@ class Budget extends Component {
       currentBudget,
       activeIndex,
       isFiltering,
-      filteredBudgets
+      filteredBudgets,
+      saved,
+      income,
+      spent
     } = this.state;
     if (!budgets) return null;
     const budgetsToDisplay = isFiltering ? filteredBudgets : budgets;
@@ -166,17 +169,17 @@ class Budget extends Component {
       handleOnCancelFilter: this.handleOnCancelFilter
     };
 
-    let { income, expense } = budgetsToDisplay.reduce(
-      (prev, b) =>
-        b.nature === "income"
-          ? { ...prev, income: prev.income + parseInt(b.limit, 10) }
-          : b.nature === "expense"
-          ? { ...prev, expense: prev.expense + parseInt(b.limit, 10) }
-          : prev,
-      { income: 0, expense: 0 }
-    );
-
-    let saved = income - expense;
+    // let { income, spent } = budgetsToDisplay.reduce(
+    //   (prev, b) =>
+    //     b.nature === "income"
+    //       ? { ...prev, income: prev.income + parseInt(b.limit, 10) }
+    //       : b.nature === "spent"
+    //         ? { ...prev, spent: prev.spent + parseInt(b.limit, 10) }
+    //         : prev,
+    //   { income: 0, spent: 0 }
+    // );
+    // spent = budgets.map(({categories})=>categories.map)
+    // let saved = income - spent;
 
     return (
       <Container fluid>
@@ -187,7 +190,7 @@ class Budget extends Component {
                 header="Budgets"
                 saved={saved}
                 income={income}
-                expense={expense}
+                spent={spent}
                 openModal={this.openModal("create")}
                 {...handlers}
               />

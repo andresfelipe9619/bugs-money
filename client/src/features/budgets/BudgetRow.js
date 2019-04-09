@@ -15,7 +15,7 @@ export default class BudgetRow extends PureComponent {
       header,
       saved,
       income,
-      expense,
+      spent,
       handleOnFilter,
       handleOnCancelFilter
     } = this.props;
@@ -27,7 +27,7 @@ export default class BudgetRow extends PureComponent {
             <MoneyPlaceholder text={"Income"} color={"green"} money={income} />
           </Grid.Column>
           <Grid.Column width={5}>
-            <MoneyPlaceholder text={"Expense"} color={"red"} money={expense} />{" "}
+            <MoneyPlaceholder text={"Expense"} color={"red"} money={spent} />{" "}
           </Grid.Column>
           <Grid.Column width={5}>
             <MoneyPlaceholder color={"blue"} text={"Saved"} money={saved} />{" "}

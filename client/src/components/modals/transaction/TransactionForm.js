@@ -131,7 +131,7 @@ const MyInnerForm = props => {
 
 const TransactionForm = withSemanticUIFormik({
   mapPropsToValues: ({ transaction }) => ({
-    name: (transaction && transaction.name) || "weed",
+    name: (transaction && transaction.name) || "Copies",
     value: (transaction && transaction.value) || "10000",
     account: (transaction && transaction.account) || "BANCOLOMBIA",
     category: (transaction && transaction.category) || "weed",

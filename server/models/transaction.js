@@ -46,18 +46,19 @@ let transactionSchema = new Schema({
     required: [true, 'El user es requerido'],
   },
 });
-transactionSchema.post('save', (transaction) => {
+
+const updateCategory = (transaction) => {
   let {value, category, type} = transaction;
   CategoryModel.findById(category, (err, categoryDB) => {
     if (err) {
-      console.error({
+      return console.error({
         ok: false,
         err,
       });
     }
 
     if (!categoryDB) {
-      console.error({
+      return console.error({
         ok: false,
         err: {
           message: 'No se encontro el id category',
@@ -71,19 +72,22 @@ transactionSchema.post('save', (transaction) => {
 
     categoryDB.save((err, categoriaGuardada) => {
       if (err) {
-        console.error({
+        return console.error({
           ok: false,
           err,
         });
       }
 
-      console.log({
+      return console.log({
         ok: true,
         category: categoriaGuardada,
       });
     });
   });
-});
+};
+
+transactionSchema.post('save', updateCategory);
+transactionSchema.post('remove', updateCategory);
 transactionSchema.plugin(uniqueValidator, {
   message: '{PATH} debe de ser unico',
 });
